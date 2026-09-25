@@ -440,4 +440,104 @@ function prismaMessage(){document.getElementById("prismaMain").innerHTML=prismaH
 function prismaSendMessage(){const n=document.getElementById("msgName").value,e=document.getElementById("msgEmail").value,t=document.getElementById("msgText").value;if(!t.trim()){alert("Escreve a mensagem.");return}localStorage.setItem("prisma_message_"+Date.now(),JSON.stringify({name:n,email:e,text:t,date:new Date().toISOString()}));document.getElementById("prismaMain").innerHTML=prismaHeader("Mensagem enviada","Obrigado pelo contributo.")+'<div class="v3box"><h2>Recebido.</h2><p>A mensagem ficou registada neste dispositivo. Para a transformar numa caixa de contacto real, falta ligar o formulário a um serviço de email/formulários.</p><button class="v3btn" onclick="prismaMessage()">Enviar outra</button></div>'}
 const oldV3RenderWorkspace=renderWorkspace;
 renderWorkspace=function(){oldV3RenderWorkspace();const nav=document.querySelector(".prisma-side");if(nav){nav.insertAdjacentHTML("beforeend",'<button onclick="prismaBlog()">✎ Blog</button><button onclick="prismaMessage()">✉ Mensagem ao criador</button>')}}
+</script>
+<style>
+.prisma-student-hero{background:linear-gradient(135deg,#111827,#334155);color:#fff;border-radius:22px;padding:28px;margin-bottom:18px}
+.psgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.pscard{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px}.pscard h3{margin:5px 0 8px}.psbar{height:8px;background:#e5e7eb;border-radius:99px;overflow:hidden}.psbar i{display:block;height:100%;width:0;background:#111827}.pssearch{width:100%;padding:13px 15px;border:1px solid #d8dde5;border-radius:12px;box-sizing:border-box;margin:12px 0}.pschips{display:flex;gap:8px;flex-wrap:wrap}.pschip{border:1px solid #d8dde5;background:#fff;border-radius:99px;padding:8px 12px;cursor:pointer}.psquestion{font-size:19px;line-height:1.45}.psanswer{padding:12px;border-left:3px solid #111827;background:#f8fafc;margin-top:12px}.psstat{font-size:28px;font-weight:800}.psmuted{color:#64748b;font-size:13px}@media(max-width:800px){.psgrid{grid-template-columns:1fr}}
+</style>
+<script>
+/* PRISMA APRENDER — camada centrada no aluno */
+const PRISMA_LEARN=[
+{id:"F10-I",year:"10.º",title:"Filosofia e filosofar",problem:"O que torna uma questão verdadeiramente filosófica?",concepts:["problema filosófico","conceito","tese","argumento","validade","verdade","solidez","falácia"],goal:"Problematizar, conceptualizar e argumentar com rigor."},
+{id:"F10-II-L",year:"10.º",title:"Livre-arbítrio",problem:"Somos realmente livres quando escolhemos?",concepts:["determinismo","livre-arbítrio","libertismo","compatibilismo"],goal:"Distinguir posições e avaliar argumentos sobre liberdade."},
+{id:"F10-II-E",year:"10.º",title:"Juízos morais",problem:"Existem verdades morais?",concepts:["subjetivismo","relativismo","objetivismo"],goal:"Analisar diferentes posições sobre a natureza dos juízos morais."},
+{id:"F10-II-M",year:"10.º",title:"Fundamentação da moral",problem:"Como devemos agir?",concepts:["dever","boa vontade","imperativo categórico","utilidade","consequências"],goal:"Reconstruir e comparar Kant e Mill."},
+{id:"F10-II-P",year:"10.º",title:"Justiça e sociedade",problem:"O que torna uma sociedade justa?",concepts:["justiça","posição original","véu de ignorância","liberdade","igualdade","mérito"],goal:"Comparar propostas de Rawls, Sandel e Nozick."},
+{id:"F10-III",year:"10.º",title:"Problemas do mundo contemporâneo",problem:"Como devemos agir perante problemas globais?",concepts:["pobreza","direitos humanos","ambiente","igualdade","guerra","cidadania"],goal:"Aplicar instrumentos filosóficos a problemas contemporâneos."},
+{id:"F11-IV-K",year:"11.º",title:"Conhecimento",problem:"O que significa saber alguma coisa?",concepts:["crença","verdade","justificação","ceticismo","dúvida metódica","cogito","empirismo"],goal:"Formular o problema do conhecimento e comparar Descartes e Hume."},
+{id:"F11-IV-C",year:"11.º",title:"Ciência",problem:"Como distinguimos ciência de pseudociência?",concepts:["indução","verificação","falsificação","hipótese","demarcação"],goal:"Analisar critérios de racionalidade científica."},
+{id:"F11-IV-T",year:"11.º",title:"Ciência, tecnologia e sociedade",problem:"Tudo o que podemos fazer devemos fazer?",concepts:["IA","tecnologia","trabalho","genoma","ambiente","informação","religião"],goal:"Problematizar consequências éticas, políticas e sociais da racionalidade científica e tecnológica."}
+];
+const PRISMA_MISSIONS=[
+["5 min","Deteta a tese","Lê uma afirmação e escreve em 20 palavras qual é a tese que está a ser defendida."],
+["10 min","Contraexemplo","Encontra um caso que ponha em dificuldade uma generalização aparentemente convincente."],
+["10 min","Explica sem jargão","Explica um conceito filosófico a alguém que nunca estudou Filosofia."],
+["15 min","Objeção","Formula a melhor objeção que conseguires a uma posição que acabaste de estudar."],
+["20 min","Duas posições","Apresenta duas respostas diferentes ao mesmo problema e identifica a razão central de cada uma."],
+["15 min","Mapa de argumentos","Escreve conclusão, premissas e uma possível objeção de um argumento."],
+["20 min","Mini-ensaio","Responde a uma questão filosófica com tese, duas razões, objeção e resposta."]
+];
+const PRISMA_EXTRA=[
+["F10","Lógica","Se chove, a rua fica molhada. A rua está molhada. Logo, choveu. O argumento é válido? O que muda se a questão for a verdade da conclusão?"],
+["F10","Ética","Se uma ação produz bons resultados mas viola uma regra moral, deve ser realizada? Compara uma resposta consequencialista e uma deontológica."],
+["F10","Justiça","Uma regra seria justa se não soubéssemos que posição ocuparíamos na sociedade? Explica o papel da informação nesta decisão."],
+["F11","Conhecimento","Se uma crença é verdadeira e justificada, é necessariamente conhecimento? Procura um contraexemplo."],
+["F11","Ciência","Uma teoria que nunca poderia ser contrariada por qualquer observação é cientificamente testável? Justifica."],
+["F11","IA","Se um sistema automatizado toma uma decisão que afeta uma pessoa, quem deve justificar a decisão e porquê?"]
+];
+function psGet(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
+function psSet(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function psProgress(){return psGet("prisma_progress_v2",{})}
+function psDone(id){const p=psProgress();p[id]=true;psSet("prisma_progress_v2",p);studentHome()}
+function psCount(){return Object.values(psProgress()).filter(Boolean).length}
+function studentHome(){
+ const m=document.getElementById("prismaMain"); if(!m)return;
+ const p=psProgress(),done=psCount(),pct=Math.round(done/PRISMA_LEARN.length*100),day=PRISMA_MISSIONS[new Date().getDate()%PRISMA_MISSIONS.length];
+ m.innerHTML='<div class="prisma-student-hero"><span class="pill">PERCURSO DO ALUNO</span><h1>Aprender Filosofia não é decorar respostas.</h1><p>É aprender a reconhecer problemas, clarificar conceitos, avaliar razões e construir respostas próprias.</p><div class="psbar"><i style="width:'+pct+'%"></i></div><p>'+done+' de '+PRISMA_LEARN.length+' percursos concluídos · '+pct+'%</p></div>'+
+ '<div class="v3box"><h2>O teu próximo passo</h2><p><b>'+day[0]+' · '+day[1]+'</b></p><p>'+day[2]+'</p><button class="v3btn" onclick="psMission()">Começar desafio</button></div>'+
+ '<input class="pssearch" id="psSearch" oninput="psSearch()" placeholder="Pesquisa problemas, conceitos, autores ou atividades...">'+
+ '<div id="psResults"></div><h2>O teu percurso</h2><div class="psgrid">'+PRISMA_LEARN.map(u=>'<article class="pscard"><span class="pill">'+u.year+' · '+u.id+'</span><h3>'+u.title+'</h3><p><b>Problema:</b> '+u.problem+'</p><p class="psmuted">'+u.goal+'</p><div class="pschips">'+u.concepts.slice(0,4).map(c=>'<span class="pschip" onclick="psConcept(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</span>').join("")+'</div><button class="v3btn" onclick="psUnit(\''+u.id+'\')">'+(p[u.id]?"Rever percurso":"Começar")+'</button></article>').join("")+'</div>';
+}
+function psSearch(){
+ const q=(document.getElementById("psSearch")?.value||"").toLowerCase().trim(),box=document.getElementById("psResults");if(!box)return;
+ if(!q){box.innerHTML="";return}
+ const hits=[];
+ PRISMA_LEARN.forEach(u=>{if((u.title+" "+u.problem+" "+u.concepts.join(" ")).toLowerCase().includes(q))hits.push(["Percurso",u.title,u.id])});
+ PRISMA_EXTRA.forEach(x=>{if(x.join(" ").toLowerCase().includes(q))hits.push(["Questão",x[1],x[2]])});
+ box.innerHTML='<div class="v3box"><h3>Resultados</h3>'+hits.slice(0,12).map(x=>'<p><span class="pill">'+x[0]+'</span> <b>'+x[1]+'</b><br>'+x[2]+'</p>').join("")+'</div>';
+}
+function psUnit(id){
+ const u=PRISMA_LEARN.find(x=>x.id===id),p=psProgress(),ls=V3_LESSONS[id]||[];
+ document.getElementById("prismaMain").innerHTML=v3Header("Aprender · "+u.title,u.problem)+'<div class="v3box"><span class="pill">PROBLEMA</span><h2>'+u.problem+'</h2><p><b>O que vais aprender:</b> '+u.goal+'</p><h3>Conceitos nucleares</h3><div class="pschips">'+u.concepts.map(c=>'<button class="pschip" onclick="psConcept(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</button>').join("")+'</div></div>'+
+ '<div class="psgrid"><article class="pscard"><span class="pill">AULAS</span><h3>Do problema ao argumento</h3>'+ls.map((x,i)=>'<p><b>'+(i+1)+'.</b> '+x+'</p>').join("")+'</article><article class="pscard"><span class="pill">PRÁTICA</span><h3>Não fiques pela definição</h3><p>1. Formula o problema.</p><p>2. Explica o conceito.</p><p>3. Reconstrói o argumento.</p><p>4. Apresenta uma objeção.</p><p>5. Dá uma resposta justificada.</p></article><article class="pscard"><span class="pill">VERIFICAÇÃO</span><h3>Consegues explicar?</h3><p>Sem consultar apontamentos, explica o problema central desta unidade em 5 frases.</p><button class="v3btn" onclick="psQuestion(\''+id+'\')">Testar-me</button></article></div>'+
+ '<div class="v3box"><h3>Biblioteca ligada ao tema</h3>'+V3_EX.filter(x=>x[0]===(id.startsWith("F10")?"10.º":"11.º")).slice(0,5).map(x=>'<p><b>'+x[1]+':</b> '+x[2]+'</p>').join("")+'</div>'+
+ '<button class="v3btn" onclick="psDone(\''+id+'\')">'+(p[id]?"Marcar novamente como concluído":"Marcar percurso como concluído")+'</button> <button class="v3btn" onclick="studentHome()">Voltar</button>';
+}
+function psConcept(c){
+ const map={
+"problema filosófico":"Uma questão cuja resposta exige clarificação conceptual e justificação racional, não apenas informação factual.",
+"tese":"Uma afirmação que pretende ser sustentada por razões.",
+"argumento":"Um conjunto de proposições em que algumas são apresentadas como razões para outra.",
+"validade":"Num argumento dedutivo válido, é impossível que as premissas sejam verdadeiras e a conclusão falsa.",
+"solidez":"Um argumento dedutivo válido cujas premissas são verdadeiras.",
+"determinismo":"A ideia de que, dadas determinadas condições anteriores e as leis relevantes, o que acontece está causalmente determinado.",
+"relativismo":"A posição segundo a qual a verdade ou correção de juízos morais depende de um quadro de referência.",
+"objetivismo":"A ideia de que há verdades ou propriedades morais que não dependem simplesmente das atitudes de cada indivíduo.",
+"imperativo categórico":"Em Kant, princípio moral que não depende de um fim particular desejado pelo agente.",
+"utilidade":"Em Mill, o princípio pelo qual a correção da ação é relacionada às suas consequências para a felicidade e ausência de sofrimento.",
+"ceticismo":"Posição ou desafio que questiona se, e em que condições, podemos ter conhecimento.",
+"justificação":"Razão ou suporte que pretende tornar racionalmente aceitável uma crença.",
+"indução":"Forma de raciocínio em que se passa de casos observados para uma generalização ou previsão que os ultrapassa.",
+"falsificação":"Em Popper, possibilidade de uma hipótese científica ser confrontada com observações que a poderiam contrariar.",
+"IA":"Sistemas computacionais capazes de executar tarefas associadas a capacidades como aprendizagem, inferência, reconhecimento ou geração de conteúdos."
+};
+ const d=map[c]||"Este conceito será aprofundado no percurso PRISMA. Tenta defini-lo, dá um exemplo e formula uma possível objeção à tua definição.";
+ document.getElementById("prismaMain").innerHTML=v3Header("Oficina de conceitos",c)+'<div class="v3box"><span class="pill">CONCEITO</span><h1>'+c+'</h1><div class="psanswer">'+d+'</div><h3>Agora és tu</h3><p><b>1.</b> Explica-o por palavras tuas.</p><p><b>2.</b> Dá um exemplo.</p><p><b>3.</b> Diz com que conceito o confundiras e explica a diferença.</p><p><b>4.</b> Formula uma pergunta filosófica em que este conceito seja indispensável.</p><button class="v3btn" onclick="studentHome()">Voltar ao percurso</button></div>';
+}
+function psQuestion(id){
+ const u=PRISMA_LEARN.find(x=>x.id===id);
+ const qs=["Qual é o problema filosófico central desta unidade?","Qual é a diferença entre duas das posições estudadas?","Que argumento sustenta uma dessas posições?","Que objeção poderias apresentar?"];
+ document.getElementById("prismaMain").innerHTML=v3Header("Verificar aprendizagem",u.title)+'<div class="v3box"><h2>'+qs[Math.floor(Math.random()*qs.length)]+'</h2><textarea id="psAns" rows="8" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px" placeholder="Escreve a tua resposta..."></textarea><br><button class="v3btn" onclick="psReveal()">Comparar com um critério</button><div id="psCrit"></div></div>';
+}
+function psReveal(){document.getElementById("psCrit").innerHTML='<div class="psanswer"><b>Procura estes elementos:</b> resposta direta à questão; conceitos corretamente usados; razões que sustentam a resposta; exemplo pertinente; reconhecimento de uma objeção; conclusão coerente. O PRISMA não deve substituir o teu juízo: deve ajudar-te a torná-lo mais rigoroso.</div>'}
+function psMission(){
+ const d=PRISMA_MISSIONS[new Date().getDate()%PRISMA_MISSIONS.length];
+ document.getElementById("prismaMain").innerHTML=v3Header("Desafio do dia",d[1])+'<div class="v3box"><span class="pill">'+d[0]+'</span><h1>'+d[1]+'</h1><p class="psquestion">'+d[2]+'</p><textarea rows="10" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px" placeholder="Constrói a tua resposta..."></textarea><p class="psmuted">Critério PRISMA: não procuramos apenas uma resposta; procuramos razões.</p><button class="v3btn" onclick="studentHome()">Concluir desafio</button></div>';
+}
+/* Corrige a biblioteca para que exercícios também abram corretamente. */
+const PRISMA_LIBRARY=V3_MATS.concat(V3_EX.map(x=>["Exercício",x[1],x[2],x[0]]));
+v3UseMat=function(i){const x=PRISMA_LIBRARY[i];if(!x)return;document.getElementById("prismaMain").innerHTML=v3Header("Biblioteca",x[1])+'<div class="v3box"><span class="v3tag">'+x[0]+'</span><h2>'+x[1]+'</h2><p>'+x[2]+'</p><p><b>Como usar:</b> tenta primeiro sem consultar a solução; depois reconstrói a resposta, identifica o ponto mais difícil e escreve uma objeção ou melhoria.</p><button class="v3btn" onclick="studentHome()">Voltar</button></div>'}
+/* Substitui a entrada do aluno por uma experiência realmente centrada na aprendizagem. */
+const oldPrismaRenderDashboard=prismaRenderDashboard;
+prismaRenderDashboard=function(){if(role==="aluno"){studentHome()}else{oldPrismaRenderDashboard()}};
 </script></body></html>

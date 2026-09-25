@@ -732,4 +732,19 @@ window.v3Professor=function(tab){
 };
 })();
 </script>
-</body></html>
+<script>
+/* PRISMA FINAL ROUTING — teacher Curriculum opens Modules. */
+(function(){
+  var previousSwitch=window.prismaSwitch;
+  window.prismaSwitch=function(tab){
+    try{
+      var current=(typeof role!=="undefined"?role:(localStorage.getItem("prisma_role")||"professor"));
+      if(tab==="curriculo" && current!=="aluno" && typeof window.v3Professor==="function"){
+        document.querySelectorAll(".prisma-nav button").forEach(function(b){b.classList.toggle("active",b.dataset.tab==="curriculo");});
+        return window.v3Professor("curriculo");
+      }
+    }catch(e){}
+    return previousSwitch(tab);
+  };
+})();
+</script></body></html>

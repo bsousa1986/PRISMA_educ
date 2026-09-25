@@ -1,0 +1,21 @@
+const { test, expect } = require('@playwright/test');
+test('PRISMA navigation works', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', e => errors.push(String(e)));
+  await page.goto('https://bsousa1986.github.io/PRISMA_educ/', { waitUntil: 'networkidle', timeout: 60000 });
+  await page.getByRole('button', { name: /Área do professor/i }).click();
+  await page.getByRole('button', { name: /Módulos/i }).click();
+  await expect(page.getByText('Módulos curriculares')).toBeVisible();
+  await page.locator('.clean-unit').first().click();
+  await expect(page.getByText('Aprendizagens Essenciais')).toBeVisible();
+  await page.getByRole('button', { name: /Voltar aos módulos/i }).click();
+  await page.locator('[data-t="planos"]').click();
+  await page.getByRole('button', { name: /Criar a minha aula/i }).click();
+  await expect(page.getByText('Evidência de aprendizagem')).toBeVisible();
+  await page.getByRole('button', { name: /Início/i }).click();
+  await page.getByRole('button', { name: /Aluno/i }).click();
+  await page.getByRole('button', { name: /Módulos/i }).click();
+  await page.getByRole('button', { name: /Aprender/i }).click();
+  await page.getByRole('button', { name: /Progresso/i }).click();
+  expect(errors, errors.join('\n')).toEqual([]);
+});

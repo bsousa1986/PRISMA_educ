@@ -26,31 +26,57 @@
 <script>
 let role='';
 const subjects=['Filosofia — 10.º ano','Filosofia — 11.º ano','Psicologia','Área de Integração'];
+const richModules={
+intro:{eyebrow:'10.º · Introdução',title:'O que é a Filosofia?',problem:'Que tipo de atividade é filosofar e que perguntas justificam uma investigação filosófica?',sections:[
+['Aprender','A Filosofia é uma atividade conceptual e crítica: parte de problemas, clarifica conceitos, formula teses e procura justificá-las por meio de argumentos. O objetivo não é apenas acumular opiniões, mas examinar racionalmente aquilo que pensamos.'],
+['Conceitos','Questão filosófica · problema filosófico · conceito · tese · argumento · validade · verdade · solidez'],
+['Autor em contexto','Sócrates pode ser estudado como referência para a atitude filosófica: questionar, pedir razões e reconhecer a necessidade de examinar aquilo que julgamos saber.'],
+['Praticar','Transforma uma opinião numa questão filosófica. Depois formula uma tese e apresenta duas razões que a sustentem.'],
+['Verificar','Consegues distinguir uma pergunta factual de uma questão filosófica? Consegues explicar por que razão uma tese precisa de razões?']],
+argumentacao:{eyebrow:'10.º · Argumentação',title:'Tese, argumento, validade e verdade',problem:'O que torna uma conclusão racionalmente sustentada?',sections:[
+['Aprender','Um argumento apresenta razões (premissas) com o objetivo de sustentar uma conclusão. A validade diz respeito à relação lógica entre premissas e conclusão; a verdade diz respeito ao conteúdo das proposições. Um argumento sólido combina validade e premissas verdadeiras.'],
+['Conceitos','Premissa · conclusão · validade · verdade · solidez'],
+['Praticar','Identifica premissas e conclusão num argumento. Depois pergunta: se as premissas fossem verdadeiras, a conclusão teria necessariamente de ser verdadeira?'],
+['Verificar','Explica por que razão um argumento pode ser válido apesar de ter uma conclusão falsa.']]},
+falacias:{eyebrow:'10.º · Pensamento crítico',title:'Falácias informais e pensamento crítico',problem:'Como reconhecer um raciocínio que parece convincente mas não justifica adequadamente a conclusão?',sections:[
+['Aprender','As falácias informais são padrões de argumentação em que a conclusão não é adequadamente sustentada, muitas vezes por causa da forma como as razões são apresentadas ou relacionadas com o problema.'],
+['Conceitos','Generalização precipitada · falsa analogia · falso dilema · ad hominem · ad populum · espantalho · petição de princípio · falsa relação causal'],
+['Praticar','Analisa um argumento de uma notícia, publicidade ou rede social: identifica a conclusão, as razões e eventual falácia. Justifica a identificação.'],
+['Verificar','Não basta nomear uma falácia: explica concretamente onde está o problema no raciocínio.']]},
+liberdade:{eyebrow:'10.º · Ação humana e valores',title:'Determinismo e liberdade',problem:'Se tudo o que fazemos tem causas, somos realmente livres?',sections:[
+['Aprender','O problema do livre-arbítrio coloca em confronto diferentes conceções da relação entre causalidade e liberdade. O determinismo radical nega a liberdade em sentido forte; o determinismo moderado procura compatibilizar causalidade e liberdade; o libertismo defende uma forma de liberdade incompatível com o determinismo.'],
+['Conceitos','Determinismo radical · determinismo moderado · libertismo · livre-arbítrio · responsabilidade'],
+['Praticar','Compara duas posições e formula uma objeção a uma delas. Não basta dizer qual preferes: apresenta razões.'],
+['Verificar','Consegues explicar por que razão a questão da liberdade é também uma questão sobre responsabilidade?']]},
+conhecimento:{eyebrow:'11.º · Conhecimento',title:'O problema do conhecimento',problem:'É possível justificar que aquilo em que acreditamos é verdadeiro?',sections:[
+['Aprender','A epistemologia interroga a possibilidade e os limites do conhecimento. O desafio cético questiona se dispomos de justificação suficiente para as nossas crenças. Descartes e Hume oferecem respostas profundamente diferentes.'],
+['Conceitos','Conhecimento · crença · justificação · ceticismo · racionalismo · empirismo'],
+['Autores','Descartes: dúvida metódica e cogito. Hume: impressões, ideias, causalidade e indução.'],
+['Praticar','Formula uma objeção cética e apresenta uma possível resposta racionalista ou empirista.'],
+['Verificar','Distingue uma crença verdadeira de conhecimento justificado.']]},
+ciencia:{eyebrow:'11.º · Filosofia da ciência',title:'Ciência, pseudociência e indução',problem:'Que critérios permitem distinguir conhecimento científico de pseudociência?',sections:[
+['Aprender','A filosofia da ciência analisa a racionalidade científica, a demarcação entre ciência e pseudociência e o problema da indução.'],
+['Conceitos','Demarcação · hipótese · teoria · verificação · indução · pseudociência'],
+['Praticar','Escolhe uma afirmação apresentada como científica e identifica que evidência seria necessária para a avaliar.'],
+['Verificar','Explica por que razão repetir observações não elimina automaticamente o problema da indução.']]},
+};
+
 const studentTopics=["O que é a Filosofia?","Argumentação: tese, argumento, validade e verdade","Falácias informais e pensamento crítico","A ação humana: determinismo e liberdade","A dimensão ética da ação","A dimensão política da ação","O problema do conhecimento","Filosofia da ciência","Filosofia da arte","Filosofia política","Problemas do mundo contemporâneo"];
 const teacherTools=[['📋','Plano de aula','Estruturar uma aula com objetivos, etapas e avaliação.','plano'],['📝','Ficha de trabalho','Criar atividades graduadas para uma turma.','ficha'],['🧪','Teste','Construir uma proposta de avaliação.','teste'],['📊','Rubrica','Definir critérios e níveis de desempenho.','rubrica'],['💬','Debate','Preparar uma questão, posições e regras de discussão.','debate'],['🧠','Oficina de conceitos','Organizar distinções, exemplos e problemas.','oficina']];
 const studentTools=[['📚','Aprender','Seguir uma explicação guiada antes de praticar.','aprender'],['🔎','Conceitos','Explorar conceitos e relações entre eles.','conceitos'],['👤','Autores','Conhecer posições filosóficas relevantes para o tema.','autores'],['📜','Textos','Ler e trabalhar um texto filosófico.','textos'],['✍️','Praticar','Resolver exercícios com feedback.','praticar'],['🧪','Verificar','Fazer um pequeno teste e descobrir onde melhorar.','quiz'],['🤖','Tutor PRISMA','Pedir uma explicação ou pista sem receber logo a resposta.','tutor']];
 const progress={};
 function openTopic(i){
-const key=i===0?'intro':i===1?'argumentacao':null;
-if(key){showModule(key);return;}
-const topic=studentTopics[i];
-const out=document.getElementById('output');
-const curriculumMap={
-2:{title:'Falácias informais e pensamento crítico',ae:'10.º · Argumentação não dedutiva e falácias informais',problem:'Como distinguir um argumento persuasivo de um argumento racionalmente deficiente?',concepts:['generalização precipitada','amostra não representativa','falsa analogia','apelo à autoridade','petição de princípio','falso dilema','falsa relação causal','ad hominem','ad populum','apelo à ignorância','espantalho','derrapagem'],task:'Analisa um argumento real, identifica a estratégia falaciosa e explica por que razão ela enfraquece a conclusão.'},
-3:{title:'A ação humana: determinismo e liberdade',ae:'10.º · Livre-arbítrio',problem:'Se as ações humanas têm causas, ainda podemos ser livres?',concepts:['determinismo radical','determinismo moderado','libertismo','liberdade','responsabilidade','causalidade'],task:'Compara duas posições sobre o livre-arbítrio e formula uma objeção a uma delas.'},
-4:{title:'A dimensão ética da ação',ae:'10.º · Juízos morais e fundamentação da moral',problem:'Como podemos justificar um juízo moral?',concepts:['subjetivismo','relativismo','objetivismo','dever','consequência','autonomia','utilidade'],task:'Analisa um caso moral e distingue uma resposta baseada em dever de uma resposta baseada nas consequências.'},
-5:{title:'A dimensão política da ação',ae:'10.º · Organização de uma sociedade justa',problem:'Que princípios podem justificar uma sociedade justa?',concepts:['justiça','posição original','véu de ignorância','liberdade','igualdade','comunitarismo','libertarismo'],task:'Compara uma proposta de justiça e explicita uma objeção fundamentada.'},
-6:{title:'O problema do conhecimento',ae:'11.º · Possibilidade do conhecimento e desafio cético',problem:'O que nos permite dizer que sabemos alguma coisa?',concepts:['dúvida','conhecimento','crença','justificação','racionalismo','empirismo'],task:'Apresenta o desafio cético e compara, de forma introdutória, uma resposta racionalista com uma empirista.'},
-7:{title:'Filosofia da ciência',ae:'11.º · Racionalidade científica',problem:'Como distinguir ciência de pseudociência e avaliar teorias científicas?',concepts:['demarcação','verificação','indução','hipótese','teoria','pseudociência'],task:'Escolhe um exemplo e apresenta critérios que permitam discutir se estamos perante conhecimento científico.'},
-8:{title:'Filosofia da arte',ae:'11.º · Problemas filosóficos da arte',problem:'O que faz de uma experiência ou objeto uma experiência artística?',concepts:['arte','experiência estética','criação','interpretação','valor'],task:'Formula uma questão filosófica sobre uma obra e sustenta uma resposta com razões.'},
-9:{title:'Filosofia política',ae:'10.º/11.º · Problemas políticos',problem:'Que razões podem justificar o poder político e a organização da sociedade?',concepts:['poder','Estado','legitimidade','liberdade','direitos','justiça'],task:'Formula uma tese sobre a legitimidade de uma regra política e apresenta uma objeção.'},
-10:{title:'Problemas do mundo contemporâneo',ae:'10.º/11.º · Problemas éticos, políticos e tecnocientíficos',problem:'Como transformar um problema contemporâneo numa questão filosófica?',concepts:['problematização','conceptualização','argumentação','responsabilidade','direitos','tecnociência'],task:'Escolhe um problema contemporâneo, formula uma questão filosófica, uma tese, duas razões, uma objeção e uma resposta.'}
-};
-const m=curriculumMap[i]||{title:topic,ae:'Elemento curricular em desenvolvimento',problem:'Que problema filosófico está em causa?',concepts:['problema','conceito','tese','argumento'],task:'Formula uma resposta fundamentada.'};
-out.innerHTML='<div class="module-card"><span class="badge">'+m.ae+'</span><h3>'+m.title+'</h3><p><b>Questão-problema:</b> '+m.problem+'</p><p><b>Conceitos nucleares:</b> '+m.concepts.join(' · ')+'</p><h4>Praticar</h4><p>'+m.task+'</p><button class="back" onclick="markDone('+JSON.stringify(topic)+')">✓ Marcar como estudado</button></div><div class="module-card"><h4>Percurso PRISMA</h4><p>Problema → Conceitos → Teses → Argumentos → Objeções → Aplicação → Verificação.</p></div>';
-out.scrollIntoView({behavior:'smooth',block:'nearest'});
+const keyMap=['intro','argumentacao','falacias','liberdade','etica','politica','conhecimento','ciencia','arte','politica2','contemporaneo'];
+const key=keyMap[i];
+if(richModules[key]){
+ const m=richModules[key],out=document.getElementById('output');
+ out.innerHTML='<div class="module-card"><span class="badge">'+m.eyebrow+'</span><h3>'+m.title+'</h3><p><b>Questão-problema:</b> '+m.problem+'</p>'+m.sections.map(s=>'<h4>'+s[0]+'</h4><p>'+s[1]+'</p>').join('')+'<button class="back" onclick="markDone('+JSON.stringify(studentTopics[i])+')">✓ Marcar como estudado</button></div>';
+ out.scrollIntoView({behavior:'smooth',block:'nearest'}); return;
 }
-function markDone(topic){progress[topic]=true;document.querySelectorAll('.studentProgress').forEach(x=>x.textContent=Object.keys(progress).length+'/'+studentTopics.length);document.querySelectorAll('.studentTopicStatus').forEach(x=>{if(studentTopics[Number(x.dataset.topic)]===topic)x.textContent='Concluído';});}
+const topic=studentTopics[i],out=document.getElementById('output');
+out.innerHTML='<div class="module-card"><span class="badge">Percurso PRISMA</span><h3>'+topic+'</h3><p><b>Questão-problema:</b> Como transformar este tema numa investigação filosófica?</p><p><b>Estrutura:</b> Problema → Conceitos → Teses → Argumentos → Objeções → Aplicação → Verificação.</p><button class="back" onclick="markDone('+JSON.stringify(topic)+')">✓ Marcar como estudado</button></div>';
+out.scrollIntoView({behavior:'smooth',block:'nearest');
+}function markDone(topic){progress[topic]=true;document.querySelectorAll('.studentProgress').forEach(x=>x.textContent=Object.keys(progress).length+'/'+studentTopics.length);document.querySelectorAll('.studentTopicStatus').forEach(x=>{if(studentTopics[Number(x.dataset.topic)]===topic)x.textContent='Concluído';});}
 function showCurriculum(kind,btn){
 document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const body=document.getElementById('curriculumBody');
 if(kind==='ae')body.innerHTML='<h3>Aprendizagens Essenciais</h3><p>As AE são documentos de orientação curricular base para a <b>planificação, realização e avaliação</b>. Organizam-se em três dimensões: <b>o que saber</b>, <b>como pensar e trabalhar para aprender</b> e <b>como mostrar o que se aprendeu</b>.</p><p><b>Filosofia — 10.º ano</b></p><ul><li>Abordagem introdutória à Filosofia e ao filosofar.</li><li>Racionalidade argumentativa: tese, argumento, validade, verdade e solidez.</li><li>Temas/problemas do mundo contemporâneo, com desenvolvimento de um ensaio filosófico.</li></ul><p><b>Filosofia — 11.º ano</b></p><ul><li>Conhecimento e racionalidade científica e tecnológica.</li><li>Problemas e teorias filosóficas mobilizando o trabalho argumentativo desenvolvido no 10.º ano.</li><li>Problemas éticos, políticos e tecnocientíficos, entre outros enquadrados nas áreas filosóficas das AE.</li></ul><p class="muted">Na próxima evolução, cada unidade será registada no PRISMA com a formulação curricular completa da DGE, evitando resumos que possam perder informação.</p>';

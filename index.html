@@ -574,4 +574,39 @@ prismaRenderDashboard=function(){if(role==="aluno"){studentHome()}else{oldPrisma
   window.addEventListener("error",e=>console.error("PRISMA runtime error:",e.error||e.message));
 })();
 </script>
-</body></html>
+<script>
+(function(){
+ const KEY="prisma_research_submissions_v1";
+ const seed=[{title:"Como nasce um problema filosófico?",author:"PRISMA",area:"Filosofia",type:"Texto de divulgação",status:"publicado",abstract:"Um texto-modelo sobre a passagem da curiosidade para a investigação filosófica.",text:"Uma investigação filosófica começa quando uma pergunta deixa de pedir apenas informação e passa a exigir clarificação conceptual, razões e confronto entre posições.\n\nO objetivo deste espaço é permitir que estudantes, professores e investigadores partilhem problemas, argumentos, ensaios e resultados de investigação."}];
+ function data(){try{return JSON.parse(localStorage.getItem(KEY))||seed}catch(e){return seed}}
+ function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+ window.prismaResearch=function(){
+  const a=data();
+  document.getElementById("prismaMain").innerHTML=prismaHeader("Investigação","Um espaço aberto para partilhar investigação, ensaios e textos filosóficos.")+
+  '<div class="prisma-detail"><div class="prisma-grid2"><section class="prisma-panel"><div class="prisma-kicker">SUBMISSÃO ABERTA</div><h2>Publica uma investigação</h2><p>Envia um texto teu para eventual divulgação no PRISMA. A submissão não significa publicação automática.</p><label>Título</label><input id="rtitle" placeholder="Título do trabalho"><label>Autor(es)</label><input id="rauthor" placeholder="Nome ou autores"><label>Área</label><select id="rarea"><option>Filosofia</option><option>Ética</option><option>Filosofia Política</option><option>Epistemologia</option><option>Filosofia da Ciência</option><option>Filosofia da Educação</option><option>Filosofia da Tecnologia</option><option>Estética</option><option>Antropologia Filosófica</option><option>Outro</option></select><label>Tipo</label><select id="rtype"><option>Investigação académica</option><option>Ensaio filosófico</option><option>Trabalho escolar</option><option>Texto de divulgação</option><option>Comunicação</option></select><label>Resumo</label><textarea id="rabs" rows="5"></textarea><label>Texto integral</label><textarea id="rtext" rows="14"></textarea><label>Palavras-chave</label><input id="rtags" placeholder="liberdade, ética, conhecimento..."><label><input id="rrights" type="checkbox" style="width:auto"> Confirmo que sou autor ou tenho autorização para divulgar este texto.</label><button class="v3btn" onclick="prismaSubmitResearch()">Enviar para apreciação</button></section><section class="prisma-panel"><div class="prisma-kicker">BIBLIOTECA</div><h2>Investigações publicadas</h2><input id="rsearch" oninput="prismaResearchFilter()" placeholder="Pesquisar investigação..."><div id="rfeed"></div></section></div></div>';
+  prismaResearchFilter();
+ };
+ window.prismaResearchFilter=function(){
+  const q=(document.getElementById("rsearch")?.value||"").toLowerCase(),a=data().filter(x=>[x.title,x.author,x.area,x.type,x.tags,x.abstract].join(" ").toLowerCase().includes(q));
+  document.getElementById("rfeed").innerHTML=a.map((x,i)=>'<article class="prisma-panel" style="margin-top:12px"><div class="prisma-kicker">'+esc(x.area)+' · '+esc(x.type)+' · '+esc(x.status)+'</div><h3>'+esc(x.title)+'</h3><p><b>'+esc(x.author)+'</b></p><p>'+esc(x.abstract||"Sem resumo.")+'</p><button class="v3btn" onclick="prismaReadResearch('+i+')">Ler</button></article>').join("");
+ };
+ window.prismaSubmitResearch=function(){
+  const title=rtitle.value.trim(),author=rauthor.value.trim(),text=rtext.value.trim();
+  if(!title||!author||!text||!rrights.checked){alert("Preenche título, autoria e texto e confirma a legitimidade para divulgação.");return}
+  const a=data();a.unshift({title,author,area:rarea.value,type:rtype.value,abstract:rabs.value.trim(),text,tags:rtags.value.trim(),status:"submetido",date:new Date().toISOString().slice(0,10)});localStorage.setItem(KEY,JSON.stringify(a));prismaResearch();
+  alert("Investigação recebida e marcada como submetida para apreciação.");
+ };
+ window.prismaReadResearch=function(i){const x=data()[i];document.getElementById("prismaMain").innerHTML=prismaHeader("Investigação",x.title)+'<div class="prisma-detail"><div class="prisma-panel"><div class="prisma-kicker">'+esc(x.area)+' · '+esc(x.type)+'</div><h1>'+esc(x.title)+'</h1><p><b>'+esc(x.author)+'</b></p><p>'+esc(x.abstract||"")+'</p><hr><div style="white-space:pre-wrap;line-height:1.8">'+esc(x.text)+'</div><br><button class="v3btn" onclick="prismaResearch()">← Voltar à biblioteca</button></div></div>'};
+ const oldSwitch=window.prismaSwitch;
+ window.prismaSwitch=function(tab){
+  if(tab==="investigacao"){document.querySelectorAll(".prisma-nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));return prismaResearch();}
+  return oldSwitch(tab);
+ };
+ const oldShell=window.prismaRenderShell;
+ window.prismaRenderShell=function(tab){
+  oldShell(tab);
+  const nav=document.querySelector(".prisma-nav");
+  if(nav&&!nav.querySelector('[data-tab="investigacao"]'))nav.insertAdjacentHTML("beforeend",'<button data-tab="investigacao" onclick="prismaSwitch(\'investigacao\')">⌕ &nbsp;Investigação</button>');
+ };
+})();
+</script></body></html>

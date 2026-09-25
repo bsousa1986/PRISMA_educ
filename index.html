@@ -30,6 +30,73 @@ if(kind==='ligacao')body.innerHTML='<h3>Currículo → atividade → competênci
 }
 
 // Conteúdo curricular detalhado — versão inicial baseada nas AE DGE março 2026.
+const philosophyModules={
+intro:{
+title:"O que é a Filosofia?",
+question:"Em que sentido filosofar é pensar de forma conceptual, crítica e racional?",
+summary:"Filosofar não é apenas ter opiniões. É transformar questões em problemas, clarificar conceitos, formular teses e avaliar razões. A Filosofia procura tornar explícito aquilo que normalmente tomamos como óbvio e submeter as nossas respostas a exame racional.",
+concepts:[
+["Questão filosófica","Pergunta que não se resolve apenas pela observação de um facto e cuja resposta exige clarificação conceptual e justificação racional."],
+["Problema filosófico","Questão que admite respostas fundamentadas diferentes e exige análise dos conceitos e razões envolvidos."],
+["Conceito","Instrumento intelectual que permite identificar, distinguir e relacionar aquilo de que estamos a falar."],
+["Tese","Afirmação que pode ser defendida ou contestada através de razões."],
+["Argumento","Conjunto de afirmações em que algumas razões, as premissas, procuram sustentar uma conclusão."]
+],
+authors:[
+["Sócrates","A investigação filosófica pode partir do reconhecimento da própria ignorância e do questionamento das respostas aparentemente evidentes."],
+["Platão","A filosofia é apresentada como investigação racional que procura ultrapassar a opinião e orientar-se para o conhecimento."],
+["Descartes","O exame crítico das crenças procura encontrar fundamentos seguros para o conhecimento."]
+],
+lesson:[
+"1. Começa com uma pergunta: “O que é uma vida boa?”",
+"2. Distingue pergunta factual de questão filosófica.",
+"3. Identifica os conceitos que precisam de clarificação: vida, boa, felicidade, finalidade.",
+"4. Formula duas respostas incompatíveis.",
+"5. Transforma uma resposta numa tese.",
+"6. Apresenta razões a favor da tese.",
+"7. Formula uma objeção.",
+"8. Responde à objeção."
+],
+practice:[
+["Classificação","“Quantos planetas existem no Sistema Solar?” é uma questão filosófica? Justifica."],
+["Conceptualização","Distingue opinião de tese."],
+["Argumentação","Transforma “a liberdade é importante” numa tese e apresenta duas razões."],
+["Problematização","Formula uma questão filosófica a partir do problema da inteligência artificial."],
+["Objeção","Apresenta uma objeção à tese de que ter mais informação significa compreender melhor."]
+],
+quiz:[
+["Uma tese é…","A) uma pergunta B) uma afirmação que pode ser defendida ou contestada C) um exemplo D) uma definição","B"],
+["Um argumento procura…","A) convencer pela autoridade B) sustentar uma conclusão através de razões C) eliminar opiniões D) substituir conceitos","B"],
+["A conceptualização serve sobretudo para…","A) decorar autores B) clarificar e distinguir conceitos C) aumentar o texto D) evitar problemas","B"]
+]
+},
+argumentacao:{
+title:"Tese, argumento, validade e verdade",
+question:"Como podemos avaliar racionalmente uma conclusão?",
+summary:"Argumentar filosoficamente implica apresentar razões. Para avaliar um argumento é necessário distinguir a verdade das proposições da relação lógica entre premissas e conclusão.",
+concepts:[
+["Premissa","Proposição apresentada como razão para sustentar uma conclusão."],
+["Conclusão","Proposição que o argumento procura sustentar."],
+["Validade","Um argumento é válido quando não é possível ter premissas verdadeiras e conclusão falsa."],
+["Verdade","Propriedade de uma proposição que corresponde ao modo como as coisas são, de acordo com a teoria da verdade em análise."],
+["Solidez","Característica de um argumento dedutivamente válido cujas premissas são verdadeiras."]
+],
+lesson:["1. Localizar a conclusão.","2. Identificar as premissas.","3. Testar a forma do argumento.","4. Separar validade de verdade das premissas.","5. Avaliar a solidez quando aplicável."],
+practice:[["Reconstrução","Identifica premissas e conclusão num argumento curto."],["Validade","Explica por que razão validade não significa que todas as premissas sejam verdadeiras."],["Avaliação","Cria um argumento válido com uma premissa falsa."],["Aplicação","Avalia um argumento retirado de uma notícia ou publicação online."]],
+quiz:[["Validade significa…","A) conclusão verdadeira B) forma que impede premissas verdadeiras com conclusão falsa C) premissas populares D) opinião correta","B"],["Solidez exige…","A) validade e premissas verdadeiras B) apenas verdade C) apenas validade D) autoridade","A"]]
+}
+};
+function showModule(key){
+const m=philosophyModules[key]; if(!m)return;
+const out=document.getElementById('output'); if(!out)return;
+let html="<h3>"+m.title+"</h3><p><b>Questão-problema:</b> "+m.question+"</p><p>"+m.summary+"</p>";
+html+="<h4>Conceitos nucleares</h4>"+m.concepts.map(x=>"<p><b>"+x[0]+"</b> — "+x[1]+"</p>").join("");
+html+="<h4>Autores em contexto</h4>"+m.authors.map(x=>"<p><b>"+x[0]+"</b> — "+x[1]+"</p>").join("");
+html+="<h4>Percurso</h4><ol>"+m.lesson.map(x=>"<li>"+x.replace(/^\\d+\\. /,"")+"</li>").join("")+"</ol>";
+html+="<h4>Praticar</h4>"+m.practice.map(x=>"<p><span class='badge'>"+x[0]+"</span> "+x[1]+"</p>").join("");
+html+="<h4>Verificar</h4>"+m.quiz.map(x=>"<p><b>"+x[0]+"</b><br>"+x[1]+"<br><span class='muted'>Resposta: "+x[2]+"</span></p>").join("");
+out.innerHTML=html; out.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 const curriculumDetail={
 "Filosofia — 10.º ano":[
 ["I. Abordagem introdutória à Filosofia e ao filosofar","Filosofia como atividade conceptual crítica; natureza das questões filosóficas; tese e argumento; validade, verdade e solidez; quadrado da oposição; conectivas e formas de inferência válida; falácias formais e informais."],
@@ -81,6 +148,8 @@ const temas=[
 'O PROBLEMA DO CONHECIMENTO\\n\\nProblema: o que significa saber alguma coisa?\\n\\nCONCEITOS: crença · verdade · justificação · conhecimento · dúvida.\\n\\nPRÁTICA: apresenta um caso de crença verdadeira que não parece conhecimento.',
 'PROBLEMAS DO MUNDO CONTEMPORÂNEO\\n\\nA Filosofia aplica problematização, conceptualização e argumentação a problemas sociais, éticos, políticos e tecnocientíficos.\\n\\nPRÁTICA: formula uma pergunta filosófica, tese, argumentos, objeção e resposta.'
 ];
+if(type==='tema0'){showModule('intro');return;}
+if(type==='tema1'){showModule('argumentacao');return;}
 let text=materials[type];
 if(!text && type.startsWith('tema')) text=temas[Number(type.replace('tema',''))]||'Tema ainda não disponível.';
 if(!text) text='Escolhe um recurso ou tema para começar.';

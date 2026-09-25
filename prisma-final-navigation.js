@@ -4,21 +4,24 @@
 function main(){return document.getElementById("workspaceContent")}
 function pane(){var w=main();return w&&(w.querySelector(".prisma-main")||w)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[c]})}
-function units(){try{return Object.values(window.curriculumUnits||{}).flat()}catch(e){return[]}}
+function units(){try{var a=Object.values(window.curriculumUnits||{}).flat();if(a.length)return a;return Array.isArray(window.PRISMA_LEARN)?window.PRISMA_LEARN.map(function(x){return{id:x.id,name:x.title,ae:x.goal||""}}):[]}catch(e){return Array.isArray(window.PRISMA_LEARN)?window.PRISMA_LEARN.map(function(x){return{id:x.id,name:x.title,ae:x.goal||""}}):[]}}
 function resources(){return window.PRISMA_READY_RESOURCES||[]}
 function header(k,t,p){return '<div class="prisma-head"><div><div class="prisma-kicker">'+esc(k)+'</div><h1>'+esc(t)+'</h1><p>'+esc(p||"")+'</p></div></div>'}
 function go(t){
 if(t==="curriculo")return modules(); if(t==="recursos")return resourceList();
-if(t==="inicio")return typeof window.prismaRenderShell==="function"?window.prismaRenderShell("inicio"):null;
+if(t==="inicio")return home();
 if(t==="planos")return teacher("planos",window.prismaTeacherPlans);
-if(t==="materiais")return teacher("materiais",function(){if(window.v3Professor)window.v3Professor("materiais")});
-if(t==="documentos")return teacher("documentos",function(){if(window.v3Professor)window.v3Professor("documentos")});
+if(t==="materiais")return teacher("Materiais",function(){return materialScreen()});
+if(t==="documentos")return teacher("Documentos",function(){return documentScreen()});
 if(t==="exercicios")return teacher("exercicios",window.prismaTeacherExercises);
 if(t==="avaliacao")return teacher("avaliacao",window.prismaTeacherAssessment);
 if(t==="biblioteca")return student("biblioteca"); if(t==="progresso")return student("progresso");
 if(t==="blog")return window.prismaBlog?window.prismaBlog():message("Blog","Área de blog.");
 if(t==="mensagem")return window.prismaMessage?window.prismaMessage():message("Mensagem","Escreve ao criador.");
 if(t==="investigacao")return window.prismaResearch?window.prismaResearch():message("Investigação","Partilha um texto.");}
+function home(){var m=pane();if(!m)return;m.innerHTML=header("PRISMA",getRole()==="aluno"?"O teu percurso":"Espaço do professor",getRole()==="aluno"?"Aprender, praticar e verificar.":"Planear, criar, avaliar e acompanhar.")+"<div class=\"v3grid\"><button class=\"v3card\" data-prisma-tab=\"curriculo\"><h3>Módulos</h3><p>Abre os dossiers curriculares completos.</p></button><button class=\"v3card\" data-prisma-tab=\""+(getRole()==="aluno"?"biblioteca":"recursos")+"\"><h3>"+(getRole()==="aluno"?"Aprender":"Recursos")+"</h3><p>Entra diretamente nos conteúdos.</p></button></div>"}
+function materialScreen(){var m=pane();if(!m)return;m.innerHTML=header("PROFESSOR","Materiais","Fichas, textos, experiências mentais e materiais de aula.")+"<div class=\"v3grid\"><article class=\"v3card\"><h3>Fichas de trabalho</h3><p>Materiais por módulo, prontos a adaptar e imprimir.</p><button class=\"v3btn\" data-prisma-tab=\"recursos\">Abrir biblioteca</button></article><article class=\"v3card\"><h3>Fichas do aluno</h3><p>Problemas, questões, critérios e espaço de resposta.</p><button class=\"v3btn\" data-prisma-tab=\"curriculo\">Abrir módulos</button></article></div>"}
+function documentScreen(){var m=pane();if(!m)return;m.innerHTML=header("PROFESSOR","Documentos","Documentação curricular e instrumentos de apoio.")+"<div class=\"v3grid\"><article class=\"v3card\"><h3>Aprendizagens Essenciais</h3><p>Documentação curricular de referência integrada no PRISMA.</p></article><article class=\"v3card\"><h3>Perfil dos Alunos</h3><p>Competências mobilizadas no planeamento e avaliação.</p></article><article class=\"v3card\"><h3>Guias PRISMA</h3><p>Modelos de planificação, avaliação e utilização pedagógica.</p></article></div>"}
 function teacher(label,fn){var m=pane();if(!m)return;if(typeof fn==="function"){try{fn();return}catch(e){}}m.innerHTML=header("PROFESSOR",label,"Conteúdo operacional PRISMA")+'<div class="prisma-detail"><p>O módulo foi carregado.</p></div>'}
 function message(t,p){var m=pane();if(m)m.innerHTML=header("PRISMA",t,p)+'<div class="prisma-detail"><p>'+esc(p)+'</p></div>'}
 function modules(){var m=pane();if(!m)return;var u=units();m.innerHTML=header("CURRÍCULO","Módulos","Escolhe um módulo para abrir o dossier completo.")+'<div class="prisma-units">'+u.map(function(x,i){return '<button type="button" class="prisma-unit" data-prisma-unit="'+esc(x.id)+'"><span class="unit-no">'+(i+1)+' · '+esc(x.id)+'</span><h3>'+esc(x.name||x.title||x.id)+'</h3><p>'+esc(x.ae||"")+'</p><div class="unit-meta">Abrir dossier →</div></button>'}).join("")+'</div>'}

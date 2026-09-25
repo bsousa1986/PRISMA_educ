@@ -678,4 +678,58 @@ window.prismaSwitch=function(tab){
   },true);
   window.prismaRoute=route;
 })();
-</script></body></html>
+</script>
+<script>
+/* PRISMA FINAL MODULE REPAIR — curriculum modules + lesson creator */
+(function(){
+"use strict";
+function getMain(){return document.getElementById("prismaMain")||document.getElementById("output");}
+function allUnits(){try{return Object.values(curriculumUnits||{}).flat();}catch(e){return[];}}
+function findUnit(id){return allUnits().find(function(x){return x.id===id;});}
+function target(){return document.getElementById("output")||document.getElementById("prismaMain");}
+window.openUnit=function(id){
+  var u=findUnit(id), d=(typeof unitContent!=="undefined"?unitContent[id]:null), out=target();
+  if(!u||!out){if(typeof v3Professor==="function")return v3Professor("planos");return;}
+  var concepts=d&&d.concepts?d.concepts:[], acts=d&&d.activities?d.activities:[], sources=d&&d.sources?d.sources:[];
+  out.innerHTML='<div class="lesson-card prisma-panel"><span class="badge">'+escV(u.id)+'</span><h2>'+escV(u.name)+'</h2><p><b>Aprendizagens Essenciais:</b> '+escV(u.ae)+'</p><h3>Conceitos nucleares</h3>'+concepts.map(function(x){return '<p><b>'+escV(x[0])+'</b> — '+escV(x[1])+'</p>';}).join('')+'<h3>Áreas de Competências</h3><p>'+u.ac.map(escV).join(' · ')+'</p><h3>Atividades</h3><ol>'+acts.map(function(x){return '<li>'+escV(x)+'</li>';}).join('')+'</ol><h3>Fontes</h3><p>'+sources.map(escV).join(' · ')+'</p><div class="prisma-grid"><button class="back" type="button" onclick="unitQuiz(\''+u.id+'\')">🧪 Verificar</button><button class="back" type="button" onclick="teacherFromUnit(\''+u.id+'\')">👨‍🏫 Criar recurso</button></div><br><button class="v3btn" type="button" onclick="prismaSwitch(\'curriculo\')">← Voltar aos módulos</button></div>';
+};
+window.renderUnitCatalog=function(subject){
+  var out=target(), units=curriculumUnits[subject]||[];
+  if(!out)return;
+  out.innerHTML='<div class="prisma-detail"><div class="prisma-kicker">MÓDULOS CURRICULARES</div><h2>'+escV(subject)+'</h2><p class="lead">Cada módulo liga Aprendizagens Essenciais, conceitos, atividades e evidências de aprendizagem.</p><div class="prisma-units">'+units.map(function(u,i){return '<button class="prisma-unit" type="button" onclick="openUnit(\''+u.id+'\')"><span class="unit-no">'+(i+1)+' · '+escV(u.id)+'</span><h3>'+escV(u.name)+'</h3><p>'+escV(u.ae)+'</p><div class="unit-meta">Abrir módulo →</div></button>';}).join('')+'</div></div>';
+};
+window.v3Plan=function(id,idx){
+  var unit=findUnit(id||(document.getElementById("v3unit")||{}).value)||allUnits()[0];
+  if(!unit)return;
+  var ls=(typeof V3_LESSONS!=="undefined"&&V3_LESSONS[unit.id])||[], i=idx==null?0:idx, title=ls[i]||"Aula de síntese";
+  var out=document.getElementById("v3out");
+  if(!out){var main=getMain();if(!main)return;main.innerHTML=v3Header("Criar aula","Plano de aula completo, alinhado com o módulo curricular.")+'<div id="v3out"></div>';out=document.getElementById("v3out");}
+  out.innerHTML='<div class="v3box"><span class="v3tag">PLANO PRISMA · '+escV(unit.id)+'</span><h2>'+escV(title)+'</h2><p><b>Módulo:</b> '+escV(unit.name)+'</p><p><b>Aprendizagens:</b> '+escV(unit.ae)+'</p><h3>Problema de entrada</h3><p>Que questão torna este conteúdo filosoficamente problemático?</p><h3>Desenvolvimento</h3><p>Problematização → conceptualização → reconstrução de argumentos → confronto de posições → avaliação crítica.</p><h3>Atividade</h3><p>Os alunos formulam uma tese, apresentam duas razões, confrontam uma objeção e reformulam a resposta.</p><h3>Evidência de aprendizagem</h3><p>Resposta escrita curta ou intervenção oral justificada.</p><h3>Pertinência pedagógica</h3><p>A tarefa torna observável o raciocínio filosófico e permite intervir sobre dificuldades conceptuais e argumentativas.</p><h3>Diferenciação</h3><p>Vocabulário-chave e pergunta-guia para apoio; contraexemplo e objeção adicional para aprofundamento.</p><h3>Avaliação formativa</h3><p>Rigor conceptual · relevância das razões · coerência · capacidade de responder à objeção.</p><button class="v3btn" type="button" onclick="window.print()">Imprimir / guardar PDF</button> <button class="v3btn" type="button" onclick="v3Professor(\'planos\')">Voltar aos módulos</button></div>';
+};
+window.teacherFromUnit=function(id){
+  var u=findUnit(id), main=getMain();
+  if(!u||!main)return;
+  main.innerHTML=v3Header("Criar aula","Construção rápida a partir do módulo curricular.")+'<div class="v3box"><span class="v3tag">MÓDULO · '+escV(u.id)+'</span><h2>'+escV(u.name)+'</h2><p><b>AE:</b> '+escV(u.ae)+'</p><label>Duração</label><select id="v3unitDuration"><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select><br><br><button class="v3btn" type="button" onclick="v3Plan(\''+u.id+'\',0)">Criar a minha aula</button></div>';
+};
+window.v3Professor=function(tab){
+  tab=tab||"planos";
+  var u=allUnits(), main=getMain(), h=v3Header("Centro do Professor","Planifica, cria, avalia e encontra materiais.");
+  h+='<div class="v3nav">'+[["planos","▣ Planos de aula"],["materiais","◈ Materiais"],["documentos","▤ Documentos"],["exercicios","✓ Exercícios"],["avaliacao","◎ Avaliação"],["curriculo","⌘ Módulos curriculares"]].map(function(x){return '<button type="button" onclick="v3Professor(\''+x[0]+'\')">'+x[1]+'</button>';}).join('')+'</div>';
+  if(tab==="curriculo"){
+    h+='<div class="v3box"><h2>Módulos curriculares</h2><p>Entra num módulo para consultar as aprendizagens e criar diretamente uma aula.</p><div class="prisma-units">'+u.map(function(x,i){return '<button class="prisma-unit" type="button" onclick="openUnit(\''+x.id+'\')"><span class="unit-no">'+(i+1)+' · '+escV(x.id)+'</span><h3>'+escV(x.name)+'</h3><p>'+escV(x.ae)+'</p><div class="unit-meta">Abrir módulo →</div></button>';}).join('')+'</div></div>';
+  }else if(tab==="planos"){
+    h+='<div class="v3box"><h2>Planos de aula</h2><p>Escolhe um módulo e cria uma aula completa.</p><div class="v3filter"><select id="v3unit">'+u.map(function(x){return '<option value="'+x.id+'">'+escV(x.name)+'</option>';}).join('')+'</select><select id="v3dur"><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select><button class="v3btn" type="button" onclick="v3Plan()">Criar a minha aula</button></div><div id="v3out"></div></div>';
+    u.forEach(function(x){var ls=(typeof V3_LESSONS!=="undefined"&&V3_LESSONS[x.id])||[];if(!ls.length)return;h+='<div class="v3box"><span class="v3tag">'+escV(x.id)+'</span><h3>'+escV(x.name)+'</h3>'+ls.map(function(z,i){return '<div class="v3lesson"><b>Aula '+(i+1)+'</b><div><h4>'+escV(z)+'</h4><p>Problematização → conceptualização → argumentação · atividade + evidência</p></div><button class="v3btn" type="button" onclick="v3Plan(\''+x.id+'\','+i+')">Abrir aula</button></div>';}).join('')+'</div>';});
+  }else{
+    // preserve existing rich resource views
+    if(tab==="materiais"&&typeof V3_MATS!=="undefined")h+='<div class="v3grid">'+V3_MATS.map(function(x,i){return '<article class="v3card"><span class="v3tag">'+escV(x[0])+'</span><h3>'+escV(x[1])+'</h3><p>'+escV(x[2])+'</p><button class="v3btn" type="button" onclick="v3UseMat('+i+')">Abrir material</button></article>';}).join('')+'</div>';
+    else if(tab==="documentos"&&typeof V3_DOCS!=="undefined")h+='<div class="v3grid">'+V3_DOCS.map(function(x){return '<article class="v3card"><span class="v3tag">'+escV(x[0])+'</span><h3>'+escV(x[1])+'</h3><a class="v3btn" target="_blank" rel="noopener" href="'+x[2]+'">Abrir documento</a></article>';}).join('')+'</div>';
+    else if(tab==="exercicios"&&typeof V3_EX!=="undefined")h+='<div class="v3grid">'+V3_EX.map(function(x,i){return '<article class="v3card"><span class="v3tag">'+x[0]+'</span><h3>'+escV(x[1])+'</h3><p>'+escV(x[2])+'</p><button class="v3btn" type="button" onclick="v3Exercise('+i+')">Resolver</button></article>';}).join('')+'</div>';
+    else if(tab==="avaliacao")h+='<div class="v3grid"><article class="v3card"><h3>Matriz de teste</h3><button class="v3btn" type="button" onclick="v3ShowAssessment(0)">Abrir</button></article><article class="v3card"><h3>Rubrica de ensaio</h3><button class="v3btn" type="button" onclick="v3ShowAssessment(1)">Abrir</button></article><article class="v3card"><h3>Bilhete de saída</h3><button class="v3btn" type="button" onclick="v3ShowAssessment(2)">Abrir</button></article></div>';
+    else h+='<div class="v3box"><p>Área do professor.</p></div>';
+  }
+  main.innerHTML=h;
+};
+})();
+</script>
+</body></html>

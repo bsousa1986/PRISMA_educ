@@ -4,7 +4,7 @@ test('PRISMA navigation works', async ({ page }) => {
   page.on('pageerror', e => errors.push(String(e)));
   await page.goto('https://bsousa1986.github.io/PRISMA_educ/', { waitUntil: 'networkidle', timeout: 60000 });
   await page.getByRole('button', { name: /Área do professor/i }).click();
-  await page.getByRole('button', { name: /Módulos/i }).click();
+  await page.locator('[data-clean-tab="curriculo"]').click();
   await expect(page.getByText('Módulos curriculares')).toBeVisible();
   await page.locator('.clean-unit').first().click();
   await expect(page.getByText('Aprendizagens Essenciais')).toBeVisible();
@@ -14,7 +14,7 @@ test('PRISMA navigation works', async ({ page }) => {
   await expect(page.getByText('Evidência de aprendizagem')).toBeVisible();
   await page.locator('.back').first().click();
   await page.getByRole('button', { name: /Aluno/i }).click();
-  await page.getByRole('button', { name: /Módulos/i }).click();
+  await page.locator('[data-clean-tab="curriculo"]').click();
   await expect(page.locator('main.prisma-main')).toBeVisible();
   await page.getByRole('button', { name: /Aprender/i }).click();
   await page.getByRole('button', { name: /Progresso/i }).click();

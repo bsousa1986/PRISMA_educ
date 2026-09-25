@@ -75,7 +75,7 @@ if(richModules[key]){
 }
 const topic=studentTopics[i],out=document.getElementById('output');
 out.innerHTML='<div class="module-card"><span class="badge">Percurso PRISMA</span><h3>'+topic+'</h3><p><b>Questão-problema:</b> Como transformar este tema numa investigação filosófica?</p><p><b>Estrutura:</b> Problema → Conceitos → Teses → Argumentos → Objeções → Aplicação → Verificação.</p><button class="back" onclick="markDone('+JSON.stringify(topic)+')">✓ Marcar como estudado</button></div>';
-out.scrollIntoView({behavior:'smooth',block:'nearest');
+out.scrollIntoView({behavior:'smooth',block:'nearest'});
 }function markDone(topic){progress[topic]=true;document.querySelectorAll('.studentProgress').forEach(x=>x.textContent=Object.keys(progress).length+'/'+studentTopics.length);document.querySelectorAll('.studentTopicStatus').forEach(x=>{if(studentTopics[Number(x.dataset.topic)]===topic)x.textContent='Concluído';});}
 function showCurriculum(kind,btn){
 document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const body=document.getElementById('curriculumBody');

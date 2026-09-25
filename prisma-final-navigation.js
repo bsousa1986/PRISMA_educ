@@ -3,7 +3,8 @@
 "use strict";
 function main(){return document.getElementById("workspaceContent")}
 function pane(){var w=main();return w&&(w.querySelector(".prisma-main")||w)}
-function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[c]})}
+function getRole(){return window.role==="aluno"?"aluno":"professor"}
+function esc(s){return String(s==null?"":s).replace(/[&<>"\']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#039;"}[c]})}
 function units(){try{var a=Object.values(window.curriculumUnits||{}).flat();if(a.length)return a;return Array.isArray(window.PRISMA_LEARN)?window.PRISMA_LEARN.map(function(x){return{id:x.id,name:x.title,ae:x.goal||""}}):[]}catch(e){return Array.isArray(window.PRISMA_LEARN)?window.PRISMA_LEARN.map(function(x){return{id:x.id,name:x.title,ae:x.goal||""}}):[]}}
 function resources(){return window.PRISMA_READY_RESOURCES||[]}
 function header(k,t,p){return '<div class="prisma-head"><div><div class="prisma-kicker">'+esc(k)+'</div><h1>'+esc(t)+'</h1><p>'+esc(p||"")+'</p></div></div>'}

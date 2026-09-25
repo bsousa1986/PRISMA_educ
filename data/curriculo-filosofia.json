@@ -1,0 +1,256 @@
+{
+  "fonte": {
+    "entidade": "Direção-Geral da Educação",
+    "ae_10": "Aprendizagens Essenciais | Articulação com o Perfil dos Alunos — Filosofia 10.º ano — março de 2026",
+    "ae_11": "Aprendizagens Essenciais | Articulação com o Perfil dos Alunos — Filosofia 11.º ano — março de 2026",
+    "pa": "Perfil dos Alunos à Saída da Escolaridade Obrigatória"
+  },
+  "filosofia_10": {
+    "titulo": "Filosofia — 10.º ano",
+    "dominios": [
+      {
+        "id": "I",
+        "titulo": "Abordagem introdutória aos instrumentos do pensamento filosófico",
+        "temas": [
+          {
+            "id": "10-I-1",
+            "titulo": "A filosofia como atividade conceptual crítica",
+            "aprendizagens": [
+              "Caracterizar a filosofia como uma atividade conceptual crítica.",
+              "Clarificar a natureza dos problemas filosóficos.",
+              "Diferenciar problemas filosóficos de não filosóficos.",
+              "Formular problemas de natureza filosófica."
+            ],
+            "conceitos": ["filosofia", "problema filosófico", "conceito", "atividade crítica"],
+            "pratica": ["Distinguir questões filosóficas de questões empíricas.", "Transformar uma questão quotidiana num problema filosófico.", "Justificar por que razão um problema merece discussão filosófica."]
+          },
+          {
+            "id": "10-I-2",
+            "titulo": "Tese e argumento",
+            "aprendizagens": [
+              "Operacionalizar os conceitos de tese, argumento, validade, verdade, solidez e cogência.",
+              "Aplicar o quadrado da oposição à negação de teses."
+            ],
+            "conceitos": ["tese", "argumento", "validade", "verdade", "solidez", "cogência", "quadrado da oposição"],
+            "pratica": ["Reconstruir argumentos.", "Distinguir validade de verdade.", "Avaliar a solidez de argumentos."]
+          },
+          {
+            "id": "10-I-3",
+            "titulo": "Tipos de argumentos, validade, verdade, solidez e cogência",
+            "aprendizagens": [
+              "Definir argumentos por indução e reconhecer generalização precipitada e amostra não representativa.",
+              "Delimitar o argumento por analogia e a falsa analogia.",
+              "Definir argumento por autoridade e reconhecer o apelo à autoridade.",
+              "Aplicar critérios de solidez e cogência."
+            ],
+            "conceitos": ["indução", "analogia", "autoridade", "generalização precipitada", "falsa analogia", "apelo à autoridade"],
+            "pratica": ["Classificar argumentos.", "Testar premissas e conclusões.", "Justificar uma avaliação argumentativa."]
+          },
+          {
+            "id": "10-I-4",
+            "titulo": "Argumentos e falácias informais",
+            "aprendizagens": [
+              "Identificar petição de princípio, falso dilema, falsa relação causal, ad hominem, ad populum, espantalho e derrapagem.",
+              "Construir bons argumentos informais, evitando as falácias estudadas.",
+              "Analisar argumentos filosóficos e não filosóficos."
+            ],
+            "conceitos": ["falácia", "petição de princípio", "falso dilema", "falsa relação causal", "ad hominem", "ad populum", "espantalho", "derrapagem"],
+            "pratica": ["Detetar falácias em textos e discursos.", "Corrigir argumentos falaciosos.", "Construir contraexemplos."]
+          },
+          {
+            "id": "10-I-5",
+            "titulo": "Conectivas proposicionais e formas de inferência válida",
+            "aprendizagens": [
+              "Identificar conectivas proposicionais de negação, conjunção, disjunção, condicional e bicondicional.",
+              "Identificar formas de inferência válida, incluindo modus ponens e modus tollens.",
+              "Reconhecer condições de validade de formas proposicionais."
+            ],
+            "conceitos": ["negação", "conjunção", "disjunção", "condicional", "bicondicional", "modus ponens", "modus tollens"],
+            "pratica": ["Formalizar argumentos simples.", "Verificar validade.", "Traduzir linguagem natural para formas proposicionais."]
+          }
+        ]
+      },
+      {
+        "id": "II",
+        "titulo": "A ação humana e os valores",
+        "temas": [
+          {
+            "id": "10-II-1",
+            "titulo": "Determinismo e liberdade na ação humana",
+            "aprendizagens": [
+              "Formular o problema da compatibilidade entre determinismo e liberdade.",
+              "Clarificar posições deterministas e libertistas e a posição compatibilista.",
+              "Confrontar argumentos e objeções relevantes."
+            ],
+            "conceitos": ["ação", "liberdade", "determinismo", "responsabilidade", "compatibilismo", "libertismo"],
+            "pratica": ["Analisar casos de responsabilidade.", "Reconstruir argumentos sobre liberdade.", "Formular objeções."]
+          },
+          {
+            "id": "10-II-2",
+            "titulo": "A dimensão ética da ação",
+            "aprendizagens": [
+              "Formular problemas relativos à ação moral.",
+              "Analisar teorias éticas e os seus critérios de avaliação da ação.",
+              "Comparar posições e avaliar argumentos."
+            ],
+            "conceitos": ["ética", "moral", "dever", "consequência", "virtude", "valor"],
+            "pratica": ["Aplicar teorias a dilemas.", "Comparar critérios morais.", "Justificar uma posição."]
+          },
+          {
+            "id": "10-II-3",
+            "titulo": "A dimensão política da ação",
+            "aprendizagens": [
+              "Problematizar a organização política da vida comum.",
+              "Analisar conceções de justiça, liberdade, igualdade e legitimidade.",
+              "Avaliar argumentos políticos com base em critérios filosóficos."
+            ],
+            "conceitos": ["política", "justiça", "igualdade", "liberdade", "legitimidade", "Estado"],
+            "pratica": ["Analisar casos políticos.", "Distinguir descrição de justificação.", "Confrontar argumentos."]
+          }
+        ]
+      },
+      {
+        "id": "III",
+        "titulo": "O conhecimento e a racionalidade",
+        "temas": [
+          {
+            "id": "10-III-1",
+            "titulo": "O problema do conhecimento",
+            "aprendizagens": [
+              "Formular problemas relativos ao conhecimento.",
+              "Distinguir crença, verdade e justificação.",
+              "Analisar posições sobre a possibilidade e os limites do conhecimento."
+            ],
+            "conceitos": ["conhecimento", "crença", "verdade", "justificação", "ceticismo"],
+            "pratica": ["Analisar casos de conhecimento.", "Testar condições de justificação.", "Construir objeções."]
+          },
+          {
+            "id": "10-III-2",
+            "titulo": "Razão, experiência e justificação",
+            "aprendizagens": [
+              "Confrontar diferentes fontes e critérios de justificação.",
+              "Avaliar argumentos sobre razão e experiência.",
+              "Aplicar critérios de rigor e verdade."
+            ],
+            "conceitos": ["razão", "experiência", "a priori", "a posteriori", "justificação"],
+            "pratica": ["Comparar argumentos.", "Identificar pressupostos.", "Avaliar evidência."]
+          }
+        ]
+      },
+      {
+        "id": "IV",
+        "titulo": "O mundo contemporâneo: problemas e desafios",
+        "temas": [
+          {
+            "id": "10-IV-1",
+            "titulo": "Problemas sociais, éticos, políticos e tecnocientíficos",
+            "aprendizagens": [
+              "Formular problemas filosóficos a partir de contextos contemporâneos.",
+              "Mobilizar conceitos e teorias para interpretar problemas.",
+              "Propor soluções fundamentadas e avaliar o seu impacto."
+            ],
+            "conceitos": ["problematização", "responsabilidade", "justiça", "tecnologia", "risco", "cidadania"],
+            "pratica": ["Partir de notícias ou situações reais.", "Formular uma questão filosófica.", "Construir tese, argumentos, objeções e conclusão."]
+          }
+        ]
+      }
+    ],
+    "competencias_filosoficas": ["problematização", "conceptualização", "argumentação"],
+    "avaliacao": ["Problematização", "Conceptualização", "Argumentação"]
+  },
+  "filosofia_11": {
+    "titulo": "Filosofia — 11.º ano",
+    "dominios": [
+      {
+        "id": "V",
+        "titulo": "Filosofia do conhecimento",
+        "temas": [
+          {
+            "id": "11-V-1",
+            "titulo": "O problema da possibilidade do conhecimento",
+            "aprendizagens": [
+              "Formular o problema da justificação do conhecimento.",
+              "Clarificar as teses e argumentos de Descartes e Hume.",
+              "Confrontar racionalismo, empirismo e desafio cético."
+            ],
+            "conceitos": ["conhecimento", "crença verdadeira justificada", "ceticismo", "racionalismo", "empirismo", "dúvida metódica", "cogito"]
+          },
+          {
+            "id": "11-V-2",
+            "titulo": "O problema da definição de conhecimento",
+            "aprendizagens": [
+              "Analisar o problema da definição tradicional de conhecimento.",
+              "Avaliar argumentos e objeções relevantes.",
+              "Reconhecer a importância da justificação."
+            ],
+            "conceitos": ["justificação", "verdade", "crença", "conhecimento", "contraexemplo"]
+          }
+        ]
+      },
+      {
+        "id": "VI",
+        "titulo": "Filosofia da ciência",
+        "temas": [
+          {
+            "id": "11-VI-1",
+            "titulo": "Ciência, método e racionalidade científica",
+            "aprendizagens": [
+              "Formular problemas sobre a natureza do conhecimento científico.",
+              "Analisar diferentes conceções de método e racionalidade científica.",
+              "Avaliar argumentos sobre objetividade, explicação e progresso científico."
+            ],
+            "conceitos": ["ciência", "método", "hipótese", "explicação", "objetividade", "progresso"]
+          }
+        ]
+      },
+      {
+        "id": "VII",
+        "titulo": "Filosofia da arte",
+        "temas": [
+          {
+            "id": "11-VII-1",
+            "titulo": "Problemas da definição de arte e da experiência estética",
+            "aprendizagens": [
+              "Formular problemas filosóficos sobre arte e experiência estética.",
+              "Clarificar conceitos e confrontar teorias.",
+              "Avaliar argumentos e propor respostas fundamentadas."
+            ],
+            "conceitos": ["arte", "estética", "experiência estética", "obra de arte", "valor estético"]
+          }
+        ]
+      },
+      {
+        "id": "VIII",
+        "titulo": "Filosofia política",
+        "temas": [
+          {
+            "id": "11-VIII-1",
+            "titulo": "Justiça, liberdade e legitimidade política",
+            "aprendizagens": [
+              "Formular problemas relativos à organização política.",
+              "Clarificar conceitos e confrontar teorias políticas.",
+              "Avaliar argumentos sobre justiça, liberdade e legitimidade."
+            ],
+            "conceitos": ["justiça", "liberdade", "igualdade", "legitimidade", "Estado", "democracia"]
+          }
+        ]
+      }
+    ],
+    "competencias_filosoficas": ["problematização", "conceptualização", "argumentação"],
+    "avaliacao": ["Problematização", "Conceptualização", "Argumentação"]
+  },
+  "perfil_alunos": {
+    "areas_competencias": [
+      "Linguagens e textos",
+      "Informação e comunicação",
+      "Raciocínio e resolução de problemas",
+      "Pensamento crítico e pensamento criativo",
+      "Relacionamento interpessoal",
+      "Desenvolvimento pessoal e autonomia",
+      "Bem-estar, saúde e ambiente",
+      "Sensibilidade estética e artística",
+      "Saber científico, técnico e tecnológico",
+      "Consciência e domínio do corpo"
+    ]
+  }
+}

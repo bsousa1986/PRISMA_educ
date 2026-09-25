@@ -1,0 +1,47 @@
+name: PRISMA browser test
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm init -y
+      - run: npm install --save-dev playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Wait for GitHub Pages
+        run: sleep 60
+      - name: Test public app
+        run: node <<'NODE'
+const { chromium } = require('playwright');
+(async()=>{
+ const b=await chromium.launch({headless:true});
+ const p=await b.newPage();
+ const errors=[];
+ p.on('pageerror',e=>errors.push(String(e)));
+ await p.goto('https://bsousa1986.github.io/PRISMA_educ/',{waitUntil:'networkidle',timeout:60000});
+ async function clickText(t){await p.getByRole('button',{name:new RegExp(t,'i')}).first().click();await p.waitForTimeout(250);}
+ await clickText('Área do professor');
+ await clickText('Módulos');
+ if(!await p.getByText('Módulos curriculares').count()) throw new Error('Módulos curriculares não abriu');
+ await p.locator('.clean-unit').first().click();
+ if(!await p.getByText('Aprendizagens Essenciais').count()) throw new Error('Módulo não abriu');
+ await p.getByRole('button',{name:/Voltar aos módulos/i}).click();
+ await p.locator('[data-t="planos"]').click();
+ await p.getByRole('button',{name:/Criar a minha aula/i}).click();
+ if(!await p.getByText('Evidência de aprendizagem').count()) throw new Error('Criar aula não abriu');
+ await clickText('Início');
+ await clickText('Aluno');
+ await clickText('Módulos');
+ await clickText('Aprender');
+ await clickText('Progresso');
+ if(errors.length) throw new Error(errors.join('\n'));
+ console.log('PRISMA E2E OK');
+ await b.close();
+})();
+NODE

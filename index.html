@@ -308,4 +308,30 @@ if(["plano","ficha","teste","rubrica","debate","oficina"].includes(type)){render
 return originalRunTool(type);
 }
 
+
+/* PRISMA — Quality Gate: nenhum recurso entra na biblioteca sem passar por critérios pedagógicos e documentais */
+const prismaQualityGate=[
+["Rigor filosófico","Conceitos corretos, teses e argumentos representados sem simplificações enganadoras."],
+["Didaticidade","Objetivo claro, instruções executáveis, progressão adequada e carga cognitiva compatível com o nível."],
+["Problematização","Existe uma questão genuinamente filosófica; o recurso não se reduz a opinião, entretenimento ou 'atividade pela atividade'."],
+["Reflexão crítica","O aluno é levado a justificar, comparar, objetar, reconstruir ou avaliar — não apenas a repetir."],
+["Pluralidade","Quando o problema o exige, são apresentadas posições relevantes sem fabricar consenso nem orientar o aluno para uma resposta pré-definida."],
+["Fontes","Autoria, origem, data/atualidade quando relevante, pertinência, profundidade e possíveis enviesamentos são verificáveis."],
+["Direitos de autor","O recurso usa conteúdo próprio, domínio público, licença compatível ou ligação/citação juridicamente adequada; não copia indiscriminadamente terceiros."],
+["Currículo","A ligação às AE é explícita e verificável; o recurso não transforma um exemplo ou atividade em 'currículo oficial'."],
+["Inclusão e respeito","Linguagem acessível, respeito pela diferença e ausência de humilhação, manipulação ou propaganda."],
+["Avaliação","Há evidência observável da aprendizagem e critérios que permitem ao professor avaliar o trabalho."]
+];
+function qualityGateHTML(){
+return '<div class="lesson-card"><span class="badge">🛡️ Filtro de qualidade PRISMA</span><h3>A regra é simples: entra o que merece ser usado numa aula.</h3><p>O PRISMA não deve funcionar como depósito de fichas da Internet. Um recurso só deve ser publicado quando passar por uma revisão de conteúdo, pedagogia, fontes e direitos.</p><div class="prisma-grid">'+prismaQualityGate.map(x=>'<div class="module-card"><h4>'+x[0]+'</h4><p>'+x[1]+'</p></div>').join('')+'</div><div class="notice"><b>Regra editorial:</b> se não for rigoroso, didático e intelectualmente honesto, fica fora — mesmo que seja popular ou visualmente apelativo.</div></div>';
+}
+const oldRenderResourceCatalog=renderResourceCatalog;
+function renderResourceCatalog(){
+oldRenderResourceCatalog();
+const out=document.getElementById("output");
+if(out && !document.getElementById("qualityGate")){
+out.insertAdjacentHTML("beforeend",'<div id="qualityGate">'+qualityGateHTML()+'</div>');
+}
+}
+
 </script></body></html>

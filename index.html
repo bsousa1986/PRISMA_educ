@@ -357,72 +357,92 @@ function runTool(type){const m=document.getElementById("prismaMain");if(type==="
 .v3nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.v3nav button{padding:10px 13px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}.v3grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.v3card{background:#fff;border:1px solid #e4e7ec;border-radius:15px;padding:18px}.v3card h3{margin:6px 0}.v3card p{color:#667085;line-height:1.5}.v3tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;opacity:.6}.v3lesson{display:grid;grid-template-columns:65px 1fr auto;gap:14px;align-items:center;padding:14px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;margin:8px 0}.v3lesson h4{margin:0 0 4px}.v3lesson p{margin:0;color:#667085;font-size:13px}.v3unit{display:grid;grid-template-columns:1.4fr .6fr;gap:16px}.v3box{background:#fff;border:1px solid #e4e7ec;border-radius:15px;padding:20px;margin-bottom:14px}.v3concepts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.v3concept{padding:13px;background:#f8f9fb;border-radius:10px}.v3btn{border:0;border-radius:9px;padding:9px 12px;background:#111827;color:#fff;cursor:pointer}.v3filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}.v3filter select{padding:10px;border:1px solid #ddd;border-radius:9px}@media(max-width:800px){.v3grid,.v3unit,.v3concepts{grid-template-columns:1fr}.v3lesson{grid-template-columns:45px 1fr}}
 </style>
 <script>
-const V3_MATS=[
-["Experiência mental","O comboio e o desvio","Imagina um comboio sem travões que pode seguir para cinco pessoas ou, mediante uma mudança de via, para uma pessoa. Não escolhas apenas uma resposta: explicita o princípio que justificaria a tua decisão.","10.º · Livre-arbítrio / ética"],
-["Experiência mental","O véu de ignorância","Escolhe as regras fundamentais de uma sociedade sem saber se nascerás rico ou pobre, saudável ou doente, com mais ou menos oportunidades.","10.º · Justiça"],
-["Experiência mental","A maioria feliz","Uma decisão beneficia cem pessoas, mas causa um dano grave a cinco. O número de beneficiários basta para justificar a decisão?","10.º · Utilitarismo"],
-["Experiência mental","O cérebro na cuba","Imagina que todas as tuas experiências poderiam ser produzidas artificialmente. Que razões terias para afirmar que existe um mundo exterior exatamente como o percebes?","11.º · Ceticismo"],
-["Experiência mental","O detetor perfeito","Imagina um método que confirma qualquer hipótese que lhe seja apresentada. Pode um método assim distinguir ciência de pseudociência?","11.º · Filosofia da ciência"],
-["Caso-problema","A decisão algorítmica","Uma IA decide quem recebe determinado recurso público. Tem bons resultados estatísticos, mas ninguém consegue explicar cada decisão. É suficiente que funcione?","11.º · IA e sociedade da informação"],
-["Texto PRISMA","O que torna uma pergunta filosófica?","Uma pergunta filosófica não é apenas uma pergunta difícil. Exige clarificação conceptual, razões, possibilidade de objeção e confronto entre respostas.","10.º · Introdução"],
-["Texto PRISMA","Quando sabemos alguma coisa?","Ter uma crença verdadeira por acaso parece diferente de saber. A questão obriga a discutir crença, verdade e justificação.","11.º · Conhecimento"]
+(function(){
+"use strict";
+window.V3_MATS=[
+ ["Experiência mental","O comboio e o desvio","Problema: é moralmente aceitável desviar o comboio para salvar mais pessoas?","Filosofia 10.º"],
+ ["Experiência mental","O véu de ignorância","Imagina escolheres as regras da sociedade sem saberes qual será a tua posição.","Filosofia 10.º"],
+ ["Experiência mental","A maioria feliz","Uma maioria pode justificar uma decisão que prejudica gravemente uma minoria?","Filosofia 10.º"],
+ ["Experiência mental","O cérebro na cuba","Como distinguir uma experiência real de uma experiência perfeitamente simulada?","Filosofia 11.º"],
+ ["Experiência mental","O detetor perfeito","Se uma máquina pudesse prever todas as tuas decisões, continuarias a ser livre?","Filosofia 10.º"],
+ ["Caso-problema","A decisão algorítmica","Um algoritmo rejeita automaticamente candidatos a emprego. Que critérios tornam a decisão justificável?","Filosofia 11.º"],
+ ["Texto PRISMA","O que torna uma pergunta filosófica?","Do pedido de informação à pergunta que exige conceitos, razões e confronto de posições.","Filosofia 10.º"],
+ ["Texto PRISMA","Quando sabemos alguma coisa?","Uma introdução ao problema da justificação e ao desafio cético.","Filosofia 11.º"]
 ];
-const V3_EX=[
-["10.º","Tese e argumento","Considera: 'Esta opinião é verdadeira porque quase toda a gente concorda com ela'. Identifica a tese e a razão. Há aqui um problema argumentativo?","A popularidade de uma afirmação não demonstra, por si só, a sua verdade; pode tratar-se de apelo à maioria."],
-["10.º","Livre-arbítrio","Se uma ação tem causas anteriores, segue-se que o agente não é responsável?","Não necessariamente. Essa é precisamente a questão disputada entre determinismo radical, determinismo moderado e libertismo."],
-["10.º","Ética","Qual a diferença entre relativismo moral e objetivismo moral?","O relativismo faz depender a validade moral de referenciais relativos; o objetivismo sustenta que há critérios morais que não dependem simplesmente das perspetivas individuais ou culturais."],
-["10.º","Kant e Mill","Uma regra pode ser rejeitada por Kant e aceite por um utilitarista por razões diferentes?","Sim. Kant centra a avaliação moral no dever e na universalização; o utilitarismo avalia as consequências e a utilidade."],
-["10.º","Justiça","Para que serve a posição original de Rawls?","Modela uma situação de escolha imparcial através da restrição da informação disponível às partes."],
-["11.º","Descartes","Qual é a função da dúvida metódica?","Levar a dúvida tão longe quanto possível para procurar um ponto de certeza."],
-["11.º","Hume","Por que razão a indução coloca um problema filosófico?","Porque a passagem de casos observados para casos não observados não parece ser garantida apenas pela experiência passada."],
-["11.º","Ciência","Uma teoria que nenhuma observação poderia contrariar é facilmente testável?","Não. A possibilidade de confronto crítico é central para discutir testabilidade e demarcação."],
-["11.º","IA","Uma decisão automatizada justa é apenas uma decisão que produz bons resultados médios?","Não é uma conclusão obrigatória; devem discutir-se critérios de justiça, transparência, responsabilidade e distribuição dos efeitos."]
+window.V3_EX=[
+ ["10.º","Tese e argumento","Identifica a tese e reconstrói duas razões que a sustentam.","Compara a força das razões."],
+ ["10.º","Livre-arbítrio","Explica a diferença entre determinismo radical, moderado e libertismo.","Apresenta uma objeção a uma das posições."],
+ ["10.º","Juízos morais","Distingue subjetivismo, relativismo e objetivismo.","Aplica as posições a um caso concreto."],
+ ["10.º","Kant e Mill","Compara a fundamentação de uma ação segundo Kant e Mill.","Formula uma objeção a uma das teorias."],
+ ["10.º","Justiça","Explica o problema da distribuição justa de bens e oportunidades.","Compara duas conceções de justiça."],
+ ["11.º","Descartes","Reconstrói o percurso da dúvida metódica.","Explica por que razão o cogito pretende funcionar como certeza."],
+ ["11.º","Hume","Explica o problema da indução.","Distingue hábito psicológico de justificação racional."],
+ ["11.º","Ciência","Distingue verificação e falsificação.","Explica por que razão uma hipótese deve poder ser contrariada."],
+ ["11.º","Inteligência artificial","Formula um problema ético relacionado com decisões algorítmicas.","Identifica pelo menos dois critérios relevantes."]
 ];
-const V3_LESSONS={
-"F10-I":["Filosofia como atividade conceptual crítica","Natureza dos problemas filosóficos","Tese, argumento e validade","Verdade e solidez","Conectores e argumentos dedutivos","Indução, analogia e autoridade","Falácias informais","Oficina de ensaio filosófico"],
-"F10-II-L":["O problema do livre-arbítrio","Determinismo radical","Determinismo moderado","Libertismo","Comparação e objeções"],
-"F10-II-E":["O problema dos juízos morais","Subjetivismo moral","Relativismo moral","Objetivismo moral","Confronto de posições"],
-"F10-II-M":["O problema da fundamentação moral","Kant: universalização","Kant: dignidade","Mill: utilitarismo","Objeções ao utilitarismo","Comparação Kant/Mill"],
-"F10-II-P":["O que é uma sociedade justa?","Rawls: posição original","Sandel: crítica","Nozick: Estado mínimo","Confronto Rawls/Sandel/Nozick","Síntese argumentativa"],
-"F11-IV-K":["É possível conhecer?","Descartes e a dúvida","Cogito e certeza","Hume: impressões e ideias","Hume e a indução","Descartes/Hume"],
-"F11-IV-C":["Ciência e pseudociência","Verificacionismo","Problema da indução","Falsificacionismo","Comparação de critérios"],
-"F11-IV-T":["Redefinição do humano pela tecnociência","Ética da IA","Sociedade da informação","Tecnociência e trabalho","Genoma, saúde e ambiente","Ensaio sobre problema contemporâneo"]
+window.V3_LESSONS={
+ "F10-I":["O que é filosofar?","Problemas, conceitos e teorias","Tese e argumento","Validade, verdade e solidez","Argumentação dedutiva","Argumentação não dedutiva","Falácias e avaliação crítica","Ensaio filosófico"],
+ "F10-II-L":["O problema do livre-arbítrio","Determinismo radical","Determinismo moderado","Libertismo","Objeções e tomada de posição"],
+ "F10-II-E":["O que é um juízo moral?","Subjetivismo","Relativismo","Objetivismo","Confronto de posições"],
+ "F10-II-M":["Problema da fundamentação moral","Kant e o dever","Imperativo categórico","Mill e utilidade","Comparação e objeções","Ensaio argumentativo"],
+ "F10-II-P":["O que torna uma sociedade justa?","Rawls e a posição original","Sandel e a crítica","Nozick e a liberdade","Confronto das posições","Debate e conclusão"],
+ "F11-IV-K":["Podemos conhecer?","Desafio cético","Descartes","Hume","Crença e justificação","Síntese argumentativa"],
+ "F11-IV-C":["O que distingue ciência?","Ciência e pseudociência","Verificação","Problema da indução","Falsificação"],
+ "F11-IV-T":["Tecnociência e sociedade","Inteligência artificial","Informação e trabalho","Genoma, saúde e ambiente","Problemas éticos contemporâneos","Ensaio sobre um problema"]
 };
-const V3_DOCS=[
-["DGE","Aprendizagens Essenciais — Filosofia 10.º","https://www.dge.mec.pt/sites/default/files/es_10_filosofia.pdf"],
-["DGE","Aprendizagens Essenciais — Filosofia 11.º","https://www.dge.mec.pt/sites/default/files/Curriculo/Aprendizagens_Essenciais/11_filosofia.pdf"],
-["DGE","Perfil dos Alunos","https://www.dge.mec.pt/node/4194"],
-["DGE","Currículo Nacional — Filosofia 10.º","https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia-0"],
-["DGE","Currículo Nacional — Filosofia 11.º","https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia"],
-["DGE","Repositório de recursos de Filosofia","https://apoioescolas.dge.mec.pt/nivelciclo/filosofia-0"],
-["DGE","Exercícios de Filosofia","https://apoioescolas.dge.mec.pt/recursos/exercicios-filosofia-para-o-ensino-secundario"],
-["DGE","Filosofia no Ensino Secundário","https://apoioescolas.dge.mec.pt/recursos/filosofia-no-ensino-secundario"],
-["#EstudoEmCasa@","Recursos Secundário","https://estudoemcasaapoia.dge.mec.pt/secundario"]
+window.V3_DOCS=[
+ ["DGE","Aprendizagens Essenciais — Filosofia 10.º","https://www.dge.mec.pt/sites/default/files/es_10_filosofia.pdf"],
+ ["DGE","Aprendizagens Essenciais — Filosofia 11.º","https://www.dge.mec.pt/sites/default/files/Curriculo/Aprendizagens_Essenciais/11_filosofia.pdf"],
+ ["DGE","Perfil dos Alunos","https://www.dge.mec.pt/node/4194"],
+ ["Currículo Nacional","Filosofia 10.º","https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia-0"],
+ ["Currículo Nacional","Filosofia 11.º","https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia"],
+ ["DGE","Repositório de recursos de Filosofia","https://apoioescolas.dge.mec.pt/nivelciclo/filosofia-0"],
+ ["DGE","Exercícios de Filosofia","https://apoioescolas.dge.mec.pt/recursos/exercicios-filosofia-para-o-ensino-secundario"],
+ ["DGE","Filosofia no Ensino Secundário","https://apoioescolas.dge.mec.pt/recursos/filosofia-no-ensino-secundario"],
+ ["#EstudoEmCasa@","Recursos do Secundário","https://estudoemcasaapoia.dge.mec.pt/secundario"]
 ];
-
-function v3Header(t,s){return prismaHeader(t,s)}
-function v3Professor(tab){
-const m=document.getElementById("prismaMain"),units=prismaUnits();let h=v3Header("Centro do Professor","Um espaço de trabalho pensado para planificar, ensinar, avaliar e reutilizar materiais.")+'<div class="v3nav">'+["planos","materiais","documentos","exercicios","avaliacao"].map(x=>'<button onclick="v3Professor(\''+x+'\')">'+({planos:"▣ Planos de aula",materiais:"◈ Materiais",documentos:"▤ Documentos",exercicios:"✓ Exercícios",avaliacao:"◎ Avaliação"}[x])+'</button>').join("")+'</div>';
-if(tab==="planos"){
-h+='<div class="v3box"><div class="v3filter"><select id="v3unit">'+units.map(u=>'<option value="'+u.id+'">'+u.name+'</option>').join("")+'</select><select id="v3dur"><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select><button class="v3btn" onclick="v3Plan()">Criar plano completo</button></div><div id="v3out"></div></div>';
-units.forEach(u=>{const ls=V3_LESSONS[u.id]||[];if(ls.length)h+='<div class="v3box"><span class="v3tag">'+u.id+'</span><h3>'+u.name+'</h3>'+ls.map((x,i)=>'<div class="v3lesson"><b>Aula '+(i+1)+'</b><div><h4>'+x+'</h4><p>Problematização → conceptualização → argumentação · atividade + evidência de aprendizagem</p></div><button class="v3btn" onclick="v3Plan(\''+u.id+'\','+i+')">Abrir</button></div>').join("")+'</div>'});
-}else if(tab==="materiais"){
-h+='<div class="v3grid">'+V3_MATS.map((x,i)=>'<article class="v3card"><span class="v3tag">'+x[0]+' · '+x[3]+'</span><h3>'+x[1]+'</h3><p>'+x[2]+'</p><p><b>Pertinência pedagógica:</b> fazer emergir um problema, obrigar à explicitação de critérios e preparar a comparação de posições.</p><button class="v3btn" onclick="v3UseMat('+i+')">Usar</button></article>').join("")+'</div>';
-}else if(tab==="documentos"){
-h+='<div class="v3grid">'+V3_DOCS.map(x=>'<article class="v3card"><span class="v3tag">'+x[0]+'</span><h3>'+x[1]+'</h3><a target="_blank" href="'+x[2]+'">Abrir fonte ↗</a></article>').join("")+'</div>';
-}else if(tab==="exercicios"){
-h+='<div class="v3grid">'+V3_EX.map((x,i)=>'<article class="v3card"><span class="v3tag">'+x[0]+' · '+x[1]+'</span><h3>'+x[2]+'</h3><details><summary>Ver orientação</summary><p>'+x[3]+'</p></details></article>').join("")+'</div>';
-}else{
-h+='<div class="v3grid"><article class="v3card"><span class="v3tag">TESTE</span><h3>Matriz de avaliação</h3><p>Construir itens a partir da AE, combinando identificação, reconstrução, aplicação, análise e avaliação.</p><button class="v3btn" onclick="runTool(\'teste\')">Abrir gerador</button></article><article class="v3card"><span class="v3tag">RUBRICA</span><h3>Ensaio filosófico</h3><p>Critérios: problema, conceitos, argumentos, objeções, exemplos, rigor e clareza.</p><button class="v3btn" onclick="runTool(\'rubrica\')">Abrir rubrica</button></article><article class="v3card"><span class="v3tag">FORMATIVA</span><h3>Exit ticket</h3><p>Tese que compreendi · conceito que consigo explicar · dúvida que permanece.</p><button class="v3btn" onclick="runTool(\'ficha\')">Criar</button></article></div>'}
-m.innerHTML=h}
-function v3Plan(id,i=0){const u=v3Unit(id||document.getElementById("v3unit").value),ls=V3_LESSONS[u.id]||[],title=ls[i]||ls[0],out=document.getElementById("v3out");if(!out)return;out.innerHTML='<div class="v3box"><span class="v3tag">PLANO DE AULA · '+(document.getElementById("v3dur")?.value||"50 minutos")+'</span><h2>'+title+'</h2><p><b>Unidade:</b> '+u.name+'</p><p><b>Aprendizagem Essencial:</b> '+u.ae+'</p><div class="v3concepts"><div class="v3concept"><b>1 · Entrada</b><br>Questão-problema, caso ou experiência mental.</div><div class="v3concept"><b>2 · Desenvolvimento</b><br>Clarificação conceptual + reconstrução de argumentos.</div><div class="v3concept"><b>3 · Atividade</b><br>Debate, análise de texto, exercício ou oficina.</div><div class="v3concept"><b>4 · Evidência</b><br>Resposta argumentativa curta, mapa conceptual ou exercício.</div></div><p><b>Pertinência pedagógica:</b> tornar visível a progressão entre problematizar, conceptualizar e argumentar, em vez de reduzir a aula à transmissão de conteúdos.</p><p><b>Diferenciação:</b> exemplo resolvido + organizador visual para apoio; objeção adicional e tarefa de extensão para desempenho avançado.</p><p><b>Avaliação:</b> observar precisão conceptual, relevância das razões, uso de exemplos e capacidade de responder a objeções.</p></div>}
-function v3UseMat(i){const x=V3_MATS[i];document.getElementById("prismaMain").innerHTML=v3Header("Material para aula",x[1])+'<div class="v3box"><span class="v3tag">'+x[0]+'</span><h2>'+x[1]+'</h2><p>'+x[2]+'</p><p><b>Enquadramento:</b> '+x[3]+'</p><p><b>Pertinência:</b> iniciar por uma situação concreta e pedir aos alunos que explicitem o critério usado antes da apresentação da teoria.</p><button class="v3btn" onclick="v3Professor(\'materiais\')">Voltar</button></div>'}
-function v3Student(){
-const m=document.getElementById("prismaMain");m.innerHTML=v3Header("Biblioteca de aprendizagem","Experiências mentais, textos didáticos e exercícios para estudar.")+'<div class="v3grid">'+V3_MATS.concat(V3_EX.map(x=>["Exercício",x[1],x[2],x[0]])).map((x,i)=>'<article class="v3card"><span class="v3tag">'+x[0]+'</span><h3>'+x[1]+'</h3><p>'+x[2]+'</p><button class="v3btn" onclick="v3UseMat('+i+')">Explorar</button></article>').join("")+'</div>'}
-
-renderWorkspace=function(){prismaRenderShell("inicio");const nav=document.querySelector(".prisma-side");if(nav){nav.innerHTML='<div class="prisma-brand">PRISMA<small>Pensar. Compreender. Aprender.</small></div>'+(role==="professor"?'<button onclick="prismaRenderDashboard()">⌂ Visão geral</button><button onclick="v3Professor(\'planos\')">▣ Planos de aula</button><button onclick="v3Professor(\'materiais\')">◈ Materiais</button><button onclick="v3Professor(\'documentos\')">▤ Documentos</button><button onclick="v3Professor(\'exercicios\')">✓ Exercícios</button><button onclick="v3Professor(\'avaliacao\')">◎ Avaliação</button><button onclick="prismaRenderCurriculum()">◫ Currículo</button>':'<button onclick="prismaRenderDashboard()">⌂ Visão geral</button><button onclick="prismaRenderDashboard()">▣ Percurso</button><button onclick="v3Student()">◈ Biblioteca</button><button onclick="prismaRenderProgress()">◔ Progresso</button><button onclick="prismaRenderCurriculum()">◫ Currículo</button><button onclick="runTool(\'tutor\')">✦ Tutor PRISMA</button>')}}
-openUnit=function(id){prismaRenderCurriculum();setTimeout(()=>{const u=prismaUnitObj(id),m=document.getElementById("prismaMain");m.innerHTML=v3Header("Unidade",u.name)+'<div class="v3unit"><main><div class="v3box"><span class="v3tag">APRENDIZAGENS ESSENCIAIS</span><h2>'+u.name+'</h2><p>'+u.ae+'</p><h3>No final, deves conseguir</h3><ul><li>explicar os conceitos centrais;</li><li>reconstruir e comparar argumentos;</li><li>aplicar as posições a casos;</li><li>formular uma objeção e responder-lhe.</li></ul></div><div class="v3box"><h3>Materiais desta unidade</h3>'+V3_MATS.filter(x=>x[3].includes(u.id==="F10-II-L"?"Livre-arbítrio":u.name.split(" — ")[1]||"")).map(x=>'<p><b>'+x[1]+'</b><br>'+x[2]+'</p>').join("")+'<h3>Exercícios</h3>'+V3_EX.filter(x=>x[0]===(u.id.startsWith("F10")?"10.º":"11.º")).slice(0,4).map(x=>'<p><b>'+x[1]+':</b> '+x[2]+'</p>').join("")+'</div></main><aside><div class="v3box"><h3>Percurso de aulas</h3>'+(V3_LESSONS[id]||[]).map((x,i)=>'<p><b>Aula '+(i+1)+'</b> · '+x+'</p>').join("")+'<button class="v3btn" onclick="markDone(\''+id+'\')">Marcar estudada</button></div></aside></div>'},0)}
-</script><style>
+window.PRISMA_LEARN=[
+ {id:"F10-I",year:"10.º",title:"Filosofia e filosofar",problem:"O que significa filosofar?",concepts:["problema filosófico","tese","argumento","validade","solidez"],goal:"Problematizar, conceptualizar e argumentar filosoficamente."},
+ {id:"F10-II-L",year:"10.º",title:"Livre-arbítrio",problem:"Somos realmente livres?",concepts:["determinismo"],goal:"Distinguir posições sobre o livre-arbítrio e avaliá-las."},
+ {id:"F10-II-E",year:"10.º",title:"Juízos morais",problem:"Existem verdades morais?",concepts:["relativismo","objetivismo"],goal:"Distinguir posições sobre a natureza dos juízos morais."},
+ {id:"F10-II-M",year:"10.º",title:"Fundamentação da moral",problem:"Como devemos agir?",concepts:["imperativo categórico","utilidade"],goal:"Comparar Kant e Mill e avaliar objeções."},
+ {id:"F10-II-P",year:"10.º",title:"Justiça e sociedade",problem:"O que torna uma sociedade justa?",concepts:["justiça"],goal:"Reconstruir e confrontar conceções de justiça."},
+ {id:"F11-IV-K",year:"11.º",title:"Conhecimento",problem:"Podemos ter conhecimento?",concepts:["ceticismo","justificação"],goal:"Compreender o desafio cético e teorias do conhecimento."},
+ {id:"F11-IV-C",year:"11.º",title:"Ciência",problem:"O que distingue ciência de pseudociência?",concepts:["indução","falsificação"],goal:"Compreender problemas da indução e demarcação científica."},
+ {id:"F11-IV-T",year:"11.º",title:"Ciência, tecnologia e sociedade",problem:"Como devemos lidar com o poder tecnocientífico?",concepts:["IA"],goal:"Problematizar questões éticas e políticas contemporâneas."]
+];
+function escV(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]});}
+function unitsV(){return typeof prismaUnits==="function"?prismaUnits():[];}
+window.v3Header=function(t,s){return typeof prismaHeader==="function"?prismaHeader(t,s):"<div class='prisma-panel'><h1>"+escV(t)+"</h1><p>"+escV(s)+"</p></div>";};
+window.v3Professor=function(tab){
+ tab=tab||"planos"; var u=unitsV(),h=v3Header("Centro do Professor","Planifica, cria, avalia e encontra materiais.");
+ h+="<div class='v3nav'>"+[["planos","▣ Planos de aula"],["materiais","◈ Materiais"],["documentos","▤ Documentos"],["exercicios","✓ Exercícios"],["avaliacao","◎ Avaliação"],["curriculo","⌘ Currículo"]].map(function(x){return "<button type='button' onclick=\"v3Professor('"+x[0]+"')\">"+x[1]+"</button>";}).join("")+"</div>";
+ if(tab==="planos"){
+   h+="<div class='v3box'><h2>Planos de aula</h2><p>Escolhe uma unidade. O PRISMA gera uma sequência de aula com problema, desenvolvimento, atividade, evidência, pertinência pedagógica, diferenciação e avaliação.</p><div class='v3filter'><select id='v3unit'>"+u.map(function(x){return "<option value='"+x.id+"'>"+escV(x.name)+"</option>";}).join("")+"</select><select id='v3dur'><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select><button class='v3btn' type='button' onclick='v3Plan()'>Criar plano completo</button></div><div id='v3out'></div></div>";
+   u.forEach(function(x){var ls=V3_LESSONS[x.id]||[]; if(!ls.length)return; h+="<div class='v3box'><span class='v3tag'>"+x.id+"</span><h3>"+escV(x.name)+"</h3>"+ls.map(function(z,i){return "<div class='v3lesson'><b>Aula "+(i+1)+"</b><div><h4>"+escV(z)+"</h4><p>Problematização → conceptualização → argumentação · atividade + evidência de aprendizagem</p></div><button class='v3btn' type='button' onclick=\"v3Plan('"+x.id+"',"+i+")\">Abrir</button></div>";}).join("")+"</div>";});
+ }else if(tab==="materiais"){
+   h+="<div class='v3grid'>"+V3_MATS.map(function(x,i){return "<article class='v3card'><span class='v3tag'>"+escV(x[0])+" · "+escV(x[3])+"</span><h3>"+escV(x[1])+"</h3><p>"+escV(x[2])+"</p><p><b>Pertinência pedagógica:</b> fazer emergir um problema, explicitar critérios e comparar posições.</p><button class='v3btn' type='button' onclick='v3UseMat("+i+")'>Abrir material</button></article>";}).join("")+"</div>";
+ }else if(tab==="documentos"){
+   h+="<div class='v3grid'>"+V3_DOCS.map(function(x){return "<article class='v3card'><span class='v3tag'>"+escV(x[0])+"</span><h3>"+escV(x[1])+"</h3><a class='v3btn' target='_blank' rel='noopener' href='"+x[2]+"'>Abrir documento</a></article>";}).join("")+"</div>";
+ }else if(tab==="exercicios"){
+   h+="<div class='v3grid'>"+V3_EX.map(function(x,i){return "<article class='v3card'><span class='v3tag'>"+x[0]+"</span><h3>"+escV(x[1])+"</h3><p>"+escV(x[2])+"</p><p><b>Produto:</b> "+escV(x[3])+"</p><button class='v3btn' type='button' onclick='v3Exercise("+i+")'>Resolver</button></article>";}).join("")+"</div>";
+ }else if(tab==="avaliacao"){
+   h+="<div class='v3grid'><article class='v3card'><h3>Matriz de teste</h3><p>Problematização · conceptualização · argumentação · aplicação · avaliação crítica.</p><button class='v3btn' type='button' onclick='v3ShowAssessment(0)'>Abrir</button></article><article class='v3card'><h3>Rubrica de ensaio</h3><p>Tese, estrutura argumentativa, conceitos, razões, objeções e conclusão.</p><button class='v3btn' type='button' onclick='v3ShowAssessment(1)'>Abrir</button></article><article class='v3card'><h3>Bilhete de saída</h3><p>Uma pergunta, uma tese, uma razão e uma dúvida.</p><button class='v3btn' type='button' onclick='v3ShowAssessment(2)'>Abrir</button></article></div>";
+ }else if(tab==="curriculo"){
+   return typeof prismaRenderCurriculum==="function"?prismaRenderCurriculum():v3Professor("planos");
+ }
+ document.getElementById("prismaMain").innerHTML=h;
+};
+window.v3Plan=function(id,idx){
+ var sel=document.getElementById("v3unit"),unit=unitsV().find(function(x){return x.id===(id||sel&&sel.value);})||unitsV()[0],ls=V3_LESSONS[unit.id]||[],i=idx==null?0:idx,title=ls[i]||"Aula de síntese";
+ document.getElementById("v3out").innerHTML="<div class='v3box'><span class='v3tag'>PLANO PRISMA</span><h2>"+escV(title)+"</h2><p><b>Unidade:</b> "+escV(unit.name)+"</p><p><b>Aprendizagens:</b> "+escV(unit.ae||"Problematização, conceptualização e argumentação.")+"</p><h3>Problema de entrada</h3><p>Que questão torna este conteúdo filosoficamente problemático?</p><h3>Desenvolvimento</h3><p>Clarificação conceptual → reconstrução de argumentos → confronto de posições → avaliação crítica.</p><h3>Atividade</h3><p>Trabalho individual ou em pares: formular uma tese, apresentar duas razões e uma objeção.</p><h3>Evidência de aprendizagem</h3><p>Resposta escrita curta ou intervenção oral justificada.</p><h3>Pertinência pedagógica</h3><p>A atividade torna observável o raciocínio do aluno e permite corrigir dificuldades conceptuais e argumentativas.</p><h3>Diferenciação</h3><p>Disponibilizar vocabulário-chave, pergunta-guia e modelo de argumento; aos alunos avançados, acrescentar objeção e contraexemplo.</p><h3>Avaliação</h3><p>Critérios: rigor conceptual, relevância das razões, coerência e capacidade de responder a objeções.</p><button class='v3btn' type='button' onclick='window.print()'>Imprimir / guardar PDF</button></div>";
+};
+window.v3UseMat=function(i){var x=V3_MATS[i];document.getElementById("prismaMain").innerHTML=v3Header(x[1],x[2])+"<div class='v3box'><h2>"+escV(x[1])+"</h2><p>"+escV(x[2])+"</p><h3>Como usar</h3><ol><li>Apresenta o caso sem antecipar a resposta.</li><li>Pede uma decisão inicial.</li><li>Exige razões e critérios.</li><li>Introduz uma objeção.</li><li>Fecha com uma reformulação da posição.</li></ol><button class='v3btn' type='button' onclick=\"v3Professor('materiais')\">Voltar aos materiais</button></div>";};
+window.v3Exercise=function(i){var x=V3_EX[i];document.getElementById("prismaMain").innerHTML=v3Header(x[1],"Exercício de "+x[0])+"<div class='v3box'><h2>"+escV(x[2])+"</h2><textarea id='v3answer' rows='10' placeholder='Escreve a tua resposta...'></textarea><button class='v3btn' type='button' onclick='alert("Resposta guardada apenas nesta sessão. Revisa a tese, as razões e a objeção antes de concluir.")'>Guardar resposta</button></div>";};
+window.v3ShowAssessment=function(i){var a=["Matriz: conceito/problema 20%; reconstrução de argumentos 30%; aplicação 20%; avaliação crítica 30%.","Rubrica: tese clara; conceitos rigorosos; razões relevantes; objeção; resposta à objeção; conclusão. Cada critério pode ser avaliado de 1 a 5.","Bilhete: Qual foi a ideia central? Que razão a sustenta? Que objeção levantarias? Que dúvida permanece?"];document.getElementById("prismaMain").innerHTML=v3Header("Avaliação","Instrumento PRISMA")+"<div class='v3box'><p>"+a[i]+"</p><button class='v3btn' type='button' onclick=\"v3Professor('avaliacao')\">Voltar</button></div>";};
+window.v3Student=function(){document.getElementById("prismaMain").innerHTML=v3Header("Biblioteca de aprendizagem","Aprende por problemas, conceitos e prática.")+"<div class='v3grid'>"+PRISMA_LEARN.map(function(x){return "<article class='v3card'><span class='v3tag'>"+x.year+"</span><h3>"+escV(x.title)+"</h3><p>"+escV(x.problem)+"</p><button class='v3btn' type='button' onclick=\"psUnit('"+x.id+"')\">Começar percurso</button></article>";}).join("")+"</div>";};
+})();
+<\/script><style>
 .bloggrid,.msggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.blogcard,.msgbox{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:20px}.blogcard h3{margin:6px 0}.msgbox textarea,.msgbox input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ddd;border-radius:9px;margin:6px 0 12px}.pill{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.6}@media(max-width:700px){.bloggrid,.msggrid{grid-template-columns:1fr}}
 </style>
 <script>
@@ -576,40 +596,49 @@ prismaRenderDashboard=function(){if(role==="aluno"){studentHome()}else{oldPrisma
 </script>
 <script>
 (function(){
- const KEY="prisma_research_submissions_v1";
- const seed=[{title:"Como nasce um problema filosófico?",author:"PRISMA",area:"Filosofia",type:"Texto de divulgação",status:"publicado",abstract:"Um texto-modelo sobre a passagem da curiosidade para a investigação filosófica.",text:"Uma investigação filosófica começa quando uma pergunta deixa de pedir apenas informação e passa a exigir clarificação conceptual, razões e confronto entre posições.\n\nO objetivo deste espaço é permitir que estudantes, professores e investigadores partilhem problemas, argumentos, ensaios e resultados de investigação."}];
- function data(){try{return JSON.parse(localStorage.getItem(KEY))||seed}catch(e){return seed}}
- function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
- window.prismaResearch=function(){
-  const a=data();
-  document.getElementById("prismaMain").innerHTML=prismaHeader("Investigação","Um espaço aberto para partilhar investigação, ensaios e textos filosóficos.")+
-  '<div class="prisma-detail"><div class="prisma-grid2"><section class="prisma-panel"><div class="prisma-kicker">SUBMISSÃO ABERTA</div><h2>Publica uma investigação</h2><p>Envia um texto teu para eventual divulgação no PRISMA. A submissão não significa publicação automática.</p><label>Título</label><input id="rtitle" placeholder="Título do trabalho"><label>Autor(es)</label><input id="rauthor" placeholder="Nome ou autores"><label>Área</label><select id="rarea"><option>Filosofia</option><option>Ética</option><option>Filosofia Política</option><option>Epistemologia</option><option>Filosofia da Ciência</option><option>Filosofia da Educação</option><option>Filosofia da Tecnologia</option><option>Estética</option><option>Antropologia Filosófica</option><option>Outro</option></select><label>Tipo</label><select id="rtype"><option>Investigação académica</option><option>Ensaio filosófico</option><option>Trabalho escolar</option><option>Texto de divulgação</option><option>Comunicação</option></select><label>Resumo</label><textarea id="rabs" rows="5"></textarea><label>Texto integral</label><textarea id="rtext" rows="14"></textarea><label>Palavras-chave</label><input id="rtags" placeholder="liberdade, ética, conhecimento..."><label><input id="rrights" type="checkbox" style="width:auto"> Confirmo que sou autor ou tenho autorização para divulgar este texto.</label><button class="v3btn" onclick="prismaSubmitResearch()">Enviar para apreciação</button></section><section class="prisma-panel"><div class="prisma-kicker">BIBLIOTECA</div><h2>Investigações publicadas</h2><input id="rsearch" oninput="prismaResearchFilter()" placeholder="Pesquisar investigação..."><div id="rfeed"></div></section></div></div>';
-  prismaResearchFilter();
- };
- window.prismaResearchFilter=function(){
-  const q=(document.getElementById("rsearch")?.value||"").toLowerCase(),a=data().filter(x=>[x.title,x.author,x.area,x.type,x.tags,x.abstract].join(" ").toLowerCase().includes(q));
-  document.getElementById("rfeed").innerHTML=a.map((x,i)=>'<article class="prisma-panel" style="margin-top:12px"><div class="prisma-kicker">'+esc(x.area)+' · '+esc(x.type)+' · '+esc(x.status)+'</div><h3>'+esc(x.title)+'</h3><p><b>'+esc(x.author)+'</b></p><p>'+esc(x.abstract||"Sem resumo.")+'</p><button class="v3btn" onclick="prismaReadResearch('+i+')">Ler</button></article>').join("");
- };
- window.prismaSubmitResearch=function(){
-  const title=rtitle.value.trim(),author=rauthor.value.trim(),text=rtext.value.trim();
-  if(!title||!author||!text||!rrights.checked){alert("Preenche título, autoria e texto e confirma a legitimidade para divulgação.");return}
-  const a=data();a.unshift({title,author,area:rarea.value,type:rtype.value,abstract:rabs.value.trim(),text,tags:rtags.value.trim(),status:"submetido",date:new Date().toISOString().slice(0,10)});localStorage.setItem(KEY,JSON.stringify(a));prismaResearch();
-  alert("Investigação recebida e marcada como submetida para apreciação.");
- };
- window.prismaReadResearch=function(i){const x=data()[i];document.getElementById("prismaMain").innerHTML=prismaHeader("Investigação",x.title)+'<div class="prisma-detail"><div class="prisma-panel"><div class="prisma-kicker">'+esc(x.area)+' · '+esc(x.type)+'</div><h1>'+esc(x.title)+'</h1><p><b>'+esc(x.author)+'</b></p><p>'+esc(x.abstract||"")+'</p><hr><div style="white-space:pre-wrap;line-height:1.8">'+esc(x.text)+'</div><br><button class="v3btn" onclick="prismaResearch()">← Voltar à biblioteca</button></div></div>'};
- const oldSwitch=window.prismaSwitch;
- window.prismaSwitch=function(tab){
-  if(tab==="investigacao"){document.querySelectorAll(".prisma-nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));return prismaResearch();}
-  return oldSwitch(tab);
- };
- const oldShell=window.prismaRenderShell;
- window.prismaRenderShell=function(tab){
-  oldShell(tab);
-  const nav=document.querySelector(".prisma-nav");
-  if(nav&&!nav.querySelector('[data-tab="investigacao"]'))nav.insertAdjacentHTML("beforeend",'<button data-tab="investigacao" onclick="prismaSwitch(\'investigacao\')">⌕ &nbsp;Investigação</button>');
- };
+"use strict";
+function roleNow(){try{return typeof role!=="undefined"?role:(localStorage.getItem("prisma_role")||"professor");}catch(e){return "professor";}}
+function blogItems(){try{return JSON.parse(localStorage.getItem("prisma_blog_user")||"[]");}catch(e){return [];}}
+function saveBlogItem(x){var a=blogItems();a.unshift(x);localStorage.setItem("prisma_blog_user",JSON.stringify(a));return a;}
+window.prismaBlog=function(){
+ var base=Array.isArray(window.PRISMA_BLOG)?window.PRISMA_BLOG:[], user=blogItems(), all=base.map(function(x,i){return {title:x.title||x[0],author:x.author||"PRISMA",category:x.category||"Filosofia",text:x.text||x.body||x.excerpt||"",idx:i,base:true};}).concat(user);
+ var h=v3Header("Blog PRISMA","Ideias, textos, experiências e contributos da comunidade.");
+ h+="<div class='v3box'><h2>Publicar / propor um texto</h2><p>Qualquer pessoa pode propor um texto. As propostas ficam marcadas para apreciação antes de serem divulgadas.</p><input id='blogTitle' placeholder='Título'><input id='blogAuthor' placeholder='Autor'><select id='blogCat'><option>Filosofia</option><option>Educação</option><option>Didática</option><option>Investigação</option><option>Divulgação</option><option>Opinião filosófica</option></select><textarea id='blogText' rows='12' placeholder='Escreve o texto...'></textarea><button class='v3btn' type='button' onclick='prismaSubmitBlog()'>Enviar proposta</button></div>";
+ h+="<div class='v3grid'>"+all.map(function(x,i){return "<article class='v3card'><span class='v3tag'>"+escV(x.category)+"</span><h3>"+escV(x.title)+"</h3><p><b>"+escV(x.author)+"</b></p><p>"+escV(x.text).slice(0,260)+(x.text.length>260?"…":"")+"</p><button class='v3btn' type='button' onclick=\"prismaReadBlog("+i+")\">Ler</button></article>";}).join("")+"</div>";
+ document.getElementById("prismaMain").innerHTML=h;
+ window.__prismaBlogAll=all;
+};
+window.prismaSubmitBlog=function(){
+ var t=document.getElementById("blogTitle").value.trim(),a=document.getElementById("blogAuthor").value.trim(),x=document.getElementById("blogText").value.trim(),cat=document.getElementById("blogCat").value;
+ if(!t||!a||!x){alert("Preenche título, autor e texto.");return;}
+ saveBlogItem({title:t,author:a,category:cat,text:x,status:"submetido",date:new Date().toISOString()});
+ prismaBlog();alert("Proposta registada para apreciação.");
+};
+window.prismaReadBlog=function(i){var x=(window.__prismaBlogAll||[])[i];if(!x)return;document.getElementById("prismaMain").innerHTML=v3Header("Blog",x.title)+"<div class='v3box'><span class='v3tag'>"+escV(x.category)+"</span><h1>"+escV(x.title)+"</h1><p><b>"+escV(x.author)+"</b></p><hr><div style='white-space:pre-wrap;line-height:1.8'>"+escV(x.text)+"</div><br><button class='v3btn' type='button' onclick='prismaBlog()'>Voltar ao blog</button></div>";};
+window.prismaMessage=function(){document.getElementById("prismaMain").innerHTML=v3Header("Mensagem ao criador","Sugestões, erros, ideias e propostas para o PRISMA.")+"<div class='v3box'><input id='msgName' placeholder='Nome'><input id='msgEmail' placeholder='Email'><textarea id='msgText' rows='10' placeholder='Mensagem'></textarea><button class='v3btn' type='button' onclick='prismaSendMessage()'>Enviar mensagem</button></div>";};
+window.prismaSendMessage=function(){var n=document.getElementById("msgName").value.trim(),e=document.getElementById("msgEmail").value.trim(),m=document.getElementById("msgText").value.trim();if(!n||!m){alert("Preenche o nome e a mensagem.");return;}localStorage.setItem("prisma_message_"+Date.now(),JSON.stringify({name:n,email:e,message:m,date:new Date().toISOString()}));alert("Mensagem registada neste dispositivo.");prismaMessage();};
+function navButtons(st){var a=[["inicio","⌂","Início"],["curriculo","▦","Currículo"],["biblioteca","▤",st?"Biblioteca de aprendizagem":"Biblioteca"],[st? "progresso":"recursos",st?"◔":"✦",st?"Progresso":"Recursos"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];return a.map(function(x){return "<button type='button' data-tab='"+x[0]+"' onclick=\"prismaSwitch('"+x[0]+"')\">"+x[1]+" &nbsp;"+x[2]+"</button>";}).join("");}
+window.prismaRenderShell=function(tab){
+ var el=document.getElementById("workspaceContent");if(!el)return;var st=roleNow()==="aluno";el.className="content "+(st?"student":"teacher");
+ el.innerHTML="<div class='prisma-shell'><aside class='prisma-side'><div class='prisma-brand'><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class='prisma-nav'>"+navButtons(st)+"</nav><div class='prisma-side-foot'>AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class='prisma-main' id='prismaMain'></main></div>";
+ prismaSwitch(tab||"inicio");
+};
+window.prismaSwitch=function(tab){
+ document.querySelectorAll(".prisma-nav button").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab);});
+ try{
+  if(tab==="inicio"){if(roleNow()==="aluno"&&typeof studentHome==="function")return studentHome();if(typeof prismaRenderDashboard==="function")return prismaRenderDashboard();return v3Professor("planos");}
+  if(tab==="curriculo"){if(typeof prismaRenderCurriculum==="function")return prismaRenderCurriculum();return v3Professor("planos");}
+  if(tab==="biblioteca"){if(roleNow()==="aluno")return v3Student();if(typeof prismaRenderLibrary==="function")return prismaRenderLibrary();return v3Professor("materiais");}
+  if(tab==="progresso"){if(typeof studentHome==="function")return studentHome();return v3Professor("planos");}
+  if(tab==="recursos"){if(typeof prismaRenderResources==="function")return prismaRenderResources();return v3Professor("documentos");}
+  if(tab==="blog")return prismaBlog();
+  if(tab==="mensagem")return prismaMessage();
+  if(tab==="investigacao"&&typeof prismaResearch==="function")return prismaResearch();
+  return v3Professor("planos");
+ }catch(e){document.getElementById("prismaMain").innerHTML="<div class='v3box'><h2>O módulo encontrou um erro</h2><p>O PRISMA continua funcional, mas esta área precisa de correção.</p><pre style='white-space:pre-wrap'>"+escV(e.message)+"</pre></div>";}
+};
 })();
-</script>
+<\/script>
 <script>
 /* PRISMA RECOVERY RUNTIME — centralizes navigation and prevents dead buttons. */
 (function(){

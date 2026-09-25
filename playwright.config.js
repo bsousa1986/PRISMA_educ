@@ -1,1 +1,1 @@
-module.exports={testDir:'.',timeout:120000,workers:1};
+module.exports={testDir:'.',testMatch:'prisma.e2e.js',timeout:120000,workers:1};

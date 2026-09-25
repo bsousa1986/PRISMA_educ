@@ -693,4 +693,78 @@ window.v3Professor=function(tab){
     if(tab==="curriculo" && typeof window.v3Professor==="function" && (typeof role==="undefined" || role!=="aluno")) return window.v3Professor("curriculo");
     return base(tab);
   };
-})();</script></body></html>
+})();</script>
+<script>
+/* PRISMA CLEAN UI — final isolated navigation layer */
+(function(){
+  "use strict";
+  function M(){return document.getElementById("prismaMain")}
+  function R(){try{return role==="aluno"?"aluno":"professor"}catch(e){return "professor"}}
+  function esc(s){return typeof escV==="function"?escV(s):String(s||"").replace(/[&<>"]/g,function(x){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[x]})}
+  function units(){try{return Object.values(curriculumUnits||{}).flat()}catch(e){return[]}}
+  function unit(id){return units().find(function(x){return x.id===id})}
+  function header(t,p){return '<div class="prisma-head"><div><div class="prisma-kicker">PRISMA</div><h1>'+esc(t)+'</h1><p>'+esc(p||"")+'</p></div></div>'}
+  function nav(tab){
+    var st=R()==="aluno";
+    var a=[["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤",st?"Aprender":"Biblioteca"],[st?"progresso":"recursos",st?"◔":"✦",st?"Progresso":"Recursos"],["blog","✎","Blog"],["mensagem","✉","Mensagem"],["investigacao","⌕","Investigação"]];
+    return '<nav class="prisma-nav-clean">'+a.map(function(x){return '<button type="button" data-clean-tab="'+x[0]+'">'+x[1]+' '+x[2]+'</button>'}).join("")+'</nav>';
+  }
+  function shell(tab){
+    var w=document.getElementById("workspaceContent"); if(!w)return;
+    var st=R()==="aluno";
+    w.className="content "+(st?"student":"teacher");
+    w.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div>'+nav(tab||"inicio")+'<div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
+    route(tab||"inicio");
+  }
+  function active(tab){document.querySelectorAll(".prisma-nav-clean button").forEach(function(b){b.classList.toggle("active",b.dataset.cleanTab===tab)})}
+  function route(tab){
+    active(tab);
+    var st=R()==="aluno";
+    try{
+      if(tab==="inicio") return st&&typeof studentHome==="function"?studentHome():typeof window.v3Professor==="function"?window.v3Professor("planos"):null;
+      if(tab==="curriculo") return st&&typeof prismaRenderCurriculum==="function"?prismaRenderCurriculum():typeof window.v3Professor==="function"?window.v3Professor("curriculo"):null;
+      if(tab==="biblioteca") return st&&typeof v3Student==="function"?v3Student():typeof window.v3Professor==="function"?window.v3Professor("materiais"):null;
+      if(tab==="progresso") return typeof studentHome==="function"?studentHome():null;
+      if(tab==="recursos") return typeof prismaRenderResources==="function"?prismaRenderResources():window.v3Professor("documentos");
+      if(tab==="blog") return typeof window.prismaBlog==="function"?window.prismaBlog():null;
+      if(tab==="mensagem") return typeof window.prismaMessage==="function"?window.prismaMessage():null;
+      if(tab==="investigacao") return typeof window.prismaResearch==="function"?window.prismaResearch():null;
+    }catch(e){var m=M();if(m)m.innerHTML='<div class="v3box"><h2>Erro</h2><pre style="white-space:pre-wrap">'+esc(e.stack||e)+'</pre></div>'}
+  }
+  function teacher(tab){
+    var main=M(); if(!main)return;
+    var u=units();
+    var h=header("Centro do Professor","Planifica, cria, avalia e encontra materiais.");
+    h+='<div class="v3nav-clean">'+[["planos","▣ Planos de aula"],["materiais","◈ Materiais"],["documentos","▤ Documentos"],["exercicios","✓ Exercícios"],["avaliacao","◎ Avaliação"],["curriculo","⌘ Módulos curriculares"]].map(function(x){return '<button type="button" data-t="'+x[0]+'">'+x[1]+'</button>'}).join("")+'</div>';
+    if(tab==="curriculo"){
+      h+='<div class="v3box"><h2>Módulos curriculares</h2><p>Entra num módulo para consultar as aprendizagens e criar diretamente uma aula.</p><div class="prisma-units">'+u.map(function(x,i){return '<button class="prisma-unit clean-unit" type="button" data-unit="'+esc(x.id)+'"><span class="unit-no">'+(i+1)+' · '+esc(x.id)+'</span><h3>'+esc(x.name)+'</h3><p>'+esc(x.ae)+'</p><div class="unit-meta">Abrir módulo →</div></button>'}).join("")+'</div></div>';
+    }else if(tab==="planos"){
+      h+='<div class="v3box"><h2>Planos de aula</h2><p>Escolhe um módulo e cria uma aula completa.</p><div class="v3filter"><select id="cleanUnit">'+u.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>'}).join("")+'</select><select id="cleanDur"><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select><button class="v3btn" type="button" data-create="1">Criar a minha aula</button></div><div id="cleanOut"></div></div>';
+      u.forEach(function(x){var ls=(typeof V3_LESSONS!=="undefined"&&V3_LESSONS[x.id])||[];if(!ls.length)return;h+='<div class="v3box"><span class="v3tag">'+esc(x.id)+'</span><h3>'+esc(x.name)+'</h3>'+ls.map(function(z,i){return '<div class="v3lesson"><b>Aula '+(i+1)+'</b><div><h4>'+esc(z)+'</h4><p>Problematização → conceptualização → argumentação · atividade + evidência</p></div><button class="v3btn" type="button" data-plan-unit="'+esc(x.id)+'" data-plan-index="'+i+'">Abrir aula</button></div>'}).join("")+'</div>'});
+    }else if(tab==="materiais"&&typeof V3_MATS!=="undefined")h+='<div class="v3grid">'+V3_MATS.map(function(x,i){return '<article class="v3card"><span class="v3tag">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p>'+esc(x[2])+'</p><button class="v3btn" type="button" data-mat="'+i+'">Abrir material</button></article>'}).join("")+'</div>';
+    else if(tab==="documentos"&&typeof V3_DOCS!=="undefined")h+='<div class="v3grid">'+V3_DOCS.map(function(x){return '<article class="v3card"><span class="v3tag">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><a class="v3btn" target="_blank" rel="noopener" href="'+x[2]+'">Abrir documento</a></article>'}).join("")+'</div>';
+    else if(tab==="exercicios"&&typeof V3_EX!=="undefined")h+='<div class="v3grid">'+V3_EX.map(function(x,i){return '<article class="v3card"><span class="v3tag">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p>'+esc(x[2])+'</p><button class="v3btn" type="button" data-ex="'+i+'">Resolver</button></article>'}).join("")+'</div>';
+    else if(tab==="avaliacao")h+='<div class="v3grid"><article class="v3card"><h3>Matriz de teste</h3><button class="v3btn" type="button" data-assess="0">Abrir</button></article><article class="v3card"><h3>Rubrica de ensaio</h3><button class="v3btn" type="button" data-assess="1">Abrir</button></article><article class="v3card"><h3>Bilhete de saída</h3><button class="v3btn" type="button" data-assess="2">Abrir</button></article></div>';
+    else h+='<div class="v3box"><p>Área do professor.</p></div>';
+    main.innerHTML=h;
+  }
+  window.prismaCleanRoute=route;
+  window.prismaRenderShell=function(tab){shell(tab||"inicio")};
+  window.v3Professor=teacher;
+  window.openApp=function(r){role=r;try{localStorage.setItem("prisma_role",r)}catch(e){};document.getElementById("home").style.display="none";document.getElementById("workspace").style.display="block";document.getElementById("role").textContent=r==="professor"?"PROFESSOR":"ALUNO";shell("inicio")};
+  window.goHome=function(){document.getElementById("workspace").style.display="none";document.getElementById("home").style.display="block"};
+  document.addEventListener("click",function(ev){
+    var b=ev.target.closest?ev.target.closest("button"):null;if(!b)return;
+    var t=b.dataset.cleanTab;if(t){ev.preventDefault();ev.stopImmediatePropagation();route(t);return}
+    var pt=b.dataset.t;if(pt){ev.preventDefault();ev.stopImmediatePropagation();teacher(pt);return}
+    var id=b.dataset.unit;if(id){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.openUnit==="function")window.openUnit(id);return}
+    if(b.dataset.create){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.v3Plan==="function")window.v3Plan(document.getElementById("cleanUnit").value,0);return}
+    if(b.dataset.planUnit){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.v3Plan==="function")window.v3Plan(b.dataset.planUnit,Number(b.dataset.planIndex||0));return}
+    if(b.dataset.mat){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.v3UseMat==="function")window.v3UseMat(Number(b.dataset.mat));return}
+    if(b.dataset.ex){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.v3Exercise==="function")window.v3Exercise(Number(b.dataset.ex));return}
+    if(b.dataset.assess){ev.preventDefault();ev.stopImmediatePropagation();if(typeof window.v3ShowAssessment==="function")window.v3ShowAssessment(Number(b.dataset.assess));return}
+  },true);
+  var style=document.createElement("style");style.textContent=".prisma-nav-clean{display:flex;flex-direction:column;gap:5px}.prisma-nav-clean button,.v3nav-clean button{border:0;background:transparent;text-align:left;padding:12px 13px;border-radius:12px;color:var(--muted);font-weight:700;cursor:pointer}.prisma-nav-clean button:hover,.prisma-nav-clean button.active,.v3nav-clean button:hover{background:var(--primary2);color:var(--primary)}.v3nav-clean{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.v3nav-clean button{border:1px solid var(--line);background:#fff}.v3nav-clean button:hover{border-color:#c9c2ff}";document.head.appendChild(style);
+})();
+</script>
+</body></html>

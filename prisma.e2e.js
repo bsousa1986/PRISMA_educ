@@ -5,9 +5,9 @@ test('PRISMA navigation works', async ({ page }) => {
   await page.goto('https://bsousa1986.github.io/PRISMA_educ/', { waitUntil: 'networkidle', timeout: 60000 });
   await page.getByRole('button', { name: /Área do professor/i }).click();
   await page.locator('[data-clean-tab="curriculo"]').click();
-  await expect(page.getByText('Módulos curriculares')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Módulos curriculares' })).toBeVisible();
   await page.locator('.clean-unit').first().click();
-  await expect(page.getByText('Aprendizagens Essenciais')).toBeVisible();
+  await expect(page.getByText('Aprendizagens Essenciais', { exact: false }).first()).toBeVisible();
   await page.getByRole('button', { name: /Voltar aos módulos/i }).click();
   await page.locator('[data-t="planos"]').click();
   await page.getByRole('button', { name: /Criar a minha aula/i }).click();

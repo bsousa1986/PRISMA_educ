@@ -541,3 +541,32 @@ v3UseMat=function(i){const x=PRISMA_LIBRARY[i];if(!x)return;document.getElementB
 const oldPrismaRenderDashboard=prismaRenderDashboard;
 prismaRenderDashboard=function(){if(role==="aluno"){studentHome()}else{oldPrismaRenderDashboard()}};
 </script></body></html>
+<script>
+(function(){
+ const safeNav={
+  "Visão geral":()=>{ if(typeof prismaRenderDashboard==="function") prismaRenderDashboard(); },
+  "Percurso":()=>{ if(typeof studentHome==="function") studentHome(); },
+  "Biblioteca":()=>{ if(typeof v3Student==="function") v3Student("library"); },
+  "Progresso":()=>{ if(typeof studentHome==="function") studentHome(); },
+  "Currículo":()=>{ if(typeof v3Student==="function") v3Student("curriculum"); },
+  "Tutor":()=>{ if(typeof v3Student==="function") v3Student("tutor"); },
+  "Planos de aula":()=>{ if(typeof v3Professor==="function") v3Professor("plans"); },
+  "Materiais":()=>{ if(typeof v3Professor==="function") v3Professor("materials"); },
+  "Documentos":()=>{ if(typeof v3Professor==="function") v3Professor("docs"); },
+  "Exercícios":()=>{ if(typeof v3Professor==="function") v3Professor("exercises"); },
+  "Avaliação":()=>{ if(typeof v3Professor==="function") v3Professor("assessment"); },
+  "Currículo":()=>{ if(typeof v3Professor==="function") v3Professor("curriculum"); }
+ };
+ document.addEventListener("click",function(e){
+   const b=e.target.closest("button,a");
+   if(!b)return;
+   const t=(b.textContent||"").trim();
+   const key=Object.keys(safeNav).find(k=>t===k || t.includes(k));
+   if(key && safeNav[key]){
+     e.preventDefault(); e.stopPropagation();
+     try{ safeNav[key](); }catch(err){ console.error("PRISMA nav:",err); }
+   }
+ },true);
+ window.addEventListener("error",function(e){console.error("PRISMA runtime:",e.error||e.message)});
+})();
+</script>

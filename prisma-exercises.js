@@ -87,6 +87,7 @@ window.prismaTeacherAssessment=function(){
  m.innerHTML='<h2>Avaliação</h2><p class="muted">Testes modulares com guião de correção e critérios de qualidade filosófica.</p>'+Object.keys(E).map(id=>'<button class="module-card" data-prisma-assess="'+id+'"><b>'+E[id].title+'</b><span>20 valores · versão professor</span></button>').join("");
 };
 document.addEventListener('click',function(ev){
+ const tab=ev.target.closest('[data-clean-tab]'); if(tab && tab.dataset.cleanTab==='exercicios'){ev.preventDefault();ev.stopImmediatePropagation();window.prismaTeacherExercises();return;} if(tab && tab.dataset.cleanTab==='avaliacao'){ev.preventDefault();ev.stopImmediatePropagation();window.prismaTeacherAssessment();return;}
  const ex=ev.target.closest('[data-prisma-ex]'); if(ex){ev.preventDefault();ev.stopImmediatePropagation();window.prismaRenderExercises(ex.dataset.prismaEx);return;}
  const as=ev.target.closest('[data-prisma-assess]'); if(as){ev.preventDefault();ev.stopImmediatePropagation();window.prismaRenderAssessment(as.dataset.prismaAssess);return;}
  const p=ev.target.closest('[data-prisma-print]'); if(p){ev.preventDefault();window.print();}

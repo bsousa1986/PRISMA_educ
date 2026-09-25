@@ -409,7 +409,7 @@ window.PRISMA_LEARN=[
  {id:"F10-II-P",year:"10.º",title:"Justiça e sociedade",problem:"O que torna uma sociedade justa?",concepts:["justiça"],goal:"Reconstruir e confrontar conceções de justiça."},
  {id:"F11-IV-K",year:"11.º",title:"Conhecimento",problem:"Podemos ter conhecimento?",concepts:["ceticismo","justificação"],goal:"Compreender o desafio cético e teorias do conhecimento."},
  {id:"F11-IV-C",year:"11.º",title:"Ciência",problem:"O que distingue ciência de pseudociência?",concepts:["indução","falsificação"],goal:"Compreender problemas da indução e demarcação científica."},
- {id:"F11-IV-T",year:"11.º",title:"Ciência, tecnologia e sociedade",problem:"Como devemos lidar com o poder tecnocientífico?",concepts:["IA"],goal:"Problematizar questões éticas e políticas contemporâneas."]
+ {id:"F11-IV-T",year:"11.º",title:"Ciência, tecnologia e sociedade",problem:"Como devemos lidar com o poder tecnocientífico?",concepts:["IA"],goal:"Problematizar questões éticas e políticas contemporâneas."}
 ];
 function escV(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]});}
 function unitsV(){return typeof prismaUnits==="function"?prismaUnits():[];}
@@ -438,11 +438,11 @@ window.v3Plan=function(id,idx){
  document.getElementById("v3out").innerHTML="<div class='v3box'><span class='v3tag'>PLANO PRISMA</span><h2>"+escV(title)+"</h2><p><b>Unidade:</b> "+escV(unit.name)+"</p><p><b>Aprendizagens:</b> "+escV(unit.ae||"Problematização, conceptualização e argumentação.")+"</p><h3>Problema de entrada</h3><p>Que questão torna este conteúdo filosoficamente problemático?</p><h3>Desenvolvimento</h3><p>Clarificação conceptual → reconstrução de argumentos → confronto de posições → avaliação crítica.</p><h3>Atividade</h3><p>Trabalho individual ou em pares: formular uma tese, apresentar duas razões e uma objeção.</p><h3>Evidência de aprendizagem</h3><p>Resposta escrita curta ou intervenção oral justificada.</p><h3>Pertinência pedagógica</h3><p>A atividade torna observável o raciocínio do aluno e permite corrigir dificuldades conceptuais e argumentativas.</p><h3>Diferenciação</h3><p>Disponibilizar vocabulário-chave, pergunta-guia e modelo de argumento; aos alunos avançados, acrescentar objeção e contraexemplo.</p><h3>Avaliação</h3><p>Critérios: rigor conceptual, relevância das razões, coerência e capacidade de responder a objeções.</p><button class='v3btn' type='button' onclick='window.print()'>Imprimir / guardar PDF</button></div>";
 };
 window.v3UseMat=function(i){var x=V3_MATS[i];document.getElementById("prismaMain").innerHTML=v3Header(x[1],x[2])+"<div class='v3box'><h2>"+escV(x[1])+"</h2><p>"+escV(x[2])+"</p><h3>Como usar</h3><ol><li>Apresenta o caso sem antecipar a resposta.</li><li>Pede uma decisão inicial.</li><li>Exige razões e critérios.</li><li>Introduz uma objeção.</li><li>Fecha com uma reformulação da posição.</li></ol><button class='v3btn' type='button' onclick=\"v3Professor('materiais')\">Voltar aos materiais</button></div>";};
-window.v3Exercise=function(i){var x=V3_EX[i];document.getElementById("prismaMain").innerHTML=v3Header(x[1],"Exercício de "+x[0])+"<div class='v3box'><h2>"+escV(x[2])+"</h2><textarea id='v3answer' rows='10' placeholder='Escreve a tua resposta...'></textarea><button class='v3btn' type='button' onclick='alert("Resposta guardada apenas nesta sessão. Revisa a tese, as razões e a objeção antes de concluir.")'>Guardar resposta</button></div>";};
-window.v3ShowAssessment=function(i){var a=["Matriz: conceito/problema 20%; reconstrução de argumentos 30%; aplicação 20%; avaliação crítica 30%.","Rubrica: tese clara; conceitos rigorosos; razões relevantes; objeção; resposta à objeção; conclusão. Cada critério pode ser avaliado de 1 a 5.","Bilhete: Qual foi a ideia central? Que razão a sustenta? Que objeção levantarias? Que dúvida permanece?"];document.getElementById("prismaMain").innerHTML=v3Header("Avaliação","Instrumento PRISMA")+"<div class='v3box'><p>"+a[i]+"</p><button class='v3btn' type='button' onclick=\"v3Professor('avaliacao')\">Voltar</button></div>";};
+window.v3Exercise=function(i){var x=V3_EX[i];document.getElementById("prismaMain").innerHTML=v3Header(x[1],"Exercício de "+x[0])+"<div class='v3box'><h2>"+escV(x[2])+"</h2><textarea id='v3answer' rows='10' placeholder='Escreve a tua resposta...'></textarea><button class='v3btn' type='button' onclick='v3Save()'>Guardar resposta</button></div>";};
+window.v3Save=function(){alert("Resposta guardada apenas nesta sessão.")};window.v3ShowAssessment=function(i){var a=["Matriz: conceito/problema 20%; reconstrução de argumentos 30%; aplicação 20%; avaliação crítica 30%.","Rubrica: tese clara; conceitos rigorosos; razões relevantes; objeção; resposta à objeção; conclusão. Cada critério pode ser avaliado de 1 a 5.","Bilhete: Qual foi a ideia central? Que razão a sustenta? Que objeção levantarias? Que dúvida permanece?"];document.getElementById("prismaMain").innerHTML=v3Header("Avaliação","Instrumento PRISMA")+"<div class='v3box'><p>"+a[i]+"</p><button class='v3btn' type='button' onclick=\"v3Professor('avaliacao')\">Voltar</button></div>";};
 window.v3Student=function(){document.getElementById("prismaMain").innerHTML=v3Header("Biblioteca de aprendizagem","Aprende por problemas, conceitos e prática.")+"<div class='v3grid'>"+PRISMA_LEARN.map(function(x){return "<article class='v3card'><span class='v3tag'>"+x.year+"</span><h3>"+escV(x.title)+"</h3><p>"+escV(x.problem)+"</p><button class='v3btn' type='button' onclick=\"psUnit('"+x.id+"')\">Começar percurso</button></article>";}).join("")+"</div>";};
 })();
-<\/script><style>
+</script><style>
 .bloggrid,.msggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.blogcard,.msgbox{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:20px}.blogcard h3{margin:6px 0}.msgbox textarea,.msgbox input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ddd;border-radius:9px;margin:6px 0 12px}.pill{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.6}@media(max-width:700px){.bloggrid,.msggrid{grid-template-columns:1fr}}
 </style>
 <script>
@@ -561,39 +561,7 @@ v3UseMat=function(i){const x=PRISMA_LIBRARY[i];if(!x)return;document.getElementB
 const oldPrismaRenderDashboard=prismaRenderDashboard;
 prismaRenderDashboard=function(){if(role==="aluno"){studentHome()}else{oldPrismaRenderDashboard()}};
 </script>
-<script>
-(function(){
-  function navButtons(st){
-    const a=[['inicio','⌂','Início'],['curriculo','▦','Currículo'],['biblioteca','▤',st?'Biblioteca de aprendizagem':'Biblioteca'],...(st?[['progresso','◔','Progresso']]:[['recursos','✦','Recursos']]),['blog','✎','Blog'],['mensagem','✉','Mensagem ao criador']];
-    return a.map(x=>'<button data-tab="'+x[0]+'" onclick="prismaSwitch(\\''+x[0]+'\\')">'+x[1]+' &nbsp;'+x[2]+'</button>').join('');
-  }
-  window.prismaRenderShell=function(tab){
-    const st=role==="aluno",el=document.getElementById("workspaceContent"); if(!el)return;
-    el.className="content "+(st?"student":"teacher");
-    el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+navButtons(st)+'</nav><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
-    prismaSwitch(tab||"inicio");
-  };
-  window.prismaSwitch=function(tab){
-    document.querySelectorAll(".prisma-nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
-    const st=role==="aluno";
-    try{
-      if(tab==="inicio") return st&&typeof studentHome==="function"?studentHome():prismaRenderDashboard();
-      if(tab==="curriculo") return prismaRenderCurriculum();
-      if(tab==="biblioteca") return st&&typeof v3Student==="function"?v3Student():prismaRenderLibrary();
-      if(tab==="progresso") return st&&typeof studentHome==="function"?studentHome():prismaRenderResources();
-      if(tab==="recursos") return prismaRenderResources();
-      if(tab==="blog") return typeof prismaBlog==="function"?prismaBlog():prismaRenderDashboard();
-      if(tab==="mensagem") return typeof prismaMessage==="function"?prismaMessage():prismaRenderDashboard();
-      return prismaRenderDashboard();
-    }catch(err){
-      console.error("PRISMA navigation error",err);
-      const m=document.getElementById("prismaMain");
-      if(m)m.innerHTML='<div class="prisma-detail"><h2>Não foi possível abrir esta área.</h2><p>O PRISMA encontrou um erro nesta função. O erro foi registado para diagnóstico.</p><button class="v3btn" onclick="prismaSwitch(\\'inicio\\')">Voltar ao início</button></div>';
-    }
-  };
-  window.addEventListener("error",e=>console.error("PRISMA runtime error:",e.error||e.message));
-})();
-</script>
+<script>(function(){function B(){try{return JSON.parse(localStorage.getItem("prisma_blog_user")||"[]")}catch(e){return[]}}function X(s){return String(s||"").replace(/[&<>"']/g,function(m){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]})}window.prismaBlog=function(){var a=(window.PRISMA_BLOG||[]).concat(B());window.__PB=a;var h=v3Header("Blog PRISMA","Textos e propostas da comunidade.");h+="<div class='v3box'><h2>Propor texto</h2><input id='bt' placeholder='Título'><input id='ba' placeholder='Autor'><select id='bc'><option>Filosofia</option><option>Educação</option><option>Didática</option><option>Investigação</option><option>Divulgação</option></select><textarea id='bx' rows='12' placeholder='Texto integral'></textarea><button class='v3btn' onclick='prismaSubmitBlog()'>Enviar proposta</button></div>";h+="<div class='v3grid'>"+a.map(function(x,i){return"<article class='v3card'><h3>"+X(x.title||"")+"</h3><p><b>"+X(x.author||"PRISMA")+"</b></p><button class='v3btn' onclick='prismaReadBlog("+i+")'>Ler</button></article>"}).join("")+"</div>";document.getElementById("prismaMain").innerHTML=h};window.prismaSubmitBlog=function(){var t=bt.value.trim(),a=ba.value.trim(),x=bx.value.trim();if(!t||!a||!x){alert("Preenche os campos.");return}var z=B();z.unshift({title:t,author:a,category:bc.value,text:x,status:"submetido"});localStorage.setItem("prisma_blog_user",JSON.stringify(z));alert("Proposta registada para apreciação.");prismaBlog()};window.prismaReadBlog=function(i){var x=window.__PB[i];document.getElementById("prismaMain").innerHTML=v3Header("Blog",x.title)+"<div class='v3box'><p><b>"+X(x.author||"")+"</b></p><div style='white-space:pre-wrap'>"+X(x.text||x.excerpt||"")+"</div><button class='v3btn' onclick='prismaBlog()'>Voltar</button></div>"}})();</script>
 <script>
 (function(){
 "use strict";
@@ -638,7 +606,7 @@ window.prismaSwitch=function(tab){
  }catch(e){document.getElementById("prismaMain").innerHTML="<div class='v3box'><h2>O módulo encontrou um erro</h2><p>O PRISMA continua funcional, mas esta área precisa de correção.</p><pre style='white-space:pre-wrap'>"+escV(e.message)+"</pre></div>";}
 };
 })();
-<\/script>
+</script>
 <script>
 /* PRISMA RECOVERY RUNTIME — centralizes navigation and prevents dead buttons. */
 (function(){

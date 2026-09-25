@@ -1,0 +1,22 @@
+{
+  "version": "0.1",
+  "language": "pt-PT",
+  "sourcePolicy": "Os dados curriculares oficiais devem ser verificados antes de serem apresentados como conteúdo curricular.",
+  "subjects": [
+    {"id":"filosofia10","name":"Filosofia","year":"10.º ano","topics":[]},
+    {"id":"filosofia11","name":"Filosofia","year":"11.º ano","topics":[]},
+    {"id":"psicologia","name":"Psicologia","year":null,"topics":[]},
+    {"id":"area-integracao","name":"Área de Integração","year":null,"topics":[]}
+  ],
+  "topic": {
+    "id": "",
+    "title": "",
+    "essentialLearning": [],
+    "concepts": [],
+    "problems": [],
+    "authors": [],
+    "texts": [],
+    "skills": [],
+    "activities": []
+  }
+}

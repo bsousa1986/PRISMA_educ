@@ -2,7 +2,7 @@
 (function(){
 function W(){return document.getElementById("workspaceContent")}
 function M(){return W()&&W.querySelector(".prisma-main")}
-function role(){return (window.role||localStorage.getItem("prisma_role")||"professor")}
+function getRole(){return (window.role||localStorage.getItem("prisma_role")||"professor")}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]})}
 function units(){try{return Object.values(window.curriculumUnits||{}).flat()}catch(e){return[]}}
 function renderModules(){
@@ -17,7 +17,8 @@ function renderResources(){
 }
 function openUnit(id){
  if(typeof window.renderCore==="function") return window.renderCore(id);
- if(typeof window.openUnit==="function") return window.openUnit(id);
+ if(typeof window.prismaCoreUnit==="function"){var m=M();if(m){m.innerHTML=window.prismaCoreUnit(id);return;}}
+ if(typeof window.prismaHotShell==="function") return window.prismaHotShell("unit:"+id);
 }
 function openResource(id){
  if(typeof window.renderResource==="function") return window.renderResource(id);
@@ -34,7 +35,7 @@ function tab(t){
  if(t==="planos"&&typeof window.prismaTeacherPlans==="function")return window.prismaTeacherPlans();
  if(t==="exercicios"&&typeof window.prismaTeacherExercises==="function")return window.prismaTeacherExercises();
  if(t==="avaliacao"&&typeof window.prismaTeacherAssessment==="function")return window.prismaTeacherAssessment();
- if(t==="inicio"&&typeof window.openApp==="function")return window.openApp(role());
+ if(t==="inicio"&&typeof window.openApp==="function")return window.openApp(getRole());
  if(t==="blog"&&typeof window.prismaBlog==="function")return window.prismaBlog();
  if(t==="mensagem"&&typeof window.prismaMessage==="function")return window.prismaMessage();
  if(t==="investigacao"&&typeof window.prismaResearch==="function")return window.prismaResearch();

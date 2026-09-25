@@ -12,9 +12,10 @@ test('PRISMA navigation works', async ({ page }) => {
   await page.locator('[data-t="planos"]').click();
   await page.getByRole('button', { name: /Criar a minha aula/i }).click();
   await expect(page.getByText('Evidência de aprendizagem')).toBeVisible();
-  await page.getByRole('button', { name: /Início/i }).click();
+  await page.locator('.back').first().click();
   await page.getByRole('button', { name: /Aluno/i }).click();
   await page.getByRole('button', { name: /Módulos/i }).click();
+  await expect(page.locator('main.prisma-main')).toBeVisible();
   await page.getByRole('button', { name: /Aprender/i }).click();
   await page.getByRole('button', { name: /Progresso/i }).click();
   expect(errors, errors.join('\n')).toEqual([]);

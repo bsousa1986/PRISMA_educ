@@ -686,7 +686,7 @@ window.prismaSwitch=function(tab){
 function getMain(){return document.getElementById("prismaMain")||document.getElementById("output");}
 function allUnits(){try{return Object.values(curriculumUnits||{}).flat();}catch(e){return[];}}
 function findUnit(id){return allUnits().find(function(x){return x.id===id;});}
-function target(){return document.getElementById("output")||document.getElementById("prismaMain");}
+function target(){return document.getElementById("prismaMain")||document.getElementById("output");}
 window.openUnit=function(id){
   var u=findUnit(id), d=(typeof unitContent!=="undefined"?unitContent[id]:null), out=target();
   if(!u||!out){if(typeof v3Professor==="function")return v3Professor("planos");return;}

@@ -608,77 +608,30 @@ window.prismaSwitch=function(tab){
 })();
 </script>
 <script>
-/* PRISMA RECOVERY RUNTIME — centralizes navigation and prevents dead buttons. */
+/* PRISMA STABLE NAVIGATION — one event path for all submenus. */
 (function(){
   "use strict";
-  function main(){ return document.getElementById("prismaMain") || document.querySelector("main") || document.body; }
-  function safeCall(name,args){
+  function go(tab){
     try{
-      if(typeof window[name]==="function"){ window[name].apply(window,args||[]); return true; }
-    }catch(e){ console.warn("PRISMA action failed:",name,e); }
-    return false;
-  }
-  function fallback(tab){
-    var m=main();
-    var pages={
-      inicio:["PRISMA","Pensar. Compreender. Aprender.","Escolhe um percurso para começar."],
-      curriculo:["Currículo","O currículo organiza o percurso de aprendizagem.","Seleciona uma disciplina e consulta as Aprendizagens Essenciais."],
-      biblioteca:["Biblioteca","Materiais, textos, exercícios e experiências mentais.","Explora recursos ligados ao currículo."],
-      progresso:["Progresso","O teu percurso de aprendizagem.","O progresso é guardado neste dispositivo."],
-      recursos:["Recursos","Recursos para ensinar e aprender Filosofia.","Consulta materiais PRISMA e fontes oficiais."],
-      blog:["Blog","Ideias sobre Filosofia, educação e didática.","Conteúdos do PRISMA."],
-      mensagem:["Mensagem ao criador","Fala diretamente com o criador do PRISMA.","Escreve a tua mensagem e envia."],
-      investigacao:["Investigação","Partilha investigação, ensaios e textos filosóficos.","As submissões ficam sujeitas a apreciação."]
-    };
-    var p=pages[tab]||pages.inicio;
-    m.innerHTML='<section class="prisma-panel" style="margin:24px 0"><div class="prisma-kicker">PRISMA</div><h1>'+p[0]+'</h1><p style="font-size:1.1rem">'+p[1]+'</p><p>'+p[2]+'</p></section>';
-  }
-  function route(tab){
-    var ok=false;
-    if(tab==="investigacao") ok=safeCall("prismaResearch");
-    else ok=safeCall("prismaSwitch",[tab]);
-    if(!ok) ok=safeCall("prismaRenderShell",[tab]);
-    if(!ok) fallback(tab);
-  }
-  function byText(t){
-    t=(t||"").replace(/\s+/g," ").trim().toLowerCase();
-    if(t.includes("início")||t==="inicio") return "inicio";
-    if(t.includes("currículo")||t==="curriculo") return "curriculo";
-    if(t.includes("biblioteca")) return "biblioteca";
-    if(t.includes("progresso")) return "progresso";
-    if(t.includes("recursos")) return "recursos";
-    if(t.includes("blog")) return "blog";
-    if(t.includes("mensagem")) return "mensagem";
-    if(t.includes("investigação")) return "investigacao";
-    return null;
-  }
-  document.addEventListener("click",function(ev){
-    var b=ev.target.closest && ev.target.closest("button,a");
-    if(!b) return;
-    var tab=b.getAttribute("data-tab");
-    var nav=b.closest(".prisma-nav");
-    var label=byText(b.textContent);
-    if(nav && !tab) tab=label;
-    if(tab){
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      document.querySelectorAll(".prisma-nav button").forEach(function(x){x.classList.toggle("active",x===b);});
-      route(tab);
-      return;
+      document.querySelectorAll(".prisma-nav button").forEach(function(x){x.classList.toggle("active",x.dataset.tab===tab);});
+      if(tab==="curriculo" && typeof window.v3Professor==="function" && (typeof role==="undefined" || role!=="aluno")) return window.v3Professor("curriculo");
+      if(typeof window.prismaSwitch==="function") return window.prismaSwitch(tab);
+    }catch(e){
+      var m=document.getElementById("prismaMain");
+      if(m)m.innerHTML='<div class="v3box"><h2>Erro nesta área</h2><pre style="white-space:pre-wrap">'+String(e&&e.stack||e)+'</pre></div>';
     }
-    var code=b.getAttribute("onclick");
-    if(code){
-      var match=code.match(/^\s*([A-Za-z_$][\w$]*)\s*\(/);
-      if(match && typeof window[match[1]]==="function"){
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
-        try{ new Function(code).call(b); }catch(e){ console.warn("PRISMA button error",e); }
-      }
+  }
+  window.prismaRoute=go;
+  document.addEventListener("click",function(ev){
+    var b=ev.target.closest?ev.target.closest("button"):null;
+    if(!b)return;
+    var nav=b.closest(".prisma-nav");
+    if(nav){
+      var tab=b.dataset.tab;
+      if(tab){ev.preventDefault();ev.stopImmediatePropagation();go(tab);}
     }
   },true);
-  window.prismaRoute=route;
-})();
-</script>
+})();</script>
 <script>
 /* PRISMA FINAL MODULE REPAIR — curriculum modules + lesson creator */
 (function(){
@@ -733,18 +686,11 @@ window.v3Professor=function(tab){
 })();
 </script>
 <script>
-/* PRISMA FINAL ROUTING — teacher Curriculum opens Modules. */
+/* FINAL ROUTING */
 (function(){
-  var previousSwitch=window.prismaSwitch;
+  var base=window.prismaSwitch;
   window.prismaSwitch=function(tab){
-    try{
-      var current=(typeof role!=="undefined"?role:(localStorage.getItem("prisma_role")||"professor"));
-      if(tab==="curriculo" && current!=="aluno" && typeof window.v3Professor==="function"){
-        document.querySelectorAll(".prisma-nav button").forEach(function(b){b.classList.toggle("active",b.dataset.tab==="curriculo");});
-        return window.v3Professor("curriculo");
-      }
-    }catch(e){}
-    return previousSwitch(tab);
+    if(tab==="curriculo" && typeof window.v3Professor==="function" && (typeof role==="undefined" || role!=="aluno")) return window.v3Professor("curriculo");
+    return base(tab);
   };
-})();
-</script></body></html>
+})();</script></body></html>

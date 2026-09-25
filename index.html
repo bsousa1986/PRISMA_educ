@@ -19,9 +19,18 @@
 <script>
 let role='';
 const subjects=['Filosofia — 10.º ano','Filosofia — 11.º ano','Psicologia','Área de Integração'];
-const studentTopics=['O que é a Filosofia?','Argumentação: tese, argumento, validade e verdade','Falácias informais e pensamento crítico','A ação humana: determinismo e liberdade','A dimensão ética da ação','A dimensão política da ação','O problema do conhecimento','Problemas do mundo contemporâneo'];
+const studentTopics=["O que é a Filosofia?","Argumentação: tese, argumento, validade e verdade","Falácias informais e pensamento crítico","A ação humana: determinismo e liberdade","A dimensão ética da ação","A dimensão política da ação","O problema do conhecimento","Filosofia da ciência","Filosofia da arte","Filosofia política","Problemas do mundo contemporâneo"];
 const teacherTools=[['📋','Plano de aula','Estruturar uma aula com objetivos, etapas e avaliação.','plano'],['📝','Ficha de trabalho','Criar atividades graduadas para uma turma.','ficha'],['🧪','Teste','Construir uma proposta de avaliação.','teste'],['📊','Rubrica','Definir critérios e níveis de desempenho.','rubrica'],['💬','Debate','Preparar uma questão, posições e regras de discussão.','debate'],['🧠','Oficina de conceitos','Organizar distinções, exemplos e problemas.','oficina']];
 const studentTools=[['📚','Aprender','Seguir uma explicação guiada antes de praticar.','aprender'],['🔎','Conceitos','Explorar conceitos e relações entre eles.','conceitos'],['👤','Autores','Conhecer posições filosóficas relevantes para o tema.','autores'],['📜','Textos','Ler e trabalhar um texto filosófico.','textos'],['✍️','Praticar','Resolver exercícios com feedback.','praticar'],['🧪','Verificar','Fazer um pequeno teste e descobrir onde melhorar.','quiz'],['🤖','Tutor PRISMA','Pedir uma explicação ou pista sem receber logo a resposta.','tutor']];
+const progress={};
+function openTopic(i){
+const key=i===0?'intro':i===1?'argumentacao':null;
+if(key){showModule(key);return;}
+const out=document.getElementById('output'),topic=studentTopics[i];
+out.innerHTML='<h3>'+topic+'</h3><p><b>Percurso PRISMA:</b> Problema → Conceitos → Teses → Argumentos → Objeções → Aplicação → Verificação.</p><p>Este módulo está ligado à estrutura curricular e será aprofundado progressivamente, distinguindo o núcleo das Aprendizagens Essenciais dos materiais de aprofundamento.</p><button class="back" onclick="markDone('+JSON.stringify(topic)+')">✓ Marcar como estudado</button>';
+out.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function markDone(topic){progress[topic]=true;document.querySelectorAll('.studentProgress').forEach(x=>x.textContent=Object.keys(progress).length+'/'+studentTopics.length);}
 function showCurriculum(kind,btn){
 document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const body=document.getElementById('curriculumBody');
 if(kind==='ae')body.innerHTML='<h3>Aprendizagens Essenciais</h3><p>As AE são documentos de orientação curricular base para a <b>planificação, realização e avaliação</b>. Organizam-se em três dimensões: <b>o que saber</b>, <b>como pensar e trabalhar para aprender</b> e <b>como mostrar o que se aprendeu</b>.</p><p><b>Filosofia — 10.º ano</b></p><ul><li>Abordagem introdutória à Filosofia e ao filosofar.</li><li>Racionalidade argumentativa: tese, argumento, validade, verdade e solidez.</li><li>Temas/problemas do mundo contemporâneo, com desenvolvimento de um ensaio filosófico.</li></ul><p><b>Filosofia — 11.º ano</b></p><ul><li>Conhecimento e racionalidade científica e tecnológica.</li><li>Problemas e teorias filosóficas mobilizando o trabalho argumentativo desenvolvido no 10.º ano.</li><li>Problemas éticos, políticos e tecnocientíficos, entre outros enquadrados nas áreas filosóficas das AE.</li></ul><p class="muted">Na próxima evolução, cada unidade será registada no PRISMA com a formulação curricular completa da DGE, evitando resumos que possam perder informação.</p>';

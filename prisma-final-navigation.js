@@ -29,6 +29,8 @@ function baseFind(id){return (window.PRISMA_READY_RESOURCES||[]).find(function(x
 function tab(t){
  if(t==="curriculo")return renderModules();
  if(t==="recursos")return renderResources();
+ if(t==="materiais"&&typeof window.v3Professor==="function")return window.v3Professor("materiais");
+ if(t==="documentos"&&typeof window.v3Professor==="function")return window.v3Professor("documentos");
  if(t==="planos"&&typeof window.prismaTeacherPlans==="function")return window.prismaTeacherPlans();
  if(t==="exercicios"&&typeof window.prismaTeacherExercises==="function")return window.prismaTeacherExercises();
  if(t==="avaliacao"&&typeof window.prismaTeacherAssessment==="function")return window.prismaTeacherAssessment();
@@ -37,7 +39,7 @@ function tab(t){
  if(t==="mensagem"&&typeof window.prismaMessage==="function")return window.prismaMessage();
  if(t==="investigacao"&&typeof window.prismaResearch==="function")return window.prismaResearch();
 }
-document.addEventListener("click",function(e){
+window.addEventListener("click",function(e){
  let b=e.target.closest("[data-final-tab]"); if(b){e.preventDefault();e.stopImmediatePropagation();tab(b.dataset.finalTab);return}
  b=e.target.closest("[data-clean-tab]"); if(b){e.preventDefault();e.stopImmediatePropagation();tab(b.dataset.cleanTab);return}
  b=e.target.closest("[data-hot-tab]"); if(b){e.preventDefault();e.stopImmediatePropagation();tab(b.dataset.hotTab);return}

@@ -806,4 +806,110 @@ window.v3Professor=function(tab){
   window.prismaRenderResources=render;
   window.PRISMA_READY_RESOURCES=RES;
 })();
+</script>
+<script>
+/* PRISMA HOTFIX 2026-09-25 — single visible workspace + real module/resource content */
+(function(){
+  "use strict";
+  function main(){
+    var w=document.getElementById("workspaceContent");
+    if(!w)return null;
+    var m=w.querySelector("main.prisma-main");
+    if(!m){m=document.createElement("main");m.className="prisma-main";w.appendChild(m);}
+    return m;
+  }
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]})}
+  function all(){try{return Object.values(curriculumUnits||{}).flat()}catch(e){return[]}}
+  function unit(id){return all().find(function(x){return x.id===id})}
+  function shell(tab){
+    var m=main(); if(!m)return;
+    var r=role==="aluno"?"aluno":"professor";
+    var h='<div class="prisma-head"><div><div class="prisma-kicker">PRISMA</div><h1>'+(r==="aluno"?"Centro do Aluno":"Centro do Professor")+'</h1><p>Currículo, conteúdos, atividades e avaliação num único percurso.</p></div></div>';
+    h+='<div class="prisma-nav-clean"><button data-hot-tab="inicio">⌂ Início</button><button data-hot-tab="curriculo">⌘ Módulos</button><button data-hot-tab="recursos">◈ Recursos</button><button data-hot-tab="progresso">◔ Progresso</button><button data-hot-tab="blog">✎ Blog</button><button data-hot-tab="investigacao">⌕ Investigação</button></div>';
+    if(r==="professor")h+='<div class="v3nav-clean"><button data-hot-prof="planos">▣ Planos de aula</button><button data-hot-prof="materiais">◈ Materiais</button><button data-hot-prof="exercicios">✓ Exercícios</button><button data-hot-prof="avaliacao">◎ Avaliação</button></div>';
+    if(tab==="curriculo")return renderModules(m,h,r);
+    if(tab==="recursos")return renderResources(m,h);
+    if(tab==="progresso")return renderProgress(m,h);
+    m.innerHTML=h+'<div class="v3box"><h2>Começar</h2><p>Escolhe <b>Módulos</b> para entrar no conteúdo curricular ou <b>Recursos</b> para abrir materiais prontos.</p><div class="prisma-units">'+all().slice(0,3).map(function(x){return '<button class="prisma-unit" data-hot-unit="'+esc(x.id)+'"><span class="unit-no">'+esc(x.id)+'</span><h3>'+esc(x.name)+'</h3><p>'+esc(x.ae)+'</p></button>'}).join("")+'</div></div>';
+  }
+  function renderModules(m,h,r){
+    h+='<div class="v3box"><h2>Módulos curriculares</h2><p>Todos os módulos têm agora uma página própria com problema, conceitos, aprendizagens, atividades e avaliação.</p><div class="prisma-units">'+all().map(function(x,i){return '<button class="prisma-unit" type="button" data-hot-unit="'+esc(x.id)+'"><span class="unit-no">'+(i+1)+' · '+esc(x.id)+'</span><h3>'+esc(x.name)+'</h3><p>'+esc(x.ae)+'</p><div class="unit-meta">Abrir conteúdo →</div></button>'}).join("")+'</div></div>';
+    m.innerHTML=h;
+  }
+  function renderUnit(id){
+    var m=main(),u=unit(id);if(!m||!u)return;
+    var concepts={
+      "F10-II-L":["determinismo","compatibilismo","libertismo","liberdade","responsabilidade"],
+      "F10-II-E":["subjetivismo","relativismo","objetivismo","juízo moral"],
+      "F10-II-M":["dever","imperativo categórico","universalização","utilidade","consequências"],
+      "F10-II-P":["justiça","igualdade","liberdade","distribuição"],
+      "F11-IV-K":["ceticismo","justificação","certeza","Descartes","Hume"],
+      "F11-IV-C":["indução","hipótese","demarcação","refutação","ciência"],
+      "F11-IV-T":["tecnologia","inteligência artificial","responsabilidade","risco","justiça"]
+    }[id]||["problema filosófico","conceito","tese","argumento","objeção"];
+    var questions={
+      "F10-II-L":"Se todas as nossas decisões tiverem causas anteriores, podemos continuar a dizer que somos livres?",
+      "F10-II-E":"Os juízos morais são apenas opiniões ou podem ser objetivamente verdadeiros?",
+      "F10-II-M":"O que torna uma ação moralmente correta: o princípio ou as consequências?",
+      "F10-II-P":"Que princípios devem orientar uma sociedade justa?",
+      "F11-IV-K":"Como podemos saber que aquilo que acreditamos conhecer não é uma ilusão?",
+      "F11-IV-C":"Como distinguir uma explicação científica de uma explicação que apenas parece científica?",
+      "F11-IV-T":"Como devemos avaliar decisões tecnológicas que afetam pessoas e a sociedade?"
+    }[id]||"Que problema filosófico está em jogo neste módulo?";
+    var activities=[
+      "Formula uma pergunta filosófica a partir do problema.",
+      "Define dois conceitos sem recorrer apenas a exemplos.",
+      "Formula uma tese e apresenta duas razões.",
+      "Constrói uma objeção forte à tese.",
+      "Responde à objeção e avalia o resultado."
+    ];
+    m.innerHTML='<div class="v3box"><button class="v3btn" data-hot-tab="curriculo">← Voltar aos módulos</button> <button class="v3btn" data-hot-create="'+esc(id)+'">Criar aula deste módulo</button><span class="v3tag">'+esc(id)+'</span><h1>'+esc(u.name)+'</h1><h2>Aprendizagens Essenciais</h2><p>'+esc(u.ae)+'</p><h2>Problema filosófico</h2><div class="v3card"><h3>'+esc(questions)+'</h3><p>O objetivo é passar da informação para a problematização, conceptualização e argumentação.</p></div><h2>Conceitos-chave</h2><div class="v3grid">'+concepts.map(function(x){return '<article class="v3card"><h3>'+esc(x)+'</h3><p>Explica o conceito, distingue-o de conceitos próximos e aplica-o a um exemplo.</p></article>'}).join("")+'</div><h2>Percurso de aprendizagem</h2><ol>'+activities.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ol><h2>Atividade de aula</h2><p>Em pares, formulem uma tese sobre o problema, apresentem duas razões, construam uma objeção e respondam-lhe. No final, cada aluno escreve um bilhete de saída com a sua conclusão.</p><h2>Verificação</h2><p>Consegue explicar o problema? Usar os conceitos com precisão? Distinguir tese e argumento? Formular e responder a uma objeção?</p></div>';
+  }
+  var extra=[
+    ["10.º · Introdução","Ficha de problematização","Do espanto ao problema filosófico","Transforma cinco perguntas do quotidiano em problemas filosóficos e justifica a transformação."],
+    ["10.º · Lógica","Oficina de argumentos","Tese, razões e objeções","Identifica a conclusão e as premissas de oito argumentos e assinala uma possível objeção."],
+    ["10.º · Lógica","Ficha de falácias","Quando um argumento parece melhor do que é","Analisa ad hominem, falsa dicotomia, generalização precipitada e apelo à autoridade em casos concretos."],
+    ["10.º · Livre-arbítrio","Debate","Ser responsável se não somos livres?","Duas equipas defendem posições diferentes; cada uma deve apresentar argumento, objeção e réplica."],
+    ["10.º · Ética","Casos morais","Mentir para proteger alguém","Analisa o caso segundo subjetivismo, relativismo, objetivismo e uma teoria normativa."],
+    ["10.º · Kant/Mill","Ficha comparativa","Dever ou consequência?","Resolve quatro dilemas aplicando os critérios de Kant e Mill e identifica uma dificuldade de cada teoria."],
+    ["10.º · Justiça","Experiência mental","A sociedade que vais desconhecer","Imagina regras sociais sem saber qual será a tua posição e avalia os princípios escolhidos."],
+    ["11.º · Conhecimento","Experiência mental","O cérebro numa cuba","Distingue aparência, crença, justificação e conhecimento perante um cenário cético."],
+    ["11.º · Conhecimento","Ficha de Hume","Causa e efeito","Explica por que razão observar A seguido de B não demonstra logicamente que A causa B."],
+    ["11.º · Ciência","Oficina científica","O que poderia refutar esta hipótese?","Para cada hipótese, cria uma previsão e uma possível observação contrária."],
+    ["11.º · Ciência","Ficha de demarcação","Ciência ou pseudociência?","Analisa critérios de testabilidade, evidência, previsão e resistência à refutação."],
+    ["11.º · IA","Caso-problema","O algoritmo que decide","Analisa eficiência, transparência, enviesamento, responsabilidade e justiça numa decisão automatizada."]
+  ];
+  function renderResources(m,h){
+    var base=window.PRISMA_READY_RESOURCES||[];
+    var cards=base.map(function(x){return '<article class="v3card"><span class="v3tag">'+esc(x.type)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.desc)+'</p><button class="v3btn" data-hot-res="'+esc(x.id)+'">Abrir</button></article>'}).join("");
+    cards+=extra.map(function(x,i){return '<article class="v3card"><span class="v3tag">'+esc(x[0])+'</span><h3>'+esc(x[1])+' · '+esc(x[2])+'</h3><p>'+esc(x[3])+'</p><button class="v3btn" data-hot-extra="'+i+'">Abrir recurso</button></article>'}).join("");
+    m.innerHTML=h+'<div class="v3box"><h2>Biblioteca pedagógica</h2><p><b>'+ (base.length+extra.length) +' recursos</b> disponíveis nesta versão.</p></div><div class="v3grid">'+cards+'</div>';
+  }
+  function renderResource(id){
+    var m=main(),r=(window.PRISMA_READY_RESOURCES||[]).find(function(x){return x.id===id});if(!m||!r)return;
+    m.innerHTML='<div class="v3box"><button class="v3btn" data-hot-tab="recursos">← Recursos</button><button class="v3btn" onclick="window.print()">🖨 Imprimir / guardar PDF</button><div class="prisma-document">'+r.html+'</div></div>';
+  }
+  function renderExtra(i){
+    var x=extra[i],m=main();if(!x||!m)return;
+    m.innerHTML='<div class="v3box"><button class="v3btn" data-hot-tab="recursos">← Recursos</button><button class="v3btn" onclick="window.print()">🖨 Imprimir / guardar PDF</button><span class="v3tag">'+esc(x[0])+'</span><h1>'+esc(x[2])+'</h1><h2>Objetivo</h2><p>'+esc(x[3])+'</p><h2>Proposta de trabalho</h2><ol><li>Identifica o problema filosófico.</li><li>Define os conceitos relevantes.</li><li>Formula uma tese.</li><li>Apresenta duas razões.</li><li>Constrói uma objeção.</li><li>Responde à objeção.</li></ol><h2>Produto final</h2><p>Entrega um texto argumentativo de 250–400 palavras ou apresenta oralmente a estrutura do argumento.</p><h2>Critérios</h2><p>Clareza conceptual · relevância das razões · qualidade da objeção · coerência da resposta · uso adequado de linguagem filosófica.</p></div>';
+  }
+  function renderProgress(m,h){m.innerHTML=h+'<div class="v3box"><h2>Progresso</h2><p>O teu percurso aparecerá aqui à medida que fores concluindo módulos e atividades.</p></div>'}
+  function createLesson(id){
+    var u=unit(id),m=main();if(!u||!m)return;
+    m.innerHTML='<div class="v3box"><button class="v3btn" data-hot-unit="'+esc(id)+'">← Módulo</button><h1>Plano de aula · '+esc(u.name)+'</h1><p><b>Duração:</b> 50 minutos · <b>Estrutura:</b> problematização → conceptualização → argumentação → avaliação.</p><h2>1. Objetivos</h2><p>Compreender a questão central do módulo; mobilizar conceitos; formular e avaliar argumentos; apresentar uma objeção.</p><h2>2. Problematização · 10 min</h2><p>Apresenta o problema: <b>'+esc(({"F10-II-L":"Somos realmente livres?","F10-II-E":"Os juízos morais são objetivos?","F10-II-M":"O que torna uma ação moral?","F11-IV-K":"Como sabemos?","F11-IV-C":"O que distingue ciência de pseudociência?","F11-IV-T":"Pode uma decisão algorítmica ser justa?"}[id]||"Que problema está em jogo?"))+'</b>. Recolhe respostas sem as avaliar imediatamente.</p><h2>3. Conceptualização · 15 min</h2><p>Extrai dos alunos os conceitos necessários e regista definições provisórias. Pede um exemplo e um contraexemplo para cada conceito.</p><h2>4. Argumentação · 15 min</h2><p>Em pares, cada aluno formula uma tese, duas razões e uma objeção. O par reformula a objeção de modo a torná-la mais forte.</p><h2>5. Discussão · 5 min</h2><p>Compara respostas e pergunta qual das razões suporta melhor a conclusão e porquê.</p><h2>6. Evidência de aprendizagem · 5 min</h2><p>Bilhete de saída: “A minha tese é…; a melhor razão é…; a objeção mais difícil é…; responderia dizendo…”.</p><h2>Materiais</h2><p>Quadro, ficha do módulo, experiência mental/caso-problema e caderno do aluno.</p></div>';
+  }
+  document.addEventListener("click",function(ev){
+    var b=ev.target.closest&&ev.target.closest("button");if(!b)return;
+    if(b.dataset.hotTab){ev.preventDefault();ev.stopImmediatePropagation();shell(b.dataset.hotTab);return}
+    if(b.dataset.hotUnit){ev.preventDefault();ev.stopImmediatePropagation();renderUnit(b.dataset.hotUnit);return}
+    if(b.dataset.hotCreate){ev.preventDefault();ev.stopImmediatePropagation();createLesson(b.dataset.hotCreate);return}
+    if(b.dataset.hotRes){ev.preventDefault();ev.stopImmediatePropagation();renderResource(b.dataset.hotRes);return}
+    if(b.dataset.hotExtra){ev.preventDefault();ev.stopImmediatePropagation();renderExtra(Number(b.dataset.hotExtra));return}
+    if(b.dataset.hotProf){ev.preventDefault();ev.stopImmediatePropagation();if(b.dataset.hotProf==="planos"){var m=main();m.innerHTML='<div class="v3box"><h1>Planos de aula</h1><p>Escolhe um módulo.</p>'+all().map(function(x){return '<button class="v3btn" data-hot-create="'+esc(x.id)+'">'+esc(x.name)+' — criar aula</button>'}).join("<br><br>")+'</div>'}else shell("inicio");return}
+  },true);
+  window.prismaHotShell=shell;
+  window.prismaRenderResources=function(){shell("recursos")};
+  window.prismaRenderShell=function(tab){shell(tab||"inicio")};
+  window.openApp=function(r){role=r;try{localStorage.setItem("prisma_role",r)}catch(e){};document.getElementById("home").style.display="none";document.getElementById("workspace").style.display="block";document.getElementById("role").textContent=r==="professor"?"PROFESSOR":"ALUNO";shell("inicio")};
+})();
 </script></body></html>

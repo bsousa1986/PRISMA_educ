@@ -924,4 +924,119 @@ window.v3Professor=function(tab){
   window.prismaRenderShell=function(tab){shell(tab||"inicio")};
   window.openApp=function(r){role=r;try{localStorage.setItem("prisma_role",r)}catch(e){};document.getElementById("home").style.display="none";document.getElementById("workspace").style.display="block";document.getElementById("role").textContent=r==="professor"?"PROFESSOR":"ALUNO";shell("inicio")};
 })();
+</script><script>
+/* PRISMA CORE — MÓDULO LIVRE-ARBÍTRIO — unidade-piloto completa */
+(function(){
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})};
+  var core={
+    "F10-II-L":{
+      title:"Livre-arbítrio: somos realmente livres?",
+      subtitle:"Unidade PRISMA completa — problema, posições, argumentos, objeções, prática e avaliação.",
+      problem:"Se as nossas ações resultam de causas anteriores, podemos ainda dizer que somos responsáveis por aquilo que fazemos?",
+      ae:[
+        "Problematizar o livre-arbítrio e a responsabilidade moral.",
+        "Caracterizar e confrontar posições filosóficas relevantes sobre a liberdade.",
+        "Formular, reconstruir e avaliar argumentos filosóficos.",
+        "Justificar uma posição própria respondendo a objeções."
+      ],
+      competencies:["Problematização","Conceptualização","Argumentação","Análise crítica","Comunicação filosófica"],
+      concepts:[
+        ["Livre-arbítrio","Capacidade de agir de modo que a ação dependa, em sentido relevante, do agente e não seja simplesmente imposta por fatores externos."],
+        ["Determinismo","Tese segundo a qual, dadas as condições anteriores e as leis da natureza, existe um único futuro possível."],
+        ["Libertismo","Posição que entende que existe liberdade genuína e que o determinismo é incompatível com ela."],
+        ["Compatibilismo","Posição segundo a qual determinismo e liberdade podem ser compatíveis."],
+        ["Responsabilidade moral","Atribuição de responsabilidade a um agente pelas suas ações, quando se verificam condições relevantes para essa atribuição."]
+      ],
+      philosophers:[
+        ["David Hume","Compatibilismo","A liberdade pode ser entendida como agir segundo a própria vontade, sem coerção externa; a regularidade causal não elimina necessariamente a liberdade."],
+        ["Immanuel Kant","Liberdade prática","A moralidade exige que nos compreendamos como agentes capazes de agir segundo princípios, e não apenas como acontecimentos determinados por causas naturais."],
+        ["Barão d'Holbach","Determinismo","As ações humanas integram uma cadeia causal natural; a sensação de liberdade não prova que pudéssemos ter feito outra coisa nas mesmas condições."],
+        ["Robert Kane","Libertismo","Defende uma conceção incompatibilista em que algumas decisões têm um papel genuinamente aberto na formação do agente."]
+      ],
+      arguments:[
+        ["Argumento determinista","Se cada ação resulta necessariamente de condições anteriores, então, mantendo exatamente essas condições, o agente não poderia agir de outro modo. Se poder agir de outro modo é necessário para a liberdade, então não somos livres nesse sentido forte.","O determinista ainda precisa de justificar por que razão a possibilidade de agir de outro modo é indispensável à responsabilidade."],
+        ["Argumento compatibilista","Ser livre não exige ausência de causas; exige que a ação resulte das razões e desejos do próprio agente e não de coerção externa. Logo, uma ação causalmente determinada pode ser livre.","O crítico pode perguntar se a origem da vontade é realmente do agente se essa vontade também tem causas anteriores."],
+        ["Argumento da responsabilidade","Práticas de elogio, censura e responsabilização parecem pressupor que o agente tem algum controlo relevante sobre a ação. Se não houver controlo, a responsabilidade parece ficar ameaçada.","O compatibilista pode responder que controlo não significa causalidade ausente, mas capacidade de agir segundo razões."]
+      ],
+      experiment:{
+        title:"A experiência mental do cientista",
+        text:"Imagina um cientista que conhece todas as leis da natureza e todas as condições físicas do teu cérebro e do mundo no instante t. Ele consegue prever que, daqui a cinco minutos, escolherás A em vez de B. Quando chega o momento, escolhes A.",
+        questions:["Se o cientista consegue prever a tua escolha, poderias ter escolhido B?","Se não poderias, isso elimina a liberdade?","Se poderias agir de outro modo apenas se as condições anteriores fossem diferentes, isso basta para a responsabilidade?","Que diferença existe entre ser causado e ser coagido?"],
+        teaching:"A experiência deve gerar uma distinção conceptual: causalidade, coerção, possibilidade alternativa e controlo não são sinónimos."
+      },
+      texts:[
+        ["Hume — liberdade e necessidade","Excerto curto para leitura orientada: Hume procura compatibilizar necessidade causal e liberdade, distinguindo a determinação dos acontecimentos da ausência de constrangimento externo.","Pergunta: que definição de liberdade torna possível essa compatibilidade?"],
+        ["Kant — autonomia","Leitura orientada sobre a ideia de agir segundo uma lei que o próprio agente reconhece racionalmente, relacionando liberdade e autonomia.","Pergunta: ser autónomo significa simplesmente fazer aquilo que queremos?"],
+        ["Problema contemporâneo","Um sistema de neurociência consegue prever com elevada antecedência uma decisão simples. A previsão torna a decisão menos livre ou apenas mostra como o cérebro participa na decisão?","Pergunta: previsão e determinação são exatamente a mesma coisa?"]
+      ],
+      activities:[
+        ["1 · Do caso à questão filosófica","Transforma a afirmação 'o cérebro influencia as nossas decisões' numa pergunta filosófica sobre liberdade. Depois explica por que não é apenas uma pergunta científica."],
+        ["2 · Mapa de posições","Preenche uma tabela com determinismo, libertismo e compatibilismo: conceção de liberdade, relação com causalidade, responsabilidade moral e principal dificuldade."],
+        ["3 · Reconstrução de argumento","Identifica premissas e conclusão no argumento determinista. Depois formula a premissa que consideras mais discutível."],
+        ["4 · Objeção forte","Escolhe o compatibilismo ou o libertismo. Formula a melhor objeção contra a tua própria posição antes de a defenderes."],
+        ["5 · Debate filosófico","Questão: 'Se uma pessoa não podia ter feito outra coisa, pode ser moralmente responsável?' Cada intervenção deve conter uma tese, uma razão e uma resposta a uma objeção."],
+        ["6 · Mini-ensaio","Escreve 500–700 palavras: 'O determinismo torna impossível a responsabilidade moral?' Apresenta pelo menos duas posições e defende uma delas."]
+      ],
+      practice:[
+        ["Nível 1 — Compreender","Define determinismo, livre-arbítrio e coerção sem usar os termos uns para explicar os outros."],
+        ["Nível 2 — Distinguir","Explica a diferença entre 'a minha ação teve causas' e 'fui obrigado a agir assim'."],
+        ["Nível 3 — Argumentar","Reconstrói um argumento compatibilista em pelo menos três premissas e uma conclusão."],
+        ["Nível 4 — Avaliar","Indica uma objeção ao argumento e explica se ela é decisiva ou apenas parcial."],
+        ["Nível 5 — Transferir","Aplica o problema a um caso de dependência, manipulação algorítmica ou pressão social sem reduzir o caso a uma simples opinião."]
+      ],
+      assessment:{
+        questions:[
+          ["1. Qual destas formulações exprime melhor o problema filosófico?","Se o cérebro tem atividade elétrica?","Se somos determinados, em que sentido podemos ser responsáveis?","Qual é a velocidade de uma decisão?","Como medir uma intenção?",1],
+          ["2. Qual é a ideia central do compatibilismo?","Liberdade exige ausência de causas.","Determinismo e liberdade são necessariamente incompatíveis.","Uma ação pode ser livre apesar de ter causas, se resultar do agente de modo relevante.","Nenhuma ação tem causas.",2],
+          ["3. Qual é uma objeção clássica ao compatibilismo?","Não existem leis naturais.","Se a vontade também é causada, pode não estar sob controlo último do agente.","As pessoas não tomam decisões.","A moral não existe.",1]
+        ],
+        essay:"O facto de uma ação ter causas anteriores é suficiente para concluir que não somos livres? Discute o problema mobilizando pelo menos duas posições filosóficas."
+      },
+      lesson:{
+        duration:"90 minutos",
+        objective:"No final da aula, o aluno deverá conseguir formular o problema do livre-arbítrio, distinguir determinismo, libertismo e compatibilismo e avaliar um argumento sobre responsabilidade moral.",
+        sequence:[
+          ["0–10 min","Problematização","Apresentação da experiência mental do cientista; resposta individual à pergunta 'poderias ter escolhido de outra maneira?'."],
+          ["10–25 min","Conceptualização","Construção conjunta das distinções: causalidade/coerção; determinismo/liberdade; liberdade/responsabilidade."],
+          ["25–45 min","Análise de posições","Grupos trabalham Hume, Kant, d'Holbach e Kane a partir de uma ficha comparativa."],
+          ["45–65 min","Argumentação","Reconstrução de um argumento determinista e formulação da melhor objeção."],
+          ["65–80 min","Discussão filosófica","Debate orientado: 'Sem possibilidade alternativa não há responsabilidade?'."],
+          ["80–90 min","Evidência de aprendizagem","Exit ticket: definição + argumento + objeção + posição provisória."]
+        ],
+        differentiation:"Para alunos que necessitam de maior apoio: mapa de conceitos e frases-guia. Para alunos com maior domínio: comparação entre responsabilidade, controlo e possibilidade alternativa."
+      }
+    }
+  };
+  window.PRISMA_CORE=core;
+  window.prismaCoreUnit=function(id){
+    var d=core[id]; if(!d) return null;
+    var h='<div class="prisma-detail"><button class="back" data-hot-back="curriculo">← Voltar aos módulos</button>';
+    h+='<div class="prisma-kicker">Módulo PRISMA · '+esc(id)+'</div><h2>'+esc(d.title)+'</h2><p class="lead">'+esc(d.subtitle)+'</p>';
+    h+='<div class="prisma-hero"><strong>Problema orientador</strong><p>'+esc(d.problem)+'</p></div>';
+    h+='<h3>Aprendizagens Essenciais trabalhadas</h3><ul>'+d.ae.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+    h+='<p><b>Competências:</b> '+d.competencies.map(x=>'<span class="badge">'+esc(x)+'</span>').join(' ')+'</p>';
+    h+='<h3>Conceitos fundamentais</h3><div class="prisma-grid2">'+d.concepts.map(x=>'<div class="prisma-panel"><h4>'+esc(x[0])+'</h4><p>'+esc(x[1])+'</p></div>').join('')+'</div>';
+    h+='<h3>Filósofos e posições</h3><div class="prisma-grid2">'+d.philosophers.map(x=>'<div class="prisma-panel"><h4>'+esc(x[0])+' · '+esc(x[1])+'</h4><p>'+esc(x[2])+'</p></div>').join('')+'</div>';
+    h+='<h3>Argumentos e objeções</h3>'+d.arguments.map(x=>'<div class="lesson-card"><h4>'+esc(x[0])+'</h4><p><b>Argumento:</b> '+esc(x[1])+'</p><p><b>Objeção a explorar:</b> '+esc(x[2])+'</p></div>').join('');
+    h+='<h3>Experiência mental</h3><div class="prisma-panel"><h4>'+esc(d.experiment.title)+'</h4><p>'+esc(d.experiment.text)+'</p><ol>'+d.experiment.questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ol><p><b>Intenção didática:</b> '+esc(d.experiment.teaching)+'</p></div>';
+    h+='<h3>Textos e leitura filosófica</h3>'+d.texts.map(x=>'<div class="lesson-card"><h4>'+esc(x[0])+'</h4><p>'+esc(x[1])+'</p><p><b>Pergunta de leitura:</b> '+esc(x[2])+'</p></div>').join('');
+    h+='<h3>Atividades de aprendizagem</h3>'+d.activities.map(x=>'<div class="lesson-card"><h4>'+esc(x[0])+'</h4><p>'+esc(x[1])+'</p></div>').join('');
+    h+='<h3>Percurso de prática</h3>'+d.practice.map(x=>'<div class="lesson-card"><h4>'+esc(x[0])+'</h4><p>'+esc(x[1])+'</p></div>').join('');
+    h+='<h3>Plano de aula</h3><div class="prisma-panel"><p><b>Duração:</b> '+esc(d.lesson.duration)+'</p><p><b>Objetivo:</b> '+esc(d.lesson.objective)+'</p>'+d.lesson.sequence.map(x=>'<p><b>'+esc(x[0])+' — '+esc(x[1])+'</b><br>'+esc(x[2])+'</p>').join('')+'<p><b>Diferenciação:</b> '+esc(d.lesson.differentiation)+'</p></div>';
+    h+='<h3>Verificação e avaliação</h3>'+d.assessment.questions.map(q=>'<div class="choice"><b>'+esc(q[0])+'</b><ol><li>'+esc(q[1])+'</li><li>'+esc(q[2])+'</li><li>'+esc(q[3])+'</li><li>'+esc(q[4])+'</li></ol></div>').join('')+'<div class="prisma-panel"><h4>Questão de desenvolvimento</h4><p>'+esc(d.assessment.essay)+'</p></div>';
+    h+='<div class="prisma-actions"><button class="prisma-action" data-hot-print="1"><strong>🖨 Imprimir / guardar PDF</strong><small>Guardar este dossiê para utilização pedagógica.</small></button><button class="prisma-action" data-hot-practice="'+esc(id)+'"><strong>✓ Começar prática</strong><small>Passar diretamente aos exercícios.</small></button><button class="prisma-action" data-hot-lesson="'+esc(id)+'"><strong>▣ Abrir plano de aula</strong><small>Usar a sequência de 90 minutos.</small></button></div>';
+    h+='</div>'; return h;
+  };
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-hot-core-unit]');
+    if(b && window.prismaHotShell){e.preventDefault();window.prismaHotShell('unit:'+b.getAttribute('data-hot-core-unit'));return;}
+  },true);
+  if(window.prismaHotShell){
+    var old=window.prismaHotShell;
+    window.prismaHotShell=function(tab){
+      if(tab==='unit:F10-II-L'){var m=document.querySelector('#workspaceContent .prisma-main');if(m){m.innerHTML=window.prismaCoreUnit('F10-II-L');return;} }
+      return old(tab);
+    };
+  }
+})();
 </script></body></html>

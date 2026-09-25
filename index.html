@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRISMA — Pensar. Compreender. Aprender.</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#687386;--accent:#5b4bdb;--accent2:#ece9ff;--line:#e3e7ef}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#211b4f,#5b4bdb);color:white;padding:28px 20px 34px}header .wrap,main{max-width:1050px;margin:auto}
+.logo{font-size:34px;font-weight:800;letter-spacing:.08em}.tag{opacity:.82;margin-top:5px}
+main{padding:22px 16px 50px}.hero{margin-top:-20px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 30px #1b245010}
+h1{margin:0 0 8px;font-size:27px}h2{margin:28px 0 14px}.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;cursor:pointer;transition:.18s}.card:hover{transform:translateY(-2px);border-color:#b8b0ff}.icon{font-size:28px}.card h3{margin:10px 0 5px}.pill{display:inline-block;background:var(--accent2);color:var(--accent);padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
+#workspace{display:none}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#eef0f5;color:var(--ink)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px}.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}.action{padding:15px;border:1px solid var(--line);background:white;border-radius:14px;cursor:pointer;text-align:left}.action strong{display:block;margin-bottom:4px}.output{white-space:pre-wrap;line-height:1.65;background:#fafaff;border-left:4px solid var(--accent);padding:16px;border-radius:10px;margin-top:18px}
+select{padding:11px;border:1px solid var(--line);border-radius:10px;background:white;width:100%;margin-top:7px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:25px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo">PRISMA</div><div class="tag">Pensar. Compreender. Aprender.</div></div></header>
+<main>
+<section id="home" class="hero">
+<h1>Uma plataforma para ensinar e aprender Filosofia.</h1>
+<p class="muted">O PRISMA liga <b>Currículo ↔ Professor ↔ Aluno</b>. Esta primeira versão já tem os dois percursos e uma base para começarmos a transformar o projeto numa aplicação real.</p>
+<h2>Escolhe o teu percurso</h2>
+<div class="grid">
+<div class="card" onclick="openApp('professor')"><div class="icon">👨‍🏫</div><h3>Professor</h3><p class="muted">Planos, materiais, exercícios e avaliação.</p><span class="pill">Entrar como professor</span></div>
+<div class="card" onclick="openApp('aluno')"><div class="icon">🎓</div><h3>Aluno</h3><p class="muted">Aprender, praticar, testar e pedir ajuda.</p><span class="pill">Entrar como aluno</span></div>
+</div>
+</section>
+<section id="workspace">
+<div class="top"><div><button class="btn secondary" onclick="goHome()">← Início</button><h1 id="title" style="display:inline;margin-left:12px"></h1></div><span id="role" class="pill"></span></div>
+<div class="panel">
+<label><b>Disciplina</b><select id="subject"><option>Filosofia — 10.º ano</option><option>Filosofia — 11.º ano</option><option>Psicologia</option><option>Área de Integração</option></select></label>
+<div id="teacherActions" class="actions">
+<button class="action" onclick="generate('plano')"><strong>📋 Plano de aula</strong><span class="muted">Estrutura uma aula completa.</span></button>
+<button class="action" onclick="generate('ficha')"><strong>📝 Ficha de trabalho</strong><span class="muted">Questões e atividades.</span></button>
+<button class="action" onclick="generate('teste')"><strong>🧪 Teste</strong><span class="muted">Modelo de avaliação.</span></button>
+<button class="action" onclick="generate('rubrica')"><strong>📊 Rubrica</strong><span class="muted">Critérios de avaliação.</span></button>
+</div>
+<div id="studentActions" class="actions" style="display:none">
+<button class="action" onclick="generate('aprender')"><strong>📚 Aprender</strong><span class="muted">Explicação guiada.</span></button>
+<button class="action" onclick="generate('conceitos')"><strong>🔎 Conceitos</strong><span class="muted">Constrói o mapa conceptual.</span></button>
+<button class="action" onclick="generate('quiz')"><strong>❓ Quiz</strong><span class="muted">Testa o que sabes.</span></button>
+<button class="action" onclick="generate('tutor')"><strong>🤖 Tutor PRISMA</strong><span class="muted">Pede uma explicação.</span></button>
+</div>
+<div id="output" class="output">Escolhe uma opção para começar.</div>
+</div>
+</section>
+<footer>PRISMA · versão 0.1 · a construir contigo</footer>
+</main>
+<script>
+let currentRole='';
+function openApp(role){currentRole=role;document.getElementById('home').style.display='none';document.getElementById('workspace').style.display='block';document.getElementById('title').textContent=role==='professor'?'Área do Professor':'Área do Aluno';document.getElementById('role').textContent=role==='professor'?'PROFESSOR':'ALUNO';document.getElementById('teacherActions').style.display=role==='professor'?'grid':'none';document.getElementById('studentActions').style.display=role==='aluno'?'grid':'none';}
+function goHome(){document.getElementById('workspace').style.display='none';document.getElementById('home').style.display='block'}
+function generate(type){
+ const s=document.getElementById('subject').value;
+ const texts={
+ plano:'PLANO DE AULA\n\nDisciplina: '+s+'\n\n1. Questão-problema\n2. Objetivos de aprendizagem\n3. Conceitos fundamentais\n4. Desenvolvimento da aula\n5. Atividade de consolidação\n6. Avaliação formativa\n\nNota: esta é uma estrutura inicial. A próxima versão vai ligar cada elemento às Aprendizagens Essenciais oficiais.',
+ ficha:'FICHA DE TRABALHO\n\nTema: '+s+'\n\n1. Identifica o problema filosófico.\n2. Explica os conceitos centrais.\n3. Analisa um argumento.\n4. Formula uma objeção.\n5. Apresenta uma posição fundamentada.',
+ teste:'MODELO DE TESTE\n\n'+s+'\n\nGrupo I — conceitos e compreensão\nGrupo II — análise de texto\nGrupo III — argumentação\n\nA próxima versão terá critérios e cotação configuráveis.',
+ rubrica:'RUBRICA\n\nCritérios: rigor conceptual · compreensão · argumentação · utilização de exemplos · clareza da expressão.\n\nEscala configurável pelo professor.',
+ aprender:'MODO APRENDER\n\nVamos estudar '+s+'.\n\nComeça por identificar: problema → conceitos → posições → argumentos → objeções → exemplos.\n\nNa versão curricular, o PRISMA vai adaptar esta sequência ao tema concreto e ao teu progresso.',
+ conceitos:'MAPA DE CONCEITOS\n\nConceito central → conceitos relacionados → distinções → exemplos → problemas filosóficos.\n\nAqui vamos construir mapas ligados diretamente ao currículo.',
+ quiz:'QUIZ\n\nPergunta 1\nQual é a função de um argumento filosófico?\n\nA) Dar uma opinião sem razões\nB) Apresentar razões em apoio de uma conclusão\nC) Memorizar uma definição\nD) Evitar objeções\n\nResposta: B',
+ tutor:'TUTOR PRISMA\n\nOlá! Pergunta-me qualquer coisa sobre '+s+'.\n\nExemplo: “Explica-me este conceito como se eu tivesse 15 anos e depois faz-me uma pergunta para verificar se percebi.”'
+ };
+ document.getElementById('output').textContent=texts[type]||'A funcionalidade está a ser construída.';
+}
+</script>
+</body>
+</html>

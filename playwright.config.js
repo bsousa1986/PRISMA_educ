@@ -1,0 +1,1 @@
+module.exports={testDir:'.',timeout:120000,workers:1};

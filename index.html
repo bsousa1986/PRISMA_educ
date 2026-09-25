@@ -208,7 +208,7 @@ const prismaQuiz={
  etica:[{q:"Uma ética deontológica centra a avaliação moral sobretudo...",o:["No número de pessoas que concordam.","No dever e nos princípios morais.","Na popularidade da ação.","Na sorte."],a:1,e:"Em Kant, a obrigação moral está ligada ao dever e à lei moral."}],
  politica:[{q:"Na posição original de Rawls, o véu de ignorância serve para...",o:["Dar mais poder aos mais ricos.","Impedir que as partes conheçam a sua posição social particular.","Eliminar a liberdade.","Provar o utilitarismo."],a:1,e:"O véu de ignorância procura impedir vantagens decorrentes do conhecimento da posição particular."}],
  conhecimento:[{q:"O cogito de Descartes surge no contexto...",o:["Da dúvida metódica.","Do utilitarismo.","Da teoria da justiça.","Da indução de Hume."],a:0,e:"O cogito é apresentado como certeza alcançada no percurso da dúvida metódica."}],
- ciencia:[{q:"O problema da indução questiona...",o:["A existência de universidades.","A passagem de casos observados para generalizações universais.","A definição de arte.","A cidadania."],a:1,e:"Hume mostra que a passagem para generalizações não é dedutivamente garantida pela experiência passada."]}
+ ciencia:[{q:"O problema da indução questiona...",o:["A existência de universidades.","A passagem de casos observados para generalizações universais.","A definição de arte.","A cidadania."],a:1,e:"Hume mostra que a passagem para generalizações não é dedutivamente garantida pela experiência passada."}]
 };
 function saveProgress(){localStorage.setItem("prisma_progress",JSON.stringify(progress));}
 function loadProgress(){try{Object.assign(progress,JSON.parse(localStorage.getItem("prisma_progress")||"{}"));}catch(e){}}

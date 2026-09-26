@@ -13,7 +13,11 @@ const PUBLIC=[
  {title:"The Wealth of Networks — repositório PDF",type:"Livro · PDF",subject:"Filosofia / sociedade em rede",url:"https://dlc.dlib.indiana.edu/dlc/items/db255ef3-81e5-494a-a60a-1def1cc29261/full",source:"Indiana University",desc:"Cópia integral em acesso aberto."},
  {title:"The Problems of Philosophy — Bertrand Russell",type:"Livro · domínio público",subject:"Filosofia 11.º",url:"https://www.gutenberg.org/ebooks/5827",source:"Project Gutenberg",desc:"Livro disponível gratuitamente; domínio público nos EUA."},
  {title:"Books in Philosophy — Project Gutenberg",type:"Biblioteca de livros",subject:"Filosofia",url:"https://www.gutenberg.org/ebooks/bookshelf/57",source:"Project Gutenberg",desc:"Coleção pública de obras filosóficas em formatos digitais."},
- {title:"Currículo Nacional — Filosofia",type:"Currículo",subject:"Filosofia",url:"https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia-0",source:"Currículo Nacional · DGE",desc:"Referencial curricular público."}
+ {title:"Currículo Nacional — Filosofia",type:"Currículo",subject:"Filosofia",url:"https://curriculonacional.dge.mec.pt/organizacao-curricular/filosofia-0",source:"Currículo Nacional · DGE",desc:"Referencial curricular público."},
+ {title:"Blog de Filosofia — Nonius dixit",type:"Blog · recursos",subject:"Filosofia 10.º / 11.º",url:"https://apoioescolas.dge.mec.pt/nivelciclo/filosofia-0",source:"DGE · Apoio às Escolas",desc:"Recurso referenciado pela DGE para apoio aos alunos de Filosofia."},
+ {title:"Blog de Filosofia — Pensa!",type:"Blog · recursos",subject:"Filosofia 10.º / 11.º",url:"https://apoioescolas.dge.mec.pt/nivelciclo/filosofia-0",source:"DGE · Apoio às Escolas",desc:"Textos e pequenos vídeos de apoio ao ensino da Filosofia."},
+ {title:"O Jardim da Filosofia",type:"Vídeos · entrevistas",subject:"Filosofia",url:"https://apoioescolas.dge.mec.pt/recursos/filosofia",source:"DGE · Apoio às Escolas",desc:"Conjunto de entrevistas introdutórias sobre tópicos de Filosofia, com acesso livre."},
+ {title:"Europeana",type:"Biblioteca digital",subject:"Filosofia / Humanidades",url:"https://www.europeana.eu/",source:"Europeana",desc:"Biblioteca digital europeia com património cultural e recursos educativos."}
 ];
 function openDB(){
  return new Promise((res,rej)=>{
@@ -34,6 +38,8 @@ async function delLocal(id){const db=await openDB();return new Promise((res,rej)
 function uid(){return "mat_"+Date.now()+"_"+Math.random().toString(36).slice(2,9)}
 function esc(s){return String(s??"").replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));}
 function roleName(){return window.role==="aluno"?"Aluno":"Professor";}
+function ownerKey(){const r=window.role||"professor";const e=(localStorage.getItem("prisma_user_email")||"").trim().toLowerCase();const n=(localStorage.getItem("prisma_user_name")||"").trim().toLowerCase();return r+"::"+(e||n||"local");}
+function ownerLabel(){return localStorage.getItem("prisma_user_name")||localStorage.getItem("prisma_user_email")||roleName();}
 function plan(){return localStorage.getItem("prisma_access")||"base";}
 function setPlan(p){localStorage.setItem("prisma_access",p);renderDrive();}
 function typeFromName(n){
@@ -49,7 +55,7 @@ async function saveFiles(files){
  const max=plan()==="premium"?999:20, current=(await allLocal()).filter(x=>x.role===window.role&&!x.public).length;
  if(current+files.length>max){alert("O acesso Base permite até 20 materiais neste dispositivo. Ativa o Premium de demonstração para testar a biblioteca sem esse limite.");return;}
  for(const f of files){
-  const x={id:uid(),role:window.role,title:f.name,type:typeFromName(f.name),subject:document.getElementById("mdSubject")?.value||"Geral",created:Date.now(),size:f.size,mime:f.type||"application/octet-stream",blob:f,public:false,source:"Meu Drive PRISMA"};
+  const x={id:uid(),role:window.role,owner:ownerKey(),ownerLabel:ownerLabel(),title:f.name,type:typeFromName(f.name),subject:document.getElementById("mdSubject")?.value||"Geral",created:Date.now(),size:f.size,mime:f.type||"application/octet-stream",blob:f,public:false,source:"Meu Drive PRISMA"};
   await putLocal(x);
  }
  renderDrive();
@@ -57,9 +63,10 @@ async function saveFiles(files){
 async function addURL(){
  const title=document.getElementById("mdTitle").value.trim(),url=document.getElementById("mdURL").value.trim();
  if(!title||!url){alert("Indica o nome e o endereço do material.");return;}
- await putLocal({id:uid(),role:window.role,title,type:document.getElementById("mdType").value,subject:document.getElementById("mdSubject").value,created:Date.now(),url,public:false,source:"Ligação guardada"});
+ await putLocal({id:uid(),role:window.role,owner:ownerKey(),ownerLabel:ownerLabel(),title,type:document.getElementById("mdType").value,subject:document.getElementById("mdSubject").value,created:Date.now(),url,public:false,source:"Ligação guardada"});
  document.getElementById("mdTitle").value="";document.getElementById("mdURL").value="";renderDrive();
 }
+function downloadItem(x){if(x.blob){const u=URL.createObjectURL(x.blob);const a=document.createElement("a");a.href=u;a.download=x.title;a.click();setTimeout(()=>URL.revokeObjectURL(u),10000);return;}if(x.url){window.open(x.url,"_blank","noopener");}}
 function openItem(x){
  if(x.url){window.open(x.url,"_blank","noopener");return;}
  if(x.blob){const u=URL.createObjectURL(x.blob);const a=document.createElement("a");a.href=u;a.download=x.title;a.target="_blank";a.click();setTimeout(()=>URL.revokeObjectURL(u),10000);}
@@ -72,7 +79,9 @@ function useInPlan(x){
 }
 async function renderDrive(){
  const m=document.getElementById("prismaMain");if(!m)return;
- const locals=(await allLocal()).filter(x=>x.role===window.role);
+ const all=await allLocal();
+ for(const x of all){if(x.role===window.role&&!x.owner){x.owner=ownerKey();x.ownerLabel=ownerLabel();await putLocal(x);}}
+ const locals=all.filter(x=>x.role===window.role&&x.owner===ownerKey());
  const search=(document.getElementById("mdSearch")?.value||"").toLowerCase();
  const list=locals.filter(x=>(x.title+" "+x.subject+" "+x.type).toLowerCase().includes(search));
  const publicList=PUBLIC.filter(x=>(x.title+" "+x.subject+" "+x.type).toLowerCase().includes(search));
@@ -86,9 +95,15 @@ async function renderDrive(){
  '<div class="v3grid">'+publicList.map((x,i)=>'<article class="v3card"><span class="v3tag">'+esc(x.type)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.desc)+'</p><p class="muted">'+esc(x.source)+' · '+esc(x.subject)+'</p><div class="prisma-actions"><button class="prisma-action" data-md-public="'+i+'"><strong>Abrir fonte</strong><small>Consultar o material público.</small></button><button class="prisma-action" data-md-public-plan="'+i+'"><strong>Usar no plano</strong><small>Associar ao próximo plano.</small></button></div></article>').join("")+'</div>';
  document.getElementById("mdPlan").onchange=e=>{setPlan(e.target.value)};
  document.getElementById("mdPick").onclick=()=>document.getElementById("mdFiles").click();
- document.getElementById("mdFiles").onchange=e=>saveFiles([...e.target.files]);
+ document.getElementById("mdFiles").onchange=e=>{saveFiles([...e.target.files]);e.target.value=""};
  document.getElementById("mdURLBtn").onclick=()=>{document.getElementById("mdURLForm").style.display="block"};
  document.getElementById("mdSaveURL").onclick=addURL;
+ document.querySelectorAll("[data-md-open]").forEach(b=>b.onclick=async()=>{const x=(await allLocal()).find(y=>y.id===b.dataset.mdOpen);if(x)openItem(x)});
+ document.querySelectorAll("[data-md-download]").forEach(b=>b.onclick=async()=>{const x=(await allLocal()).find(y=>y.id===b.dataset.mdDownload);if(x)downloadItem(x)});
+ document.querySelectorAll("[data-md-use]").forEach(b=>b.onclick=async()=>{const x=(await allLocal()).find(y=>y.id===b.dataset.mdUse);if(x)useInPlan(x)});
+ document.querySelectorAll("[data-md-del]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminar este material do teu Drive?")){await delLocal(b.dataset.mdDel);renderDrive()}});
+ document.querySelectorAll("[data-md-public]").forEach(b=>b.onclick=()=>window.open(PUBLIC[Number(b.dataset.mdPublic)].url,"_blank","noopener"));
+ document.querySelectorAll("[data-md-public-plan]").forEach(b=>b.onclick=()=>useInPlan(PUBLIC[Number(b.dataset.mdPublic)]));
  document.getElementById("mdPremium").onclick=()=>{if(confirm("Ativar o Premium de demonstração neste dispositivo? Não é uma subscrição nem um pagamento.")){setPlan("premium")}};
 }
 function renderAccess(){

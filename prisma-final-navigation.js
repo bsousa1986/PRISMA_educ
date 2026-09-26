@@ -11,6 +11,7 @@ function header(k,t,p){return '<div class="prisma-head"><div><div class="prisma-
 function go(t){
 if(t==="curriculo")return modules(); if(t==="recursos")return resourceList();
 if(t==="inicio")return home();
+if(t==="preparar")return window.prismaLessonBuilder&&window.prismaLessonBuilder.open?window.prismaLessonBuilder.open():teacher("preparar");
 if(t==="planos")return teacher("planos",window.prismaTeacherPlans);
 if(t==="materiais")return teacher("Materiais",function(){return materialScreen()});
 if(t==="documentos")return teacher("Documentos",function(){return documentScreen()});
@@ -42,7 +43,7 @@ if(t==="biblioteca"){studentMaterials();return;}
 message("Aluno",t==="progresso"?"Progresso de aprendizagem":"Biblioteca de aprendizagem")
 }
 function intercept(e){var b=e.target.closest&&e.target.closest("[data-prisma-tab],[data-clean-tab],[data-hot-tab],[data-t],[data-final-tab],[data-tab]");if(b){var t=b.dataset.prismaTab||b.dataset.cleanTab||b.dataset.hotTab||b.dataset.t||b.dataset.finalTab||b.dataset.tab;
-if(!t && b.closest(".prisma-nav")){var tx=(b.textContent||"").toLowerCase();t=tx.includes("currículo")?"curriculo":tx.includes("recurso")||tx.includes("biblioteca")?"recursos":tx.includes("progresso")?"progresso":tx.includes("início")?"inicio":tx.includes("plano")?"planos":tx.includes("material")?"materiais":tx.includes("document")?"documentos":tx.includes("exerc")?"exercicios":tx.includes("avalia")?"avaliacao":"inicio";}
+if(!t && b.closest(".prisma-nav")){var tx=(b.textContent||"").toLowerCase();t=tx.includes("currículo")?"curriculo":tx.includes("preparar")?"preparar":tx.includes("recurso")||tx.includes("biblioteca")?"recursos":tx.includes("progresso")?"progresso":tx.includes("início")?"inicio":tx.includes("plano")?"planos":tx.includes("material")?"materiais":tx.includes("document")?"documentos":tx.includes("exerc")?"exercicios":tx.includes("avalia")?"avaliacao":"inicio";}
 e.preventDefault();e.stopImmediatePropagation();go(t);return}b=e.target.closest&&e.target.closest("[data-prisma-unit],[data-final-unit],[data-hot-unit],[data-prisma-plan],[data-prisma-exercise],[data-prisma-assessment]");if(b){var id=b.dataset.prismaUnit||b.dataset.finalUnit||b.dataset.hotUnit;
 if(b.dataset.hotCreate&&getRole()==="aluno"){e.preventDefault();e.stopImmediatePropagation();studentMaterials();return}
 if(b.dataset.prismaPlan){ if(window.prismaTeacherPlans&&typeof window.prismaTeacherPlans.open==="function") return window.prismaTeacherPlans.open(b.dataset.prismaPlan); if(window.PRISMA_TEACHER_STUDIO&&typeof window.PRISMA_TEACHER_STUDIO.open==="function") return window.PRISMA_TEACHER_STUDIO.open(b.dataset.prismaPlan); }
@@ -56,7 +57,7 @@ function updateWorkspaceSession(){var n=localStorage.getItem("prisma_user_name")
 function releaseNav(){
  var st=getRole()==="aluno", items=st
  ? [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤","Materiais"],["progresso","◔","Progresso"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]]
- : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Materiais"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
+ : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["preparar","✦","Preparar aula"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Materiais"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
  var el=document.getElementById("workspaceContent");if(!el)return;
  el.className="content "+(st?"student":"teacher");
  el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-session-card"><div class="prisma-session-role">SESSÃO PRISMA</div><strong id="prismaSessionName">Sessão não iniciada</strong><small id="prismaSessionEmail">Entra para guardar o teu espaço.</small><button type="button" id="prismaWorkspaceSession">🔐 Iniciar sessão</button></div><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';

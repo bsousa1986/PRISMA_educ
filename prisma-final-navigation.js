@@ -1,5 +1,4 @@
 /* PRISMA NAVIGATION RESET — single authority */
-.prisma-session-card{display:none}
 (function(){
 "use strict";
 function main(){return document.getElementById("workspaceContent")}

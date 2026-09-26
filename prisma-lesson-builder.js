@@ -1,0 +1,28 @@
+/* PRISMA LESSON BUILDER — curriculum to lesson flow */
+(function(){
+"use strict";
+function esc(s){return String(s??"").replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));}
+function plans(){return window.prismaTeacherPlans&&Array.isArray(window.prismaTeacherPlans.list)?window.prismaTeacherPlans.list:[];}
+function modules(){try{return typeof units==="function"?units():[]}catch(e){return []}}
+function open(){
+ const m=document.getElementById("prismaMain"); if(!m)return;
+ const us=modules(), ps=plans();
+ m.innerHTML='<div class="prisma-head"><div><div class="prisma-kicker">PRISMA · PREPARAR AULA</div><h1>Constrói a tua aula</h1><p>Escolhe o currículo, define o foco e junta os teus materiais. O PRISMA transforma essas escolhas numa primeira proposta de aula editável.</p></div></div>'+
+ '<div class="prisma-panel"><h2>1 · Partir do currículo</h2><div class="tool-form"><label>Módulo curricular<select id="lbUnit"><option value="">Escolher módulo…</option>'+us.map(u=>'<option value="'+esc(u.id)+'">'+esc(u.name||u.title||u.id)+'</option>').join("")+'</select></label><label>Tema / foco<input id="lbTopic" placeholder="Ex.: livre-arbítrio, justiça, conhecimento…"></label><label>Duração<select id="lbDuration"><option>50 minutos</option><option>90 minutos</option><option>100 minutos</option></select></label></div></div>'+
+ '<div class="prisma-panel"><h2>2 · O que queres aproveitar?</h2><p class="muted">O PRISMA usa os teus materiais já guardados neste dispositivo como contexto de planeamento.</p><div id="lbMaterials" class="v3grid"><div class="notice">Abre o Drive para adicionar materiais, ou continua sem materiais.</div></div></div>'+
+ '<div class="prisma-panel"><h2>3 · Ponto de partida</h2><div class="tool-form"><label>Modelo opcional<select id="lbTemplate"><option value="">Criar de raiz</option>'+ps.map(p=>'<option value="'+esc(p.id||"")+'">'+esc(p.title||p.name||"Plano existente")+'</option>').join("")+'</select></label></div><button class="v3btn" id="lbGenerate">✨ Gerar proposta de aula</button></div>'+
+ '<div id="lbOutput"></div>';
+ const load=async()=>{if(typeof allLocal!=="function")return;const a=await allLocal();const role=window.role||"professor";const owner=(localStorage.getItem("prisma_user_email")||localStorage.getItem("prisma_user_name")||"local").toLowerCase();const mine=a.filter(x=>x.role===role&&(!x.owner||x.owner===role+"::"+owner));document.getElementById("lbMaterials").innerHTML=mine.length?mine.map(x=>'<label class="prisma-panel" style="display:block"><input type="checkbox" class="lbMat" value="'+esc(x.id)+'"> <strong>'+esc(x.title)+'</strong><div class="muted">'+esc(x.type||"Material")+' · '+esc(x.subject||"Geral")+'</div></label>').join(""):'<div class="notice">Ainda não tens materiais pessoais selecionados. Podes continuar sem eles.</div>';}; load();
+ document.getElementById("lbGenerate").onclick=async()=>{
+   const unitId=document.getElementById("lbUnit").value, topic=document.getElementById("lbTopic").value.trim(), duration=document.getElementById("lbDuration").value;
+   const u=us.find(x=>x.id===unitId)||{}; const title=topic||u.name||"Aula de Filosofia"; const chosen=[...document.querySelectorAll(".lbMat:checked")].map(x=>x.value);
+   const materials=typeof allLocal==="function"?(await allLocal()).filter(x=>chosen.includes(x.id)):[];
+   const problem=(window.PRISMA_CORE&&window.PRISMA_CORE[unitId]&&window.PRISMA_CORE[unitId].problem)||"Que problema filosófico está em causa e que razões permitem defendê-lo?";
+   const plan={title,duration,module:u.name||unitId||"A definir",ae:u.ae||"Consultar Aprendizagens Essenciais",problem,materials:materials.map(x=>x.title)};
+   const out=document.getElementById("lbOutput");
+   out.innerHTML='<div class="prisma-panel"><div class="prisma-kicker">PROPOSTA PRISMA</div><h2>'+esc(plan.title)+'</h2><p><strong>Módulo:</strong> '+esc(plan.module)+' · <strong>Duração:</strong> '+esc(plan.duration)+'</p><div class="prisma-hero"><strong>Problema filosófico</strong><p>'+esc(plan.problem)+'</p></div><h3>Intenção</h3><p>Problematizar <strong>'+esc(plan.title)+'</strong>, mobilizando conceitos, argumentos e razões através de participação ativa dos alunos.</p><h3>Sequência sugerida</h3><ol><li><strong>Problematização — 10 min:</strong> questão inicial e recolha de respostas.</li><li><strong>Conceptualização — 15 min:</strong> clarificação dos conceitos essenciais.</li><li><strong>Análise — 20 min:</strong> leitura/análise de um texto ou recurso.</li><li><strong>Discussão — 20 min:</strong> confronto de argumentos e objeções.</li><li><strong>Síntese — 10 min:</strong> construção conjunta das conclusões.</li><li><strong>Exit ticket — 5 min:</strong> resposta individual à questão central.</li></ol><h3>Materiais associados</h3><p>'+esc(plan.materials.length?plan.materials.join(" · "):"Nenhum material pessoal associado.")+'</p><div class="prisma-actions"><button class="prisma-action" onclick="window.print()"><strong>🖨 Imprimir / guardar PDF</strong><small>Levar esta proposta para a aula.</small></button><button class="prisma-action" id="lbSave"><strong>💾 Guardar proposta</strong><small>Guardar no navegador para reutilizar.</small></button></div></div>';
+   document.getElementById("lbSave").onclick=()=>{localStorage.setItem("prisma_last_lesson",JSON.stringify(plan));alert("Proposta guardada neste dispositivo.")};
+ };
+}
+window.prismaLessonBuilder={open};
+})();

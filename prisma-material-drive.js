@@ -117,7 +117,12 @@ function install(){
  window.prismaRenderShell=function(tab){
   if(tab==="drive"||tab==="materiais")return renderDrive();
   if(tab==="acesso")return renderAccess();
-  return oldShell(tab);
+  const out=oldShell(tab);
+  const nav=document.querySelector(".prisma-nav");
+  if(nav&&!nav.querySelector("[data-tab=\"drive\"]")){
+    nav.insertAdjacentHTML("beforeend",'<button data-tab="drive" onclick="prismaSwitch(\'drive\')">📁 &nbsp;Meu Drive</button><button data-tab="acesso" onclick="prismaSwitch(\'acesso\')">✦ &nbsp;Acesso</button>');
+  }
+  return out;
  };
  const oldSwitch=window.prismaSwitch;
  window.prismaSwitch=function(tab){

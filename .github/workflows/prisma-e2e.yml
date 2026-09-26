@@ -1,8 +1,9 @@
 name: PRISMA E2E
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths-ignore:
+      - "qa-status.json"
   workflow_dispatch:
 jobs:
   browser:
@@ -14,5 +15,32 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npx playwright install --with-deps chromium
-      - run: sleep 90
-      - run: npx playwright test prisma.e2e.js --reporter=line
+      - run: sleep 30
+      - name: Run browser tests
+        id: e2e
+        continue-on-error: true
+        run: npx playwright test prisma.e2e.js --reporter=line
+      - name: Publish QA status
+        if: always()
+        env:
+          E2E_OUTCOME: ${{ steps.e2e.outcome }}
+          SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json, os, datetime
+          data = {
+            "status": os.environ.get("E2E_OUTCOME", "unknown"),
+            "commit": os.environ.get("SHA", ""),
+            "checked_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat()
+          }
+          with open("qa-status.json","w",encoding="utf-8") as f:
+              json.dump(data,f,indent=2)
+          PY
+          git config user.name "PRISMA QA Bot"
+          git config user.email "actions@github.com"
+          git add qa-status.json
+          git commit -m "chore: publish browser QA status" || true
+          git push || true
+      - name: Fail job when E2E fails
+        if: steps.e2e.outcome == 'failure'
+        run: exit 1

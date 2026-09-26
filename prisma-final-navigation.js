@@ -1,4 +1,5 @@
 /* PRISMA NAVIGATION RESET — single authority */
+.prisma-session-card{display:none}
 (function(){
 "use strict";
 function main(){return document.getElementById("workspaceContent")}
@@ -52,13 +53,15 @@ if(id){e.preventDefault();e.stopImmediatePropagation();unit(id);if(getRole()==="
 window.addEventListener("click",intercept,true);
 
 // RELEASE SHELL — single visible navigation authority
+function updateWorkspaceSession(){var n=localStorage.getItem("prisma_user_name"),e=localStorage.getItem("prisma_user_email"),b=document.getElementById("prismaWorkspaceSession"),nn=document.getElementById("prismaSessionName"),ee=document.getElementById("prismaSessionEmail");if(!b||!nn||!ee)return;if(n&&e){nn.textContent=n;ee.textContent=e;b.textContent="↪ Terminar sessão";b.onclick=function(){localStorage.removeItem("prisma_user_name");localStorage.removeItem("prisma_user_email");localStorage.removeItem("prisma_session_role");updateWorkspaceSession()}}else{nn.textContent="Sessão não iniciada";ee.textContent="Entra para guardar o teu espaço.";b.textContent="🔐 Iniciar sessão";b.onclick=function(){if(typeof prismaLogin==="function")prismaLogin(getRole())}}}
 function releaseNav(){
  var st=getRole()==="aluno", items=st
  ? [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤","Materiais"],["progresso","◔","Progresso"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]]
  : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Materiais"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
  var el=document.getElementById("workspaceContent");if(!el)return;
  el.className="content "+(st?"student":"teacher");
- el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
+ el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-session-card"><div class="prisma-session-role">SESSÃO PRISMA</div><strong id="prismaSessionName">Sessão não iniciada</strong><small id="prismaSessionEmail">Entra para guardar o teu espaço.</small><button type="button" id="prismaWorkspaceSession">🔐 Iniciar sessão</button></div><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
+ updateWorkspaceSession();
  releaseSwitch("inicio");
 }
 function releaseSwitch(t){

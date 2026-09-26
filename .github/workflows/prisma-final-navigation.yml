@@ -18,5 +18,9 @@ jobs:
       - run: |
           git config user.name "PRISMA Bot"; git config user.email "actions@github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "chore: activate final navigation authority"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: activate final navigation authority"
+            git push
+          else
+            echo "Final navigation already linked; nothing to commit."
+          fi

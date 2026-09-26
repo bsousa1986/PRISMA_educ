@@ -49,5 +49,46 @@ if(b.dataset.prismaPlan){ if(window.prismaTeacherPlans&&typeof window.prismaTeac
 if(b.dataset.prismaExercise){ if(window.prismaTeacherExercises&&typeof window.prismaTeacherExercises.open==="function") return window.prismaTeacherExercises.open(b.dataset.prismaExercise); }
 if(b.dataset.prismaAssessment){ if(window.prismaTeacherAssessment&&typeof window.prismaTeacherAssessment.open==="function") return window.prismaTeacherAssessment.open(b.dataset.prismaAssessment); }
 if(id){e.preventDefault();e.stopImmediatePropagation();unit(id);if(getRole()==="aluno"){var pm=pane();if(pm){pm.querySelectorAll("[data-hot-create],[data-prisma-plan],[data-create]").forEach(function(x){x.remove()});var note=pm.querySelector(".prisma-detail,.v3box");if(note&&!pm.querySelector(".student-no-create")){var n=document.createElement("div");n.className="notice student-no-create";n.textContent="Modo aluno: podes estudar, praticar e imprimir materiais. A criação de aulas pertence à área do professor.";note.appendChild(n)}}}return}}b=e.target.closest&&e.target.closest("[data-prisma-resource],[data-final-resource],[data-hot-res]");if(b){var id=b.dataset.prismaResource||b.dataset.finalResource||b.dataset.hotRes;e.preventDefault();e.stopImmediatePropagation();resource(id);return}b=e.target.closest&&e.target.closest("[data-hot-print]");if(b){e.preventDefault();e.stopImmediatePropagation();window.print();return}}
-window.addEventListener("click",intercept,true);\nwindow.PRISMA_FINAL_NAV_READY=true;window.PRISMA_STUDENT_MATERIALS_READY=true;window.PRISMA_FINAL_NAV={go:go,modules:modules,resourceList:resourceList,unit:unit,resource:resource};
+window.addEventListener("click",intercept,true);\n
+// RELEASE SHELL — single visible navigation authority
+function releaseNav(){
+ var st=getRole()==="aluno", items=st
+ ? [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤","Materiais"],["progresso","◔","Progresso"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]]
+ : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Materiais"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
+ var el=document.getElementById("workspaceContent");if(!el)return;
+ el.className="content "+(st?"student":"teacher");
+ el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
+ releaseSwitch("inicio");
+}
+function releaseSwitch(t){
+ document.querySelectorAll(".prisma-nav button").forEach(function(b){b.classList.toggle("active",b.dataset.tab===t)});
+ if(t==="inicio")return home();
+ if(t==="curriculo")return modules();
+ if(t==="recursos")return resourceList();
+ if(t==="biblioteca")return studentMaterials();
+ if(t==="progresso")return (window.studentHome?window.studentHome():message("Progresso","O teu progresso será apresentado aqui."));
+ if(t==="planos")return teacher("PROFESSOR","Planos de aula",window.prismaTeacherPlans);
+ if(t==="materiais")return materialScreen();
+ if(t==="documentos")return documentScreen();
+ if(t==="exercicios")return teacher("PROFESSOR","Exercícios",window.prismaTeacherExercises);
+ if(t==="avaliacao")return teacher("PROFESSOR","Avaliação",window.prismaTeacherAssessment);
+ if(t==="blog")return window.prismaBlog?window.prismaBlog():message("Blog","Partilha e lê conteúdos.");
+ if(t==="mensagem")return window.prismaMessage?window.prismaMessage():message("Mensagem","Escreve ao criador.");
+ if(t==="investigacao")return window.prismaResearch?window.prismaResearch():message("Investigação","Partilha um texto.");
+}
+window.prismaRenderShell=releaseNav;
+window.prismaSwitch=releaseSwitch;
+window.openApp=function(r){
+ role=r;try{localStorage.setItem("prisma_role",r)}catch(e){}
+ var h=document.getElementById("home"),w=document.getElementById("workspace");
+ if(h)h.style.display="none";if(w)w.style.display="block";
+ var rr=document.getElementById("role");if(rr)rr.textContent=r==="professor"?"PROFESSOR":"ALUNO";
+ releaseNav();
+};
+document.addEventListener("click",function(e){
+ var b=e.target.closest&&e.target.closest(".prisma-nav button");if(b){
+   e.preventDefault();e.stopImmediatePropagation();releaseSwitch(b.dataset.tab);return;
+ }
+},true);
+window.PRISMA_FINAL_NAV_READY=true;window.PRISMA_STUDENT_MATERIALS_READY=true;window.PRISMA_FINAL_NAV={go:go,modules:modules,resourceList:resourceList,unit:unit,resource:resource};
 })();

@@ -49,8 +49,13 @@ test('PRISMA — percurso completo do aluno', async ({ page }) => {
 
   await page.locator('[data-prisma-unit]').first().click();
   await expect(main.getByText('Problema filosófico', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-hot-create]')).toHaveCount(0);
+  await expect(main.getByText(/Modo aluno: podes estudar/i)).toBeVisible();
 
   await page.locator('[data-clean-tab="biblioteca"]').click();
+  await expect(main.getByRole('heading', { name: 'Biblioteca de materiais' })).toBeVisible();
+  await expect(page.locator('[data-prisma-resource]').first()).toBeVisible();
+  await page.locator('[data-prisma-resource]').first().click();
   await expect(main).toBeVisible();
 
   await page.locator('[data-clean-tab="progresso"]').click();

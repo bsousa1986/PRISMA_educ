@@ -49,7 +49,8 @@ if(b.dataset.prismaPlan){ if(window.prismaTeacherPlans&&typeof window.prismaTeac
 if(b.dataset.prismaExercise){ if(window.prismaTeacherExercises&&typeof window.prismaTeacherExercises.open==="function") return window.prismaTeacherExercises.open(b.dataset.prismaExercise); }
 if(b.dataset.prismaAssessment){ if(window.prismaTeacherAssessment&&typeof window.prismaTeacherAssessment.open==="function") return window.prismaTeacherAssessment.open(b.dataset.prismaAssessment); }
 if(id){e.preventDefault();e.stopImmediatePropagation();unit(id);if(getRole()==="aluno"){var pm=pane();if(pm){pm.querySelectorAll("[data-hot-create],[data-prisma-plan],[data-create]").forEach(function(x){x.remove()});var note=pm.querySelector(".prisma-detail,.v3box");if(note&&!pm.querySelector(".student-no-create")){var n=document.createElement("div");n.className="notice student-no-create";n.textContent="Modo aluno: podes estudar, praticar e imprimir materiais. A criação de aulas pertence à área do professor.";note.appendChild(n)}}}return}}b=e.target.closest&&e.target.closest("[data-prisma-resource],[data-final-resource],[data-hot-res]");if(b){var id=b.dataset.prismaResource||b.dataset.finalResource||b.dataset.hotRes;e.preventDefault();e.stopImmediatePropagation();resource(id);return}b=e.target.closest&&e.target.closest("[data-hot-print]");if(b){e.preventDefault();e.stopImmediatePropagation();window.print();return}}
-window.addEventListener("click",intercept,true);\n
+window.addEventListener("click",intercept,true);
+
 // RELEASE SHELL — single visible navigation authority
 function releaseNav(){
  var st=getRole()==="aluno", items=st

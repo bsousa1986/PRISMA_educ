@@ -64,6 +64,19 @@ create policy "owners read prisma materials" on storage.objects
 for select to authenticated
 using (bucket_id='prisma-materials' and owner_id = auth.uid());
 
+drop policy if exists "community read shared prisma materials" on storage.objects;
+create policy "community read shared prisma materials" on storage.objects
+for select to authenticated
+using (
+  bucket_id='prisma-materials'
+  and exists (
+    select 1 from public.prisma_materials m
+    where m.file_path = name
+      and m.is_shared = true
+      and m.status = 'published'
+  )
+);
+
 drop policy if exists "owners delete prisma materials" on storage.objects;
 create policy "owners delete prisma materials" on storage.objects
 for delete to authenticated

@@ -13,7 +13,7 @@ if(t==="curriculo")return modules(); if(t==="recursos")return resourceList();
 if(t==="inicio")return home();
 if(t==="preparar")return window.prismaLessonBuilder&&window.prismaLessonBuilder.open?window.prismaLessonBuilder.open():teacher("preparar");
 if(t==="planos")return teacher("planos",window.prismaTeacherPlans);
-if(t==="materiais")return teacher("Materiais",function(){return materialScreen()});
+if(t==="materiais")return window.prismaCloudDrive&&window.prismaCloudDrive.open?window.prismaCloudDrive.open():teacher("Materiais",function(){return materialScreen()});
 if(t==="documentos")return teacher("Documentos",function(){return documentScreen()});
 if(t==="exercicios")return teacher("exercicios",window.prismaTeacherExercises);
 if(t==="avaliacao")return teacher("avaliacao",window.prismaTeacherAssessment);
@@ -79,7 +79,7 @@ function updateWorkspaceSession(){var n=localStorage.getItem("prisma_user_name")
 function releaseNav(){
  var st=getRole()==="aluno", items=st
  ? [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤","Materiais"],["progresso","◔","Progresso"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]]
- : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["preparar","✦","Preparar aula"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Materiais"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
+ : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["preparar","✦","Preparar aula"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Drive & Biblioteca"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
  var el=document.getElementById("workspaceContent");if(!el)return;
  el.className="content "+(st?"student":"teacher");
  el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-session-card"><div class="prisma-session-role">SESSÃO PRISMA</div><strong id="prismaSessionName">Sessão não iniciada</strong><small id="prismaSessionEmail">Entra para guardar o teu espaço.</small><button type="button" id="prismaWorkspaceSession">🔐 Iniciar sessão</button></div><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';

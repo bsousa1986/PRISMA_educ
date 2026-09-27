@@ -75,3 +75,140 @@ authors:[
 counterexample:"Um algoritmo pode ser mais consistente do que decisões humanas e, ainda assim, produzir resultados injustos se os dados ou critérios incorporarem desigualdades.",questions:["Uma decisão automática pode ser moralmente neutra?","Quem deve responder por uma decisão algorítmica?","Transparência basta para garantir justiça?","Devemos confiar mais num algoritmo do que num decisor humano?"],mistake:"Confundir eficiência com legitimidade: uma decisão pode ser tecnicamente eficaz e moralmente problemática.",challenge:"Define três condições mínimas para considerar legítima uma decisão automatizada.",activity:{title:"O algoritmo juiz",instructions:"Analisar um caso de seleção automatizada e distribuir responsabilidade por programador, empresa, utilizador e sistema.",product:"Mapa de responsabilidades + três critérios de legitimidade."}}
 };
 })();
+/* Resource layer: texts, thought experiments, arguments and workshops */
+(function(){
+const R={
+"F10-I":{
+texts:[
+{title:"Platão — Sócrates e o exame da vida",author:"Platão",note:"Usar como porta de entrada para a ideia de exame crítico das crenças.",excerpt:"A vida examinada é apresentada como inseparável da reflexão sobre aquilo que pensamos saber.",questions:["Porque pode o exame das próprias crenças ser uma exigência filosófica?","Examinar uma crença significa necessariamente abandoná-la?"]}
+],
+thoughts:[
+{title:"A máquina de respostas perfeitas",setup:"Imagina uma máquina capaz de responder corretamente a todas as perguntas factuais. Ela também seria capaz de responder a “O que é uma vida justa?”?",twist:"Se duas respostas forem incompatíveis, o que faltaria à máquina para resolver o problema?",debrief:"Distinguir informação, decisão conceptual e justificação filosófica."}
+],
+arguments:[
+{title:"Da opinião à posição fundamentada",steps:["Tenho uma opinião.","Uma opinião pode ser verdadeira por acaso.","Para defender uma posição preciso de razões.","As razões podem ser criticadas.","Logo, filosofar exige tornar a posição publicamente discutível."],objection:"Uma posição pode ser verdadeira mesmo sem conseguirmos justificá-la?",reply:"Sim; mas verdade e justificação são dimensões diferentes, e a Filosofia trabalha precisamente a qualidade das razões que apresentamos."}
+],
+workshops:[
+{title:"Oficina: transforma a pergunta",steps:["Escolhe “Devemos obedecer às regras?”","Define o conceito de regra.","Encontra um caso-limite.","Formula uma pergunta geral.","Apresenta duas respostas incompatíveis.","Escreve uma objeção a uma delas."],product:"Uma questão filosófica acompanhada de duas posições e uma objeção."}
+]},
+"F10-II-L":{
+texts:[
+{title:"Hume — liberdade e necessidade",author:"David Hume",note:"Comparar a ideia de liberdade como ausência de coerção com a exigência de causalidade.",excerpt:"A discussão permite perguntar se agir segundo a própria vontade é compatível com uma cadeia causal.",questions:["Hume precisa de negar o determinismo para defender a liberdade?","É diferente fazer o que queremos e querer aquilo que fazemos?"]},
+{title:"Sartre — liberdade e responsabilidade",author:"Jean-Paul Sartre",note:"Usar para problematizar a tendência de atribuir as escolhas apenas às circunstâncias.",excerpt:"A liberdade aparece ligada à responsabilidade do sujeito pelas escolhas que faz.",questions:["As circunstâncias diminuem sempre a responsabilidade?","Podemos escolher a nossa atitude perante uma situação que não escolhemos?"]}
+],
+thoughts:[
+{title:"O cérebro previsível",setup:"Um cientista conhece completamente o teu cérebro e prevê que amanhã vais escolher estudar Filosofia.",twist:"Se a previsão for infalível, poderias ter escolhido de outro modo?",debrief:"Distinguir previsibilidade, causalidade e liberdade."},
+{title:"A pistola invisível",setup:"Uma pessoa faz exatamente aquilo que queria fazer, mas foi previamente submetida a uma manipulação que criou esse desejo.",twist:"A ausência de coerção externa basta para responsabilidade?",debrief:"Introduzir o problema da origem da vontade."}
+],
+arguments:[
+{title:"Argumento da possibilidade alternativa",steps:["Ser responsável parece exigir que pudéssemos ter feito outra coisa.","Se o passado e as leis da natureza determinam a ação, não poderíamos agir de outro modo.","Logo, o determinismo ameaça a responsabilidade moral."],objection:"Talvez responsabilidade não exija possibilidades alternativas, mas apenas que a ação resulte do agente de uma forma adequada.",reply:"É uma das vias para o compatibilismo."},
+{title:"Argumento compatibilista",steps:["Ser coagido é diferente de agir segundo a própria vontade.","A responsabilidade depende dessa diferença.","Logo, liberdade relevante pode ser compatível com causalidade."],objection:"E se a própria vontade tiver sido totalmente determinada?",reply:"O problema passa a ser a origem da vontade e não apenas a existência de coerção."}
+],
+workshops:[
+{title:"Tribunal do livre-arbítrio",steps:["Um agente comete uma ação prejudicial.","Um grupo defende determinismo.","Outro defende libertismo.","Outro defende compatibilismo.","Cada grupo apresenta duas razões.","Cada grupo responde à melhor objeção adversária."],product:"Mapa comparativo das três posições + conclusão individual."}
+]},
+"F10-II-E":{
+texts:[
+{title:"James Rachels — argumento do desacordo cultural",author:"James Rachels",note:"Usar para testar se o desacordo cultural prova relativismo.",excerpt:"A existência de diferenças morais não basta, por si só, para demonstrar que não existem verdades morais objetivas.",questions:["Que premissa adicional seria necessária para passar do desacordo ao relativismo?","Podemos explicar o desacordo por diferenças factuais?"]}
+],
+thoughts:[
+{title:"A sociedade que aprova a crueldade",setup:"Imagina uma sociedade em que uma prática cruel é unanimemente considerada correta.",twist:"A unanimidade social torna a prática correta?",debrief:"Separar aprovação social de justificação moral."}
+],
+arguments:[
+{title:"Argumento do desacordo cultural",steps:["Culturas diferentes fazem juízos morais diferentes.","Logo, não há uma verdade moral universal."],objection:"O desacordo pode resultar de crenças factuais diferentes.",reply:"É preciso mostrar que o desacordo é sobre valores fundamentais e não apenas sobre factos ou circunstâncias."},
+{title:"Argumento do erro moral",steps:["Algumas práticas podem ser moralmente erradas mesmo quando aceites socialmente.","Logo, aceitação social não é critério suficiente de correção moral."],objection:"Quem decide que a prática é errada?",reply:"O objetivista precisa de apresentar razões que pretendam valer independentemente da aceitação social."}
+],
+workshops:[
+{title:"Laboratório do relativismo",steps:["Escolher uma prática controversa.","Separar factos de valores.","Reconstruir uma defesa relativista.","Construir uma objeção.","Defender o relativismo contra a objeção.","Trocar papéis e defender o objetivismo."],product:"Debate escrito com argumento, objeção e resposta."}
+]},
+"F10-II-M":{
+texts:[
+{title:"Kant — princípio de universalização",author:"Immanuel Kant",note:"Trabalhar a diferença entre agir conforme um dever e agir por dever.",excerpt:"A avaliação moral de uma máxima depende da possibilidade de a querer como princípio universal.",questions:["O que significa universalizar uma máxima?","Uma boa consequência pode justificar uma máxima que não pode ser universalizada?"]},
+{title:"Mill — princípio da maior felicidade",author:"John Stuart Mill",note:"Explorar a avaliação das ações pelas consequências e pela felicidade.",excerpt:"O valor moral de uma ação é relacionado com as consequências para o bem-estar.",questions:["Como comparar consequências diferentes?","Uma minoria pode ser sacrificada pelo benefício da maioria?"]}
+],
+thoughts:[
+{title:"A mentira que salva",setup:"Um agressor pergunta onde está escondida uma pessoa inocente. Dizer a verdade permitirá que a encontre.",twist:"O dever de dizer a verdade mantém-se absoluto?",debrief:"Confrontar dever e consequência sem reduzir nenhuma teoria a um slogan."}
+],
+arguments:[
+{title:"Kant contra o consequencialismo",steps:["Se a moral dependesse apenas de consequências, uma boa consequência poderia justificar instrumentalizar alguém.","Pessoas possuem dignidade e não devem ser tratadas apenas como meios.","Logo, existem limites morais que não dependem do resultado."],objection:"Ignorar consequências pode permitir resultados moralmente desastrosos.",reply:"Kantista: a moralidade não pode ser reduzida ao cálculo de resultados."},
+{title:"Mill contra o absolutismo moral",steps:["As ações têm efeitos sobre o bem-estar.","Ignorar efeitos previsíveis pode produzir sofrimento evitável.","Logo, consequências são moralmente relevantes."],objection:"Uma maioria poderia beneficiar sacrificando injustamente uma minoria.",reply:"O consequencialista precisa explicar como incorpora direitos, regras ou consequências de longo prazo."}
+],
+workshops:[
+{title:"Dilema moral em dupla perspetiva",steps:["Ler o caso.","Resolver segundo Kant.","Resolver segundo Mill.","Identificar a premissa que produz a diferença.","Formular a melhor objeção a cada solução."],product:"Quadro comparativo + mini-ensaio de avaliação."}
+]},
+"F10-II-P":{
+texts:[
+{title:"Rawls — posição original",author:"John Rawls",note:"Introduzir o véu de ignorância como dispositivo para pensar imparcialidade.",excerpt:"Escolher princípios sem conhecer a posição que ocuparemos torna mais difícil desenhar regras em benefício próprio.",questions:["Porque é relevante não saber se seremos ricos ou pobres?","O dispositivo produz igualdade ou apenas imparcialidade?"]},
+{title:"Nozick — justiça nas transferências",author:"Robert Nozick",note:"Confrontar justiça distributiva com direitos sobre propriedade e transferência.",excerpt:"Uma distribuição pode ser considerada justa se resultar de aquisições e transferências legítimas, mesmo sendo desigual.",questions:["Uma distribuição desigual pode ser justa?","O Estado pode redistribuir legitimamente recursos?"}
+],
+thoughts:[
+{title:"A lotaria social",setup:"Antes de nascer, escolhes regras para educação, saúde e impostos sem saber que posição ocuparás.",twist:"Que regras escolherias se pudesses nascer em qualquer posição?",debrief:"Distinguir igualdade, risco, necessidade e mérito."}
+],
+arguments:[
+{title:"Argumento da imparcialidade",steps:["Não sabemos a posição que ocuparemos.","Queremos proteger-nos contra posições muito desfavoráveis.","Logo, tendemos a escolher princípios que não dependam de favorecer a nossa posição atual."],objection:"Uma pessoa pode aceitar riscos e desigualdades maiores.",reply:"A discussão passa pelo modo como avaliamos risco, liberdade e distribuição."},
+{title:"Argumento da liberdade de transferência",steps:["Pessoas têm direitos sobre os seus bens legitimamente adquiridos.","Transferências voluntárias respeitam esses direitos.","Logo, uma distribuição desigual pode ser justa sem seguir um padrão igualitário."],objection:"E se a aquisição inicial tiver ocorrido num contexto profundamente desigual?",reply:"A teoria precisa de responder à legitimidade da aquisição, não apenas da transferência."}
+],
+workshops:[
+{title:"Constituição de uma sociedade",steps:["Definir recursos a distribuir.","Escolher regras sem conhecer a própria posição.","Introduzir depois a informação sobre a sociedade real.","Testar se as regras continuam a parecer justas."],product:"Conjunto de princípios de justiça + teste de consistência."}
+]},
+"F10-III":{
+texts:[
+{title:"Yochai Benkler — The Wealth of Networks",author:"Yochai Benkler",note:"Usar para ligar Filosofia, informação, autonomia e produção em rede.",excerpt:"A produção entre pares permite formas distribuídas de criação e partilha de informação.",questions:["A produção distribuída aumenta autonomia?","Mais participação significa necessariamente melhor conhecimento?"]},
+{title:"Hannah Arendt — espaço público",author:"Hannah Arendt",note:"Pensar o espaço comum onde diferentes perspetivas podem aparecer e ser discutidas.",excerpt:"A política depende de um mundo partilhado onde diferentes pessoas podem aparecer e agir umas perante as outras.",questions:["As redes ampliam ou fragmentam o espaço público?","Pode existir debate público sem mundo comum?"]}
+],
+thoughts:[
+{title:"A bolha perfeita",setup:"Um sistema conhece os teus interesses e mostra-te apenas conteúdos de que provavelmente gostarás.",twist:"Estás mais livre porque recebes informação relevante ou menos livre porque deixas de encontrar o inesperado?",debrief:"Autonomia, personalização e pluralidade informacional."}
+],
+arguments:[
+{title:"Mais informação não é necessariamente mais conhecimento",steps:["As redes reduzem custos de acesso à informação.","A abundância aumenta possibilidades de escolha.","Mas informação pode ser falsa, enviesada ou descontextualizada.","Logo, acesso à informação não garante conhecimento."],objection:"A inteligência coletiva pode corrigir erros.",reply:"Pode, mas depende de mecanismos de verificação, participação e qualidade."},
+{title:"Produção entre pares",steps:["Ferramentas digitais reduzem custos de colaboração.","Muitos indivíduos podem contribuir sem coordenação central rígida.","Projetos como Wikipedia mostram produção distribuída de conhecimento.","Logo, existem alternativas à produção exclusivamente hierárquica."],objection:"Comunidades abertas também podem produzir erros.",reply:"A questão passa para mecanismos de revisão, reputação e correção."}
+],
+workshops:[
+{title:"Wikipedia: conhecimento ou opinião coletiva?",steps:["Escolher um artigo.","Identificar contribuições e mecanismos de revisão.","Encontrar um ponto controverso.","Perguntar quem valida o conhecimento.","Comparar autoridade central e produção entre pares."],product:"Análise filosófica da produção distribuída de conhecimento."}
+]},
+"F11-IV-K":{
+texts:[
+{title:"Descartes — dúvida metódica",author:"René Descartes",note:"Usar o sonho e o génio maligno para testar a confiança na experiência.",excerpt:"A dúvida radical não procura simplesmente negar tudo; procura encontrar um ponto de partida que resista à dúvida.",questions:["A possibilidade de erro destrói todo o conhecimento?","Que tipo de certeza procura Descartes?"]},
+{title:"Hume — problema da indução",author:"David Hume",note:"Distinguir hábito psicológico de justificação lógica.",excerpt:"Esperar que o futuro se comporte como o passado não resulta de uma demonstração dedutiva.",questions:["Porque esperamos que o Sol nasça amanhã?","A experiência justifica logicamente a uniformidade da natureza?"]}
+],
+thoughts:[
+{title:"O mundo simulado",setup:"Imagina que todas as tuas experiências são produzidas por um sistema perfeito.",twist:"Que evidência poderias usar para demonstrar que não estás numa simulação?",debrief:"Distinguir dúvida local e dúvida global."}
+],
+arguments:[
+{title:"Argumento cético",steps:["Os sentidos podem enganar.","Não conseguimos excluir todas as possibilidades de erro.","Logo, algumas crenças que parecem certas podem não ser conhecimento."],objection:"Exigir certeza absoluta pode ser um padrão demasiado forte.",reply:"O debate passa pelo padrão de justificação exigido para conhecimento."},
+{title:"Problema da indução",steps:["Todas as observações passadas são compatíveis com diferentes futuros possíveis.","Nenhum argumento dedutivo garante que o futuro imitará o passado.","Logo, a indução não pode ser justificada apenas pela dedução."],objection:"A indução funciona extraordinariamente bem na prática.",reply:"Sucesso prático não é o mesmo que justificação lógica; essa diferença é precisamente o problema."}
+],
+workshops:[
+{title:"Laboratório cético",steps:["Escolher uma crença quotidiana.","Construir uma possibilidade de erro.","Procurar uma razão que exclua essa possibilidade.","Avaliar se a razão é suficiente.","Definir o nível de certeza alcançado."],product:"Mapa entre crença, evidência, dúvida e justificação."}
+]},
+"F11-IV-C":{
+texts:[
+{title:"Karl Popper — falsificação",author:"Karl Popper",note:"Explorar a diferença entre confirmar casos e procurar testes severos.",excerpt:"Uma hipótese científica deve correr o risco de entrar em conflito com observações possíveis.",questions:["O que poderia mostrar que a hipótese está errada?","Uma teoria que explica tudo explica realmente alguma coisa?"]},
+{title:"Thomas Kuhn — paradigmas",author:"Thomas Kuhn",note:"Introduzir a ideia de ciência normal e mudanças de enquadramento.",excerpt:"A história da ciência inclui períodos de estabilidade e mudanças profundas na forma de interpretar problemas.",questions:["Os mesmos dados podem ser interpretados de formas diferentes?","Uma revolução científica é apenas acumulação de factos?"]}
+],
+thoughts:[
+{title:"A teoria que nunca perde",setup:"Uma teoria é reformulada sempre que surge uma observação contrária.",twist:"Se nada puder contar contra ela, é uma boa teoria científica?",debrief:"Testabilidade e risco empírico."}
+],
+arguments:[
+{title:"Teste severo",steps:["Uma hipótese científica faz previsões.","Algumas previsões podem falhar.","Um teste que poderia mostrar erro distingue hipóteses arriscadas de afirmações imunes à crítica.","Logo, testabilidade é epistemicamente relevante."],objection:"Uma previsão falhada pode dever-se a uma hipótese auxiliar.",reply:"Sim; a avaliação científica ocorre em redes de hipóteses e condições experimentais."}
+],
+workshops:[
+{title:"Desenha uma experiência",steps:["Criar hipótese.","Definir previsão.","Escolher condições de teste.","Indicar resultado favorável.","Indicar resultado refutador.","Explicar o que fazer perante um resultado inesperado."],product:"Plano experimental filosoficamente comentado."}
+]},
+"F11-IV-T":{
+texts:[
+{title:"Langdon Winner — artefactos políticos",author:"Langdon Winner",note:"Questionar a neutralidade tecnológica.",excerpt:"Tecnologias podem favorecer determinadas formas de poder, acesso ou organização social.",questions:["Uma tecnologia pode ser politicamente relevante mesmo sem intenção política?","Quem beneficia e quem fica excluído?"]},
+{title:"Luciano Floridi — ética da informação",author:"Luciano Floridi",note:"Pensar pessoas, dados e ambientes digitais como parte de um mesmo ecossistema informacional.",excerpt:"As tecnologias de informação alteram as condições em que agentes vivem, decidem e interagem.",questions:["Os dados sobre uma pessoa fazem parte da sua identidade informacional?","Que deveres temos perante ambientes informacionais?"]}
+],
+thoughts:[
+{title:"O algoritmo que decide por ti",setup:"Um sistema conhece o teu histórico e escolhe automaticamente o que podes ver, comprar ou estudar.",twist:"Se o resultado for melhor do que uma decisão humana, ainda precisas de poder contestá-lo?",debrief:"Eficiência, autonomia, transparência e responsabilidade."}
+],
+arguments:[
+{title:"Eficiência não basta",steps:["Um sistema pode tomar decisões rápidas e consistentes.","Consistência não garante justiça.","Dados históricos podem reproduzir desigualdades.","Logo, eficiência técnica não é suficiente para legitimidade moral."],objection:"Uma decisão humana também pode ser enviesada.",reply:"Verdade; por isso a comparação deve considerar mecanismos de explicação, auditoria e contestação."}
+],
+workshops:[
+{title:"Conselho de ética algorítmica",steps:["Analisar um sistema automatizado.","Identificar afetados.","Mapear benefícios e riscos.","Definir três condições de legitimidade.","Testar as condições num caso adverso."],product:"Código de princípios para utilização responsável do sistema."}
+]}
+};
+window.PRISMA_PHILOSOPHY_RESOURCES=R;
+})();

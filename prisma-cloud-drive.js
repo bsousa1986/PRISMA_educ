@@ -4,7 +4,8 @@
 var CONFIG=window.PRISMA_SUPABASE_CONFIG||{};
 var client=null;
 function configured(){return !!(window.supabase&&CONFIG.url&&CONFIG.publishableKey&&!/YOUR_|COLOQUE_/i.test(CONFIG.url+" "+CONFIG.publishableKey));}
-var authReady=Promise.resolve(null);\nif(configured()){client=window.supabase.createClient(CONFIG.url,CONFIG.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});authReady=new Promise(function(resolve){var done=false;var finish=function(){if(done)return;done=true;resolve(true);};client.auth.onAuthStateChange(function(){finish();});setTimeout(finish,3000);});}
+var authReady=Promise.resolve(null);
+if(configured()){client=window.supabase.createClient(CONFIG.url,CONFIG.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});authReady=new Promise(function(resolve){var done=false;var finish=function(){if(done)return;done=true;resolve(true);};client.auth.onAuthStateChange(function(){finish();});setTimeout(finish,3000);});}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]});}
 function uid(){return "cm_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);}
 function role(){return window.role||localStorage.getItem("prisma_session_role")||"professor";}

@@ -12,7 +12,7 @@ function role(){return window.role||localStorage.getItem("prisma_session_role")|
 function pane(){return document.getElementById("prismaMain");}
 function modules(){return Object.entries((window.PRISMA_PHILOSOPHY_DB||{}).modules||{}).map(function(a){return {id:a[0],label:a[1].label};});}
 function currentUser(){return client?client.auth.getUser():Promise.resolve({data:{user:null}});}
-async function authUser(){if(!client)return null;await authReady;var r=await client.auth.getUser();return r.data&&r.data.user||null;}
+async function authUser(){if(!client)return null;await authReady;var s=await client.auth.getSession();if(s.data&&s.data.session&&s.data.session.user)return s.data.session.user;var r=await client.auth.getUser();if(r.data&&r.data.user)return r.data.user;return null;}
 function localMaterials(){try{return JSON.parse(localStorage.getItem("prisma_cloud_demo_materials")||"[]")}catch(e){return[]}}
 function saveLocal(a){localStorage.setItem("prisma_cloud_demo_materials",JSON.stringify(a));}
 function materialType(name){var n=(name||"").toLowerCase();if(/\.pdf$/.test(n))return"PDF / Livro / Ensaio";if(/\.pptx?$/.test(n))return"PP / Apresentação";if(/\.docx?$/.test(n))return"Documento";if(/\.(png|jpe?g|webp|gif)$/.test(n))return"Imagem";return"Outro material";}

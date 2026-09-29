@@ -9,7 +9,7 @@ function units(){try{var a=Object.values(window.curriculumUnits||{}).flat();if(a
 function resources(){return window.PRISMA_READY_RESOURCES||[]}
 function header(k,t,p){return '<div class="prisma-head"><div><div class="prisma-kicker">'+esc(k)+'</div><h1>'+esc(t)+'</h1><p>'+esc(p||"")+'</p></div></div>'}
 function go(t){
-if(t==="curriculo")return modules(); if(t==="recursos")return resourceList();
+if(t==="curriculo")return modules(); if(t==="mapa")return window.prismaPhilosophyMap&&window.prismaPhilosophyMap.open?window.prismaPhilosophyMap.open():message("Mapa da Filosofia","O mapa filosófico está a carregar."); if(t==="recursos")return resourceList();
 if(t==="inicio")return home();
 if(t==="preparar")return window.prismaLessonBuilder&&window.prismaLessonBuilder.open?window.prismaLessonBuilder.open():teacher("preparar");
 if(t==="planos")return teacher("planos",window.prismaTeacherPlans);
@@ -79,7 +79,7 @@ function updateWorkspaceSession(){var n=localStorage.getItem("prisma_user_name")
 function releaseNav(){
  var st=getRole()==="aluno", items=st
  ? [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["biblioteca","▤","Materiais"],["progresso","◔","Progresso"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]]
- : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["preparar","✦","Preparar aula"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Drive & Biblioteca"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
+ : [["inicio","⌂","Início"],["curriculo","▦","Módulos"],["mapa","⌘","Mapa da Filosofia"],["preparar","✦","Preparar aula"],["recursos","✦","Recursos"],["planos","▣","Planos de aula"],["materiais","◈","Drive & Biblioteca"],["documentos","▤","Documentos"],["exercicios","✓","Exercícios"],["avaliacao","◎","Avaliação"],["blog","✎","Blog"],["mensagem","✉","Mensagem ao criador"],["investigacao","⌕","Investigação"]];
  var el=document.getElementById("workspaceContent");if(!el)return;
  el.className="content "+(st?"student":"teacher");
  el.innerHTML='<div class="prisma-shell"><aside class="prisma-side"><div class="prisma-brand"><strong>PRISMA</strong><small>Pensar. Compreender. Aprender.</small></div><nav class="prisma-nav">'+items.map(function(x){return '<button type="button" data-tab="'+x[0]+'">'+x[1]+' &nbsp;'+x[2]+'</button>';}).join("")+'</nav><div class="prisma-session-card"><div class="prisma-session-role">SESSÃO PRISMA</div><strong id="prismaSessionName">Sessão não iniciada</strong><small id="prismaSessionEmail">Entra para guardar o teu espaço.</small><button type="button" id="prismaWorkspaceSession">🔐 Iniciar sessão</button></div><div class="prisma-side-foot">AE · Perfil dos Alunos<br>PRISMA · versão de desenvolvimento</div></aside><main class="prisma-main" id="prismaMain"></main></div>';
@@ -94,7 +94,8 @@ function releaseSwitch(t){
  if(t==="biblioteca")return studentMaterials();
  if(t==="progresso")return (window.studentHome?window.studentHome():message("Progresso","O teu progresso será apresentado aqui."));
  if(t==="planos")return teacher("PROFESSOR","Planos de aula",window.prismaTeacherPlans);
- if(t==="materiais")return materialScreen();
+ if(t==="mapa")return window.prismaPhilosophyMap&&window.prismaPhilosophyMap.open?window.prismaPhilosophyMap.open():message("Mapa da Filosofia","O mapa filosófico está a carregar.");
+ if(t==="materiais")return window.prismaCloudDrive&&window.prismaCloudDrive.open?window.prismaCloudDrive.open():materialScreen();
  if(t==="documentos")return documentScreen();
  if(t==="exercicios")return teacher("PROFESSOR","Exercícios",window.prismaTeacherExercises);
  if(t==="avaliacao")return teacher("PROFESSOR","Avaliação",window.prismaTeacherAssessment);
